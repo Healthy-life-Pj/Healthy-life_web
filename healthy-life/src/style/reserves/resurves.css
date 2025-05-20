@@ -1,0 +1,78 @@
+.reservesHead{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 60px;
+  margin-bottom: -60px;
+  width: 800px;
+}
+
+
+.reservesHead h2{
+  margin-right: 725px;
+}
+
+
+.viewPoint{
+  display: flex;
+  flex-direction: column;
+  width: 790px;
+  height: 150px;
+  margin-right: 6px;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+
+.tabBox{
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-bottom: 1px solid gray;
+  width: 760px;
+}
+
+.date{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+
+}
+
+.context{
+  margin-left: 160px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.payOrDeducted{
+  margin-left: 160px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.changePoint{
+  margin-left: 60px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.expirationPeriod{
+  margin-left: 60px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.showUseReserves{
+  margin-top: 100px; 
+  display: flex;
+  justify-content: center;
+}
+
+
+.showUseReserves p{
+  font-size: 16px;
+  color: gray;
+}

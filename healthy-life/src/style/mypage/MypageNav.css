@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'goorm-sans-bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+.mypagNavContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.myPageNavDiv {
+  /* background-color: #DFF5FF; */
+  width: 120px;
+  line-height: 25px;
+  padding: 15px;
+  border-radius: 5px;
+  height: 800px;
+  box-sizing: border-box;
+}
+
+.myPageNavBox{
+  display: flex;
+  flex-direction: column;;
+  list-style: none;
+  gap: 10px;
+  font-family: 'goorm-sans-bold';
+  margin: 10px auto;
+}
+
+.mypageMenue{
+  color: #666;
+  font-size: 11px;
+}
+.mypageNavTitle {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.mypageTitle {
+  font-size: 17px;
+  font-family: 'goorm-sans-bold';
+}
+
+.mypageNavLine {
+  width: 80px;
+  border: 1px solid #86919664;
+  margin: 15px 0px;
+}
+

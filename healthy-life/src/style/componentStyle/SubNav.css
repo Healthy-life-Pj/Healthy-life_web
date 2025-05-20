@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'goorm-sans-bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.subNavContainer > ul {
+  font-family: 'goorm-sans-bold';
+  width: 950px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 14px;
+  list-style-type: none;
+}
+
+
+@media (max-width: 800px) {
+  .subNavContainer > ul > li{
+    font-size: 9px;
+  }
+}
+
+.subNavContainer{
+  display: flex;
+  background-color: #DFF5FF;
+  height: 60px;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  left: 100px;
+  margin: 0 auto;
+  left: 0;
+}

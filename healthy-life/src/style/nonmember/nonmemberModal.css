@@ -1,0 +1,79 @@
+.openModalButton{
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  background-color: #67C6E3;
+  color: white;
+}
+
+
+.openModalButton:hover{
+  background-color: #1478FF;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.modalContent{
+  position: relative;
+  background: white;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.orderList{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+.orderListImages{
+  display: flex;
+  justify-content: space-around;
+  width: 400px;
+}
+
+
+.orderListImages img{
+  width: 100px;
+}
+
+
+.orderListInformation{
+  display: flex;
+  justify-content: space-around;
+  width: 400px;
+}
+
+
+
+.orderListInformation img{
+  width: 100px;
+}
+
+.closeModalButton{
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}

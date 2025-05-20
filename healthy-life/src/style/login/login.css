@@ -1,0 +1,125 @@
+.loginContainer h1{
+  text-align: center;
+}
+
+.loginContainer {
+  margin-top: 5%;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.loginContainer p{
+  text-align: center;
+  font-size: 16px;
+}
+
+.findIdContainer h1{
+  text-align: center;
+}
+
+.findIdContainer {
+  margin-top: 5%;
+}
+
+
+.findIdForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.findPasswordContainer h1{
+  text-align: center;
+}
+
+
+.findPasswordContainer {
+  margin-top: 5%;
+}
+
+.findPasswordForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.modalContainer{
+  text-align: center;
+  margin-top: 50px;
+}
+
+
+
+
+.modalContent{
+  position: relative;
+  background: white;
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+
+
+.modalOverlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+
+.closeModalButton{
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #67C6E3;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+
+
+.closeModalButton:hover{
+  background-color: #1478FF;
+}
+
+
+
+.loginButton{
+  background-color: #67C6E3;
+  border-radius: 5px;
+  color: white;
+  width: 110px;
+  height: 40px;
+  border: none;
+}
+
+
+.loginButton:hover{
+  background-color: #1478FF;
+}
+
+

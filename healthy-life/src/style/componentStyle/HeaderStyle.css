@@ -1,0 +1,81 @@
+.header{
+  margin-bottom: 2%;
+  padding-right: 0;
+  height: 110px;
+  padding-top: 1%;
+  /* #C6DFAA */
+}
+
+.headerFlexBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 900px;
+  margin: 0 auto ;
+  padding-right: 0;
+}
+
+
+
+.buttonFlexBox1{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 125px;
+  
+}
+
+
+.button1 {
+  width: 350px;
+  color: gray;
+  margin-right: 0;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 2%;
+}
+
+
+
+
+.button2 {
+  width: 200px;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  margin-right: 2%;
+}
+
+
+.button2Link{
+  margin-top: 1%;
+}
+
+
+.button2 input {
+  border: 1px solid black;
+  height: 18px;
+  border-radius: 20px;
+  padding: 4px;
+  padding-left: 10px;
+  border: 2px solid #67C6E3;
+  font-size: 10px;
+}
+
+
+
+.realLogo{
+  margin-top: 20px;
+  width: 200px;
+  
+  
+}
+
+
+
+.logo :hover{
+  color: black;
+}
+

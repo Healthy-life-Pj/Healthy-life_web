@@ -1,0 +1,30 @@
+.bmiCalculator{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  flex-direction: column;
+}
+
+
+
+.result{
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
+.bmiButton{
+  background-color: #67C6E3;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 45px;
+  margin-left: 103px;
+}
+
+
+.bmiButton:hover{
+  background-color: #1478FF;
+}

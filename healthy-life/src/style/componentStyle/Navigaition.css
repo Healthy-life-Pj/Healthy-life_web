@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'goorm-sans-bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+
+.mainNavBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+.mainNavBox ul {
+  font-family: 'goorm-sans-bold';
+  width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 15x;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: darkgray;
+  cursor: pointer;
+}
+
+.mainNavBox li:hover {
+  color: darkgray;
+
+}
+
+.subNavDiv {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+  span{
+    font-size: 10px;
+  }
+}

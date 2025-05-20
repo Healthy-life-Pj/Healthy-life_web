@@ -1,0 +1,66 @@
+.bannerDiv .mainBannerImages {
+  display: flex;
+  align-items: center;
+  width: 1200px;
+  height: 300px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.bannerDiv {
+  width: 100%;
+  height: 300px;
+}
+
+.bannerImages {
+  transition: transform 1s ease-in-out;
+}
+
+.bannerSlide {
+  transition: opacity 1s ease-in-out;
+}
+
+.sliderBtnDiv {
+  background-color: rgba(118, 118, 118, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 80px;
+  height: 15px;
+  border-radius: 20px;
+  padding: 5px;
+  z-index: 3;
+}
+
+.prevClick, .nextClick, .centerBar {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  font-size: 15px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  z-index: 2;
+}
+
+.emptyBox {
+  width: 870px;
+  height: 45px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: -40px;
+}
+
+
+
+
+@media (max-width: 500px)and(max-width: 700px) {
+  .emptyBox{
+    width: 400px;
+  }
+  .mainBannerImages {
+    width: 600px;
+  }
+}

@@ -1,0 +1,53 @@
+.termUl {
+  list-style: none;
+  margin-top: 30px;
+}
+
+.termUl h5 {
+margin-bottom: 20px;
+padding: 5px;
+border-bottom: 1px solid #bbbbbb;
+}
+
+.labelInputDiv {
+  padding: 5px;
+}
+
+.labelInputDiv label {
+  margin-right: 10px;
+}
+
+.Agree {
+  border-bottom: 1px solid #575757;
+}
+
+.termsDiv {
+  margin-top: 30px;
+}
+
+.labelInputContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #575757;
+}
+
+.labelInputContainer button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.contractContent {
+  height: 150px;
+  font-size: 10px;
+  background-color: #fff;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.moreBtn:active {
+  border: none;
+  /* animation-name: rotate;
+  transform: rotate(180deg);
+  transition: roatae 2s ease-in; */
+}

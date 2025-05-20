@@ -1,0 +1,42 @@
+.nonMemberContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.nonMemberContainer h2{
+  text-align: center;
+}
+
+.nonMemberForm{
+  display: flex;
+  justify-content: center;
+}
+
+.nonMemberFormContainer{
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+}
+
+
+.nonMemberData{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.nonMemberInput{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+
+
+.nonMemberButton{
+  display: flex;
+  justify-content: center;
+}
