@@ -75,7 +75,7 @@ const Chicken: React.FC<{ products: ProductDetail[] }> = ({ products }) => {
             >
               <img
                 src={product.imageUrl}
-                alt={product.name}
+                alt={product.productName}
                 className="allProductImage"
               />
             </div>
@@ -83,7 +83,7 @@ const Chicken: React.FC<{ products: ProductDetail[] }> = ({ products }) => {
             <div>
               <ul className="productContent">
                 <li>
-                  <h4>{product.name}</h4>
+                  <h4>{product.productName}</h4>
                   <p>{product.price}원</p>
                 </li>
                 <li>
@@ -124,8 +124,8 @@ const Chicken: React.FC<{ products: ProductDetail[] }> = ({ products }) => {
             <div className="modalImages">
               {visibleProducts.map((product) => (
                 <div key={product.productId} className="relatedModalImage">
-                  <img src={product.imageUrl} alt={product.name} />
-                  <p>{product.name}</p>
+                  <img src={product.imageUrl} alt={product.productName} />
+                  <p>{product.productName}</p>
                 </div>
               ))}
               <button className="nextButton" onClick={handleNextClick}>

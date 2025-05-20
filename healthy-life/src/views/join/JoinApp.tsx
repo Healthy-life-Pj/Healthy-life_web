@@ -52,6 +52,7 @@ function JoinApp() {
       userBirth,
       userAddress,
       userGender,
+
     });
     setUserInfo([...userInfo, response.data]);
 
@@ -59,44 +60,46 @@ function JoinApp() {
   }
 
   const [errors, setErrors] = useState<InFormData>({
-    id: nextId.current,
-    userId: '',
+    userId: 0, 
+    username: '', 
     userNickName: '',
     userPassword: '',
-    userRePassword: '',
-    userName: '',
+    userRePassword: '', 
+    name: '', 
     userEmail: '',
     userPhone: '',
     userBirth: '',
     userAddress: '',
-    userGender: ''
+    userGender: '',
+    totalPayment: 0,
+    memberGrade: "병아리",
+    point: 0
   });
 
   const handleSingUpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     let tempErrors = {
-      id:nextId.current,
-      userId: '',
+      userId: 0,
       userNickName: '',
       userPassword: '',
       userRePassword: '',
-      userName: '',
+      name: '',
+      username: '',
       userEmail: '',
       userPhone: '',
       userBirth: '',
       userAddress: '',
-      userGender: ''
+      userGender: '',
+      totalPayment: 0,
+      memberGrade: "병아리",
+      point: 0
     };
 
     let isValid = true;
 
-    if (!userId) {
-      tempErrors.userId = '아이디를 입력하세요.';
-      isValid = false;
-    }
     if (!userName) {
-      tempErrors.userName = '이름을 입력하세요.';
+      tempErrors.username = '이름을 입력하세요.';
       isValid = false;
     }
     if (!userNickName) {
@@ -234,7 +237,7 @@ function JoinApp() {
                 onChange={(e) => setUserName(e.target.value)}
               />
             </li>
-            <li><p>{errors.userName}</p></li>
+            <li><p>{errors.username}</p></li>
             <li className="li05">
               <label htmlFor="userAddress">주소</label>
               <input

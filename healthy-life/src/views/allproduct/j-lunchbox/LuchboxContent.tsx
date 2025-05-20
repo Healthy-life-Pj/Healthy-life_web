@@ -57,12 +57,12 @@ const LunchboxContent: React.FC<{ products: ProductDetail[] }> = ({ products }) 
           <Link to={"/productdetail"}>
             <img
               src={product.imageUrl}
-              alt={product.name}
+              alt={product.productName}
               className="allProductImage"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             />
-            <h4 className="productTitile">{product.name}</h4>
+            <h4 className="productTitile">{product.productName}</h4>
             <p className="productPrice">{product.price}</p>
           </Link>
           <div
@@ -84,12 +84,12 @@ const LunchboxContent: React.FC<{ products: ProductDetail[] }> = ({ products }) 
           <Link to={"/productdetail"}>
             <img
               src={product.imageUrl}
-              alt={product.name}
+              alt={product.productName}
               className="allProductImage"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             />
-            <h4 className="productTitile">{product.name}</h4>
+            <h4 className="productTitile">{product.productName}</h4>
             <p className="productPrice">{product.price}</p>
           </Link>
           <div
@@ -121,8 +121,8 @@ const LunchboxContent: React.FC<{ products: ProductDetail[] }> = ({ products }) 
             <div className="modalImages">
               {visibleProducts.map((product) => (
                 <div key={product.productId} className="relatedModalImage">
-                  <img src={product.imageUrl} alt={product.name} />
-                  <p>{product.name}</p>
+                  <img src={product.imageUrl} alt={product.productName} />
+                  <p>{product.productName}</p>
                 </div>
               ))}
               <button className="nextButton" onClick={handleNextClick}>

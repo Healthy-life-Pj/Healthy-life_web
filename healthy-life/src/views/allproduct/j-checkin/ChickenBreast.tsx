@@ -73,13 +73,13 @@ if (visibleProducts.length < 4) {
           <Link to={"/productdetail"}>
             <img
               src={product.imageUrl}
-              alt={product.name}
+              alt={product.productName}
               className="allProductImage"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             />
             <div className="productLine"></div>
-            <h4>{product.name}</h4>
+            <h4>{product.productName}</h4>
             <p>{product.price}원</p>
           </Link>
           <div
@@ -111,8 +111,8 @@ if (visibleProducts.length < 4) {
             <div className="modalImages">
               {visibleProducts.map((product) => (
                 <div key={product.productId} className="relatedModalImage">
-                  <img src={product.imageUrl} alt={product.name} />
-                  <p>{product.name}</p>
+                  <img src={product.imageUrl} alt={product.productName} />
+                  <p>{product.productName}</p>
                 </div>
               ))}
               <button className="nextButton" onClick={handleNextClick}>

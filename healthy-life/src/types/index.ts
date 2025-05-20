@@ -7,14 +7,16 @@ export type InFormData = {
   name: string; // 이름름
   userEmail: string;
   userPhone: string;
-  userBirth: Date;
+  userBirth: string;
   userAddress: string;
   userGender: string;
   totalPayment: number; // 멤버십등급기준 금액 (이거도 복합키 사용을 해야하나??)
-  memberGrade: ["병아리", "닭", "오골계", "독수리"]
+  memberGrade: string;
   //(누적 구매액수에 따라 결정)
   point: number //포인트
 }
+
+export type memberGrade =  "병아리" | "닭" | "오골계" | "독수리"
 
 export type userGender = "Male" | "Female";
 
@@ -88,7 +90,7 @@ export interface ProductDetail {
   manufacturer: string; // 제조사 정보
   origin: string; // 원산지
   usage: string; // 사용 방법
-  expirationDate: Date; // 유통기한
+  expirationDate: String; // 유통기한
   surveyType: surveyType; //설문지 카테고리 타입
   recommendCount: number; //찜 수량
 }
