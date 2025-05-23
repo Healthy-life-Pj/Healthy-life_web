@@ -1,0 +1,35 @@
+.productSmallPagination {
+  display: flex;
+  gap: 6px;
+  width: 180px;
+  margin: 0px auto;
+  margin-top: 15px;
+}
+
+.productSmallPageLink {
+  border: none;
+  border-radius: 3px;
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border: 1px solid #eee;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.smallPageLinkdirection{
+  border: none;
+  border-radius: 3px;
+  width: 55px;
+  height: 35px;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+.productSmallPagination .smallPageItem.active .smallPageLink {
+  background-color: #67C6E3;
+  color: white;
+  border-color: #67C6E3;
+}

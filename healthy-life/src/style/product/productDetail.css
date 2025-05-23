@@ -1,0 +1,221 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'goorm-sans-bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.prodcutDetailPageContainer {
+  width: 800px;
+  margin: 100px auto;
+}
+.productDetailPage {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.DivProductImage {
+  width: 40%;
+  height: 240px;
+  display: flex;
+  flex-direction: center!important;
+  align-items: center;
+}
+
+.productImgInDiv {
+  width: 90%;
+}
+
+.productData {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.productNameRating {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  justify-content: space-between;
+  margin-left: 10px;
+  font-size: 19px;
+  font-weight: 600;
+  font-family: 'Pretendard-Regular';
+}
+
+.productDataLine {
+  border: 1px solid #eee;
+  width: 100%;
+}
+
+.producPriceDiv {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 10px;
+}
+
+.productPriceBox {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-family: 'Pretendard-Regular';
+}
+
+
+.countInput {
+  padding: 7px;
+  font-size: 18px;
+  box-sizing: border-box;
+  border-radius: 11px;
+  border: none;
+  width: 60px;
+  outline: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: inner-spin-button;
+    opacity: 1;
+  cursor: pointer;
+
+}
+
+.deliveryMethod{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.totalPrieDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalPriceD {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 17px;
+  font-family: 'Pretendard-Regular';
+  margin: 5px 0px;
+}
+
+.totalPriceSpan {
+  width: 100%;
+  font-size: 25px;
+  font-weight: 500;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.deliveryKind {
+  font-size: 13px;
+  font-family: 'goorm-sans';
+}
+
+.productDetailbutton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.putinCartButton {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+  font-family: 'goorm-sans-bold';
+}
+
+.orderButton {
+  width: 100%;
+  color: white;
+  font-family:
+  'goorm-sans-bold';
+  background-color: #67C6E3;
+}
+
+.orderButton:hover {
+  background-color: #1478FF;
+}
+
+.wishCartBtn {
+  width: 49%;
+  text-align: center;
+  background-color: #8e8e8e;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+}
+
+.wishCartBtn:hover {
+  background-color: #676767;
+  cursor: pointer;
+}
+
+.orderButton {
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+}
+
+@media (max-width: 800px){
+  .prodcutDetailPageContainer {
+    width: 90%;
+    min-width: 400px;
+  }
+  .productNameRating {
+    font-size: 15px;
+  }
+  .productPriceBox{
+    width: 50%;
+    font-size: 13px;
+  }
+  .producPriceDiv > input {
+    font-size: 14px;
+    width: 50px;
+    padding: 7px;
+  }
+  .totalPriceD {
+  font-size: 15px;
+  }
+  .totalPriceSpan {
+    font-size: 20px;
+  }
+  .deliveryKind {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 600px){
+  .productNameRating {
+    font-size: 15px;
+  }
+  .productPriceBox{
+    font-size: 10px;
+  }
+  .producPriceDiv > input {
+    font-size: 11px;
+    width: 40px;
+    padding: 4px;
+  }
+}

@@ -11,7 +11,6 @@
   font-style: normal;
 }
 
-
 *{
 margin: 0;
 padding: 0;
@@ -59,11 +58,11 @@ padding: 0;
   display: flex;
   flex-direction: column;
   width: 900px;
-  height: 150px;
   list-style: none;
   margin: 0 auto;
   border-top: 1.2px solid #67C6E3;
   border-bottom: 1.2px solid #67C6E3;
+  overflow: hidden;
 }
 
 .cartLi {
@@ -71,26 +70,103 @@ padding: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0px;
-  padding: 0px 20px;
+  padding: 10px;
   border-bottom: 1px solid #DFF5FF;
   font-family: 'Pretendard-Regular';
   box-sizing: border-box;
-  height: 150px;
+  width: 860px;
+  height: 100px;
+  margin: 0px auto;
 }
 
 .cartCheckbox{
   margin-right: 10px;
 }
 
+.cartProductName {
+  width: 120px;
+  font-size: 10px;
+}
+
+.cartAmountBox {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.cartAmountName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 140px;
+  font-size: 10px;
+}
+
 .productAmount {
-  width: 40px;
-  height: 20px;
-  text-align: center;
+  padding: 7px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-radius: 11px;
+  border: none;
+  width: 50px;
+  outline: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: inner-spin-button;
+    opacity: 1;
+  cursor: pointer;
+}
+
+.productAmountUpDateBtn {
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 10px;
+  background-color: #67C6E3;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.productAmountUpDateBtn:hover {
+  background-color: #1478FF;
+}
+
+.priceDivGroupBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 10px;
+}
+
+.priceDivGroupSpan1 {
+  width: 54px;
+  text-align: right;
+}
+
+.priceDivGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.cartImgDiv {
+  width: 90px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
 
 .cartImage {
-  width: 25%;
+  width: 100%;
+}
+
+.cartColseIcon {
+  font-size: 20px;
 }
 
 .totalContainer {
@@ -166,4 +242,10 @@ padding: 0;
 
 .processButton:hover {
   background-color: #1478FF;
+}
+
+.soldOut {
+  color: red;
+  font-weight: bold;
+  padding: 8px;
 }
