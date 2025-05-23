@@ -1,42 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ProductDetailResponseDto } from "../types/dto";
+import { ProductDetailResponseDto, ProductListResponseDto } from "../types/dto";
+
 interface PaginationScrollProps<T> {
-  apiUrl01: string;
-  apiUrl02: string;
+  apiUrl: string;
   limit: number;
-  extraParams?: Record<string, string>;
 }
 
-function usePaginationScroll<T>({
-  apiUrl01,
-  apiUrl02,
+function useAllproductpaginationHook<T>({
+  apiUrl,
   limit,
-  extraParams = {},
 }: PaginationScrollProps<T>) {
   const [data, setData] = useState<ProductDetailResponseDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("default");
-  const [params, setParams] = useState(extraParams);
-  const useDetailApi = !!params.pCategoryDetailName;
-  const isFetching = useRef(false);
 
   const fetchData = async (page: number) => {
-    if (loading || isFetching.current) return;
+    if (loading) return;
     setLoading(true);
-    isFetching.current = true;
-
-      try {
-        let response: any;
-        if (useDetailApi) {
-          response = await axios.get(apiUrl02, { params: { page, limit, sortBy, ...params } });
-        } else {
-          response = await axios.get(apiUrl01, { params: { page, limit, sortBy, ...params } });
-        }
-
-      const sortData = (data: ProductDetailResponseDto[]) => {
+    try {
+      const response = await axios.get(apiUrl, {
+        params: { page, limit },
+      });
+      
+      const sortedData = (data: ProductDetailResponseDto[]) => {
         return [...data].sort((a, b) => {
           if (sortBy === "rating") return b.averageRating - a.averageRating;
           // if (sortBy === "like") return b.like - a.like;
@@ -46,7 +35,11 @@ function usePaginationScroll<T>({
         });
       };
 
-        setData(page === 1 ? sortData(response.data.data) : (prev) => [...prev, ...sortData(response.data.data)]);
+      setData(
+        page === 1
+          ? sortedData(response.data.data)
+          : (prev) => [...prev, ...sortedData(response.data.data)]
+      );
       setTotalPages(response.data.totalPages || 1);
 
       setTotalPages(response.data.totalPages || response.data.totalPages || 1);
@@ -54,7 +47,6 @@ function usePaginationScroll<T>({
       console.error("데이터 요청 중 오류:", error);
     } finally {
       setLoading(false);
-      isFetching.current = false;
     }
   };
 
@@ -62,20 +54,19 @@ function usePaginationScroll<T>({
     setCurrentPage(1);
     setData([]);
     fetchData(1);
-  }, [params, sortBy]);
+  }, [sortBy]);
 
   useEffect(() => {
-    if (currentPage === 1) return;
+    setData([]);
     fetchData(currentPage);
   }, [currentPage]);
 
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 500 &&
+        document.documentElement.offsetHeight - 200 &&
       currentPage < totalPages &&
-      !loading &&
-      !isFetching.current
+      !loading
     ) {
       setCurrentPage((prev) => prev + 1);
     }
@@ -86,12 +77,7 @@ function usePaginationScroll<T>({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, currentPage, totalPages]);
 
-  return {
-    data,
-    loading,
-    resetAndFetchData: setSortBy,
-    updatedParams: setParams,
-  };
+  return { data, resetAndFetchData: setSortBy, loading };
 }
 
-export default usePaginationScroll;
+export default useAllproductpaginationHook;

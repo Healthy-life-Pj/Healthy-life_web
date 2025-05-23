@@ -1,0 +1,31 @@
+.productIntroduceDiv {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.productIntroduceUl {
+  width: 90%;
+  list-style: none;
+}
+
+.productIntroduceLi {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+
+.productIntroduceLiLi {
+  text-align: right;
+  width: 75%;
+}
+
+.productIntroduceLiLi:first-child {
+  text-align: left;
+  width: 20%;
+}
+
+.productIntroduceLine {
+  width: 100%;
+  border: 1px solid #67C6E3;
+  margin-top: 20px;
+}

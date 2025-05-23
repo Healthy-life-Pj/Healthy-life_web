@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import RecommandList from './RecommandList';
-import Pagination from '../allproduct/j-checkin/Pagination';
+// import Pagination from '../product/j-checkin/Pagination';
 
 import '../../style/recommandList.css'
 
@@ -71,12 +71,12 @@ const RecommandApp: React.FC  = () => {
           <RecommandList products={currentProducts} />
         </div>
       </div>
-    <Pagination 
+    {/* <Pagination 
     productPerPage={ProductPerPage}
     totalProducts={products.length}
     paginate={paginate}
     currentPage={currentPage}
-    />
+    /> */}
     </div>
   )
 }
