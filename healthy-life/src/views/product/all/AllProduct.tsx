@@ -15,6 +15,7 @@ const AllProduct: React.FC = () => {
   const { data, loading, resetAndFetchData} = useAllproductpaginationHook({
     apiUrl: `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`,
     limit: 10,
+    chooseSort: btnStatus
   });
 
   const buttons = [
