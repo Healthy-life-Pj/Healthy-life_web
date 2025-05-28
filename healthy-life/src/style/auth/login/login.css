@@ -2,8 +2,18 @@
   text-align: center;
 }
 
+.loginErrorMg {
+  text-align: center;
+  font-size: 12px;
+  color: red;
+}
+
 .loginContainer {
   margin-top: 5%;
+}
+
+.loginBox {
+  width: 220px;
 }
 
 .loginForm {
@@ -11,12 +21,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
-
-.loginContainer p{
-  text-align: center;
-  font-size: 16px;
+.findDiv {
+  display: flex;
+  width: 150px;
+  margin: 0px auto;
+  margin-top: 5px;
+  text-align: center; 
+  font-size: 11px;
+  justify-content: space-between;
 }
 
 .findIdContainer h1{
@@ -26,7 +41,6 @@
 .findIdContainer {
   margin-top: 5%;
 }
-
 
 .findIdForm {
   display: flex;
@@ -51,14 +65,10 @@
   justify-content: center;
 }
 
-
 .modalContainer{
   text-align: center;
   margin-top: 50px;
 }
-
-
-
 
 .modalContent{
   position: relative;
@@ -71,8 +81,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
-
-
 
 .modalOverlay{
   position: fixed;
@@ -87,8 +95,6 @@
   z-index: 999;
 }
 
-
-
 .closeModalButton{
   margin-top: 20px;
   padding: 10px 20px;
@@ -100,23 +106,19 @@
   border-radius: 5px;
 }
 
-
-
 .closeModalButton:hover{
   background-color: #1478FF;
 }
-
-
 
 .loginButton{
   background-color: #67C6E3;
   border-radius: 5px;
   color: white;
-  width: 110px;
+  width: 220px;
   height: 40px;
   border: none;
+  margin-top: 20px;
 }
-
 
 .loginButton:hover{
   background-color: #1478FF;

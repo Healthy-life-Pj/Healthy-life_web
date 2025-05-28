@@ -1,83 +1,59 @@
-import React, { useState } from 'react'
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import '../style/componentStyle/HeaderStyle.css'
-import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
-import { Link } from 'react-router-dom';
-import Logo from '../assets/images/KakaoTalk_20240822_203008371.png'
-
-// classname = lowcamelcase로 작성
-// css => style 폴더안에
-//  App 건들지 말고 view/Home.tsx에 작성i
-
-
-
+import React, { useEffect, useState } from "react";
+import "../style/componentStyle/HeaderStyle.css";
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../assets/images/KakaoTalk_20240822_203008371.png";
+import userAuthStore from "../stores/user.store";
+import { useCookies } from "react-cookie";
 
 export default function Header() {
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
+  const {username, isAuthenticated, logout} = userAuthStore();
+  const [cookies, setCookies, removeCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
 
-  const InputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  useEffect(() => {
+    if (!cookies.token) {
+      logout();
+    }
+  }, [cookies.token,logout]);
+
+  const handleLougoutClick = () => {
+    setCookies("token", "", { expires: new Date() });
+    removeCookie("token", { path: "/"});
+    logout();
+    navigate("/");
   }
 
-
-  
-
-
   return (
-    <header className='header'>
-  
-    <div className='headerFlexBox'>
-    
-    <div className='logo'>
-      <br />
-    <Link to={'/'}>
-      <img className='realLogo' src={Logo} alt="로고" />
-    </Link>
-    </div>
-
-
-
-    
-
-    <div className='buttonFlexBox1'>
-    <p className='button1'>
-    <Link to={'/login'}>로그인</Link>
-
-    |
-
-    <Link to={'/join'}>회원가입</Link>
-    
-    |
-    
-    <Link to={'/mypage/orderApp'}>주문조회</Link>
-
-    |
-    <Link to={'/myPage'}>마이페이지</Link>
-  </p>
-      
-    <br />
-        
-          
-    
-
-
-  <div className='button2'>
-  <form action='submit' className='productSearch'>
-  <input type="text" placeholder='제품검색' value={search} onChange={InputChangeHandler}/>
-  </form>
-  <Link className='button2Link' to={'/mypage/'}><AccountCircle /></Link>
-  <Link className='button2Link' to={'/cart'}><LocalGroceryStoreIcon /></Link>
-  </div>
-
-    </div>
-
-
-
-  </div>
-
-
-  
-  <br />
+    <header className="header">
+      <div className="headerFlexBox">
+        <div className="logo">
+          <Link to={"/"}>
+            <img className="realLogo" src={Logo} alt="로고" />
+          </Link>
+        </div>
+        <div className="buttonFlexBox1">
+          <div>
+            {isAuthenticated ? 
+            <div className="button1">
+            <span className="usernameSpan">{username}</span>
+            <span className="buttonFlexBox1Span">|</span>
+            <Link to={"/"} onClick={handleLougoutClick}>로그아웃</Link>
+            <span className="buttonFlexBox1Span">|</span>
+            <Link to={"/mypage/orderApp"}>주문조회</Link>
+            <span className="buttonFlexBox1Span">|</span>
+            <Link to={"/myPage"}>마이페이지</Link>
+            </div>
+            :
+            <div className="button3">
+            <Link to={"/login"}>로그인</Link>
+            <span className="buttonFlexBox1Span">|</span>
+            <Link to={"/signUp"}>회원가입</Link>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
     </header>
-  )
+  );
 }

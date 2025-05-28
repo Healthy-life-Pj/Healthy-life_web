@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
@@ -9,13 +9,12 @@ import Sidenavigation from "./components/Sidenavigation";
 import Home from "./views/home/Home";
 import SurveyApp from "./views/survey/SurveyApp";
 import ReviewWrite from "./views/mypage/review/ReviewWrite";
-import FindId from "./views/login/FindId";
-import FindPassword from "./views/login/FindPassword";
+import FindId from "./views/auth/login/find-id/FindId";
+import FindPassword from "./views/auth/login/FindPassword";
 import Review from "./views/product/productpage/review/Review";
 import QNA from "./views/product/productpage/qna/QNA";
 import All from "./views/product/all/All";
 import AllReview from "./views/allreview/AllReview";
-import LoginNav from "./views/login/LoginNav";
 import SurveryListAllerge from "./views/survey/SurveryListAllerge";
 import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
 import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
@@ -29,16 +28,44 @@ import CartAPP from "./views/cart/CartAPP";
 import MyPageMain from "./views/mypage/MyPageMain";
 import Product from "./views/product/Product";
 import ProductDetail from "./views/product/productpage/product/ProductDetail";
+import { useCookies } from "react-cookie";
+import userAuthStore from "./stores/user.store";
+import { jwtDecode } from "jwt-decode";
+import SignUp from "./views/auth/signUp/SignUp";
+import Login from "./views/auth/login/Login";
 
 function App() {
+  interface TokenUser {
+    username: string;
+  }
+
+  const [cookies] = useCookies(["token"]);
+  const { login, logout } = userAuthStore();
+
+  useEffect(() => {
+    if (cookies.token) {
+      try {
+        const decodedToken: TokenUser = jwtDecode<TokenUser>(cookies.token);  
+        login(decodedToken.username);
+      }catch (e) {
+        console.error("Invalid Token", e);
+        logout();
+      }
+    } else {
+      logout();
+    }
+  }, [cookies.token, login, logout]);
+
   return (
     <>
       <Sidenavigation />
       <Header />
       <Navigation />
       <Routes>
-        <Route path="" element={<Home />} />
-        <Route path="/all" element={<All />} />
+      <Route path='/' element={<Home />} /> 
+      <Route path='/login/*' element={<Login/>}/>
+      <Route path='/signUp/*' element={<SignUp/>}/>
+      <Route path='/all' element={<All />}/>
         <Route path="/survey" element={<SurveyApp />} />
         <Route path="/survey/allerge" element={<SurveryListAllerge />} />
         <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
@@ -50,7 +77,7 @@ function App() {
 
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPageMain />} />
-        <Route path="/login" element={<LoginNav />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/login/FindId" element={<FindId />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
         <Route path="/productdetail" element={<Review />} />

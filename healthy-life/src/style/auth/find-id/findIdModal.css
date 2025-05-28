@@ -1,0 +1,48 @@
+/* 모달 콘텐츠 */
+.modalContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 420px;
+  border: none;
+}
+
+/* 모달 내용 */
+.findUserIdModal {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.closeModalBtn {
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  background-color: #FF7B54;
+  &:hover {
+    background-color: #e5673b;
+  }
+}
+
+/* 오버레이 스타일 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}

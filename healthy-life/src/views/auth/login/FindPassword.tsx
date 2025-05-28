@@ -1,6 +1,6 @@
 import { Box, Button, InputAdornment, TextField } from '@mui/material';
 import React, { useState } from 'react'
-import "../../style/login/login.css"
+import "../../../style/auth/login/login.css"
 import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 

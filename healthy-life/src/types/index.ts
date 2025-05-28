@@ -1,3 +1,242 @@
+// Users Interface
+export interface User {
+  userId: number;
+  username: string;
+  userNickName: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  userEmail: string;
+  userPhone: string;
+  userBirth: Date;
+  userGender: UserGender;
+  userMemberGrade: UserMemberGrade
+  snsId: string | null;
+  joinPath: string;
+}
+
+export type UserGender = 'M' | 'F';
+export type UserMemberGrade = '병아리' | '오골계' | '닭' | '독수리';
+
+// Products Interface
+export interface Product {
+  pId: number;
+  pName: string;
+  pPrice: number;
+  pDescription: string;
+  pIngredients: string;
+  pNutritionInfo: string;
+  pOrigin: string;
+  pUsage: string;
+  pExpirationDate: Date;
+  pManufacturer: string;
+  pImageUrl: string;
+  pStockStatus: number;
+}
+
+// Product Category Interface
+export interface ProductCategory {
+  categoryId: number;
+  categoryName: string;
+}
+
+// Product Category Details Interface
+export interface ProductCategoryDetail {
+  categoryDetailId: number;
+  categoryId: number;
+  pId: number;
+  categoryDetailName: string;
+}
+
+export type CategoryType = 
+  | "닭가슴살_육류"
+  | "도시락"
+  | "간식"
+  | "음료"
+  | "샐러드"
+  | "비건"
+  | "저당"
+  | "해산물"
+  | "견과류";
+
+export type categoryDetails =
+  | "닭가슴살"
+  | "달걀"
+  | "소고기"
+  | "볶음밥"
+  | "주먹밥"
+  | "즉석밥"
+  | "에너지바"
+  | "과자"
+  | "베이커리"
+  | "물"
+  | "탄산수"
+  | "프로틴음료"
+  | "커피"
+  | "차"
+  | "제로음료"
+  | "닭가슴살샐러드"
+  | "연어샐러드"
+  | "큐브스테이크샐러드"
+  | "간식"
+  | "간편식"
+  | "식재료"
+  | "저당간식"
+  | "저당음료"
+  | "저당드레싱"
+  | "생선선"
+  | "해조류"
+  | "어패류"
+  | "견과류";
+
+  export type physiqueTags = 
+  | "비건"
+  | "육류"
+  | "해산물"
+  | "견과류"
+  | "어패류"
+  | "저당"
+  | "근육"
+  | "체중감소"
+  | "유제품품"
+  | "체중증가";
+
+// Cart Interface
+export interface Cart {
+  cartId: number;
+  userId: number;
+}
+
+// Cart Item Interface
+export interface CartItem {
+  cartItemId: number;
+  cartId: number;
+  productId: number;
+  productQuantity: number;
+  productPrice: number;
+}
+
+// Wish List Interface
+export interface WishList {
+  wishListId: number;
+  userId: number;
+}
+
+// Wish List Item Interface
+export interface WishListItem {
+  wishListItemId: number;
+  wishListId: number;
+  productId: number;
+  wishListAddedAt: Date;
+}
+
+// Order Interface
+export type OrderStatus =
+  | 'PENDING'
+  | 'CONFIRMED'
+  | 'PREPARING'
+  | 'SHIPPED'
+  | 'DELIVERED'
+  | 'CANCELLED'
+  | 'REFUNDED'
+  | 'RETURN'
+  | 'EXCHANGE';
+
+export interface Order {
+  orderId: number;
+  userId: number;
+  cartId?: number;
+  orderDate: Date;
+  orderStatus: OrderStatus;
+  orderTotalAmount: number;
+  orderShippingCost: number;
+  orderShippingRequest: string;
+}
+
+// Order Detail Interface
+export interface OrderDetail {
+  orderDetailId: number;
+  orderId: number;
+  productId: number;
+  quantity: number;
+  price: number;
+  totalPrice: number;
+}
+
+// Shipping Interface
+export type ShippingStatus = 'PENDING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+
+export interface Shipping {
+  shippingId: number;
+  orderId: number;
+  shippingTrackingNum: number;
+  shippingShippedAt: Date;
+  shippingDeliveredAt: Date;
+  shippingStatus: ShippingStatus;
+}
+
+// Payment Interface
+export type PaymentMethod = 'CREDIT_CARD' | 'POINT';
+export type PaymentStatus = 'COMPLETED' | 'FAILED' | 'REFUNDED';
+
+export interface Payment {
+  paymentId: number;
+  orderId: number;
+  userId: number;
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
+  paymentDate: Date;
+}
+
+// Review Interface
+export interface Review {
+  reviewId: number;
+  userId: number;
+  orderDetailId: number;
+  reviewRating: number;
+  reviewContent: string;
+  reviewCreatedAt: Date;
+  reviewImageUrl?: string;
+}
+
+// QnA Interface
+export interface QnA {
+  qnaId: number;
+  userId: number;
+  qnaTitle: string;
+  qnaContent: string;
+}
+
+// Physique Tag Interface
+export interface PhysiqueTag {
+  physiqueTagId: number;
+  productId?: number;
+  physiqueTagName: string;
+}
+
+// User Physique Tag Interface
+export interface UserPhysiqueTag {
+  physiqueTagId: number;
+  userId: number;
+}
+
+// Delivery Address Interface
+export interface DeliveryAddress {
+  addressDeliverId: number;
+  userId: number;
+  address: string;
+  addressDetail: string;
+  postNum: number;
+}
+
+export interface LoginInResponseDto {
+  token: string;
+  user: User;
+  exprTime: number;
+}
+
+
+//----------------------------------------------------------------
 export type InFormData = {
   userId: number; // 고유넘버
   username: string; // 사용자 아이디
@@ -19,18 +258,6 @@ export type InFormData = {
 export type memberGrade =  "병아리" | "닭" | "오골계" | "독수리"
 
 export type userGender = "Male" | "Female";
-
-// 상품 상세 페이지 관련 타입
-export type CategoryType = 
-  | "닭가슴살_육류"
-  | "도시락"
-  | "간식"
-  | "음료"
-  | "샐러드"
-  | "비건"
-  | "저당"
-  | "해산물"
-  | "견과류";
 
 // 상품 유형 타입 정의
 export type ProductType =
@@ -129,7 +356,7 @@ export interface Order {
   username: string;
   orderDate: Date; //주문날짜
   totalAmount: number; // 총 주문 금액
-  orderStatus: ['Completed', 'Candelled']; // 주문상태 주문완료, 주문취소
+  orderStatus: OrderStatus; // 주문상태 주문완료, 주문취소
 } 
 
 export interface OrderPayMent {

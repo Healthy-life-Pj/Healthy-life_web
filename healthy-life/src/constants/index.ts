@@ -3,6 +3,7 @@ export const MAIN_APT_PATH = "http://localhost:4040/api/v1";
 // Resource
 export const USER_PATH = "/users";
 export const AUTH_PATH = "/auth";
+export const MAIL_PATH = "/mail";
 export const PRODUCT_PATH = "/products";
 export const SHIPPING_PATH = "/shipping";
 export const ORDER_PATH = "/orders";
@@ -27,7 +28,7 @@ export const LOGIN = "/login";
 export const SIGN_UP = "/sign-up";
 export const SNS_LOGIN = "/sns-login";
 export const SNS_SIGN_UP = "/sns-sign-up";
-export const FIND_ID_BY_TOKEN = "/find-id/";
+export const FIND_ID_BY_TOKEN = "/find-id";
 export const RECOVERY_EMAIL = "/recovery-email";
 export const DUPLICATE_NICKNAME = "/duplicate/userNickName/";
 export const DUPLICATE_USERNAME = "/duplicate/username/";
