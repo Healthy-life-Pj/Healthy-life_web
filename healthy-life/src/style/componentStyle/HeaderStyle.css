@@ -1,32 +1,36 @@
-.header{
-  margin-bottom: 2%;
-  padding-right: 0;
-  height: 110px;
-  padding-top: 1%;
-  /* #C6DFAA */
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
 
-.headerFlexBox{
+.header {
+  font-family: 'Pretendard-Regular';
+  margin-bottom: 2%;
+  padding-right: 0;
+  padding-top: 1%;
+}
+
+.headerFlexBox {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 900px;
-  margin: 0 auto ;
+  width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 10px;
   padding-right: 0;
 }
 
-
-
-.buttonFlexBox1{
+.buttonFlexBox1 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
   height: 125px;
-  
-}
 
+}
 
 .button1 {
   width: 350px;
@@ -37,45 +41,134 @@
   margin-right: 2%;
 }
 
-
-
-
-.button2 {
-  width: 200px;
+.button3 {
+  width: 150px;
+  color: gray;
+  margin-right: 0;
   display: flex;
-  text-align: center;
   justify-content: space-between;
   margin-right: 2%;
 }
 
-
-.button2Link{
-  margin-top: 1%;
+.buttonFlexBox1Span {
+  font-weight: bold;
 }
 
+.usernameSpan {
+  color: black;
+  font-weight: bold;
+}
 
-.button2 input {
-  border: 1px solid black;
-  height: 18px;
-  border-radius: 20px;
-  padding: 4px;
+.headerSearchContainer {
+  display: flex;
+  width: 1000px;
+  justify-content: flex-end;
+  margin: 0px auto;
+}
+
+.button2 {
+  width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 100px;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.searchBarBoxDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button2Link {
+  height: 24px;
+}
+
+.button2 .headerSearchBar {
+  width: 200px;
   padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.searchBarInput {
+  font-size: 13px;
+  outline: none;
+  border: none;
+  height: 30px;
+  padding: 10px;
+  border-radius: 10px;
   border: 2px solid #67C6E3;
+  box-sizing: border-box;
+  transition: border-radius 0.3s ease;
+}
+
+.headerSearchList {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+  border: 2px solid #67C6E3;
+  border-top: none;
+  border-radius: 0px 0px 10px 10px;
+  position: absolute;
+  top: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  z-index: 30;
+}
+
+.headerSearchLi {
+  text-align: left;
+  cursor: pointer;
+}
+
+.searchListBtn {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
   font-size: 10px;
 }
 
-
-
-.realLogo{
-  margin-top: 20px;
-  width: 200px;
-  
-  
+.headerSearchList.show {
+  width: 190px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
 }
 
+.headerSearchList.empty {
+  display: none;
+}
+
+.searchBarInput.active {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.realLogo {
+  margin-top: 20px;
+  width: 200px;
 
 
-.logo :hover{
+}
+
+.logo :hover {
   color: black;
 }
 
+
+@media (max-width: 900px) {
+  .headerFlexBox,
+  .headerSearchContainer {
+    width: 90%;
+  }
+}

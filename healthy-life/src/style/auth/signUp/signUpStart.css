@@ -1,0 +1,54 @@
+.signUpStartContainer {
+  margin: 60px auto;
+  width: 500px;
+}
+
+.signUpList {
+  list-style: none;
+  font-size: 17px;
+}
+
+.singUpLink {
+  display: flex;
+  justify-content: center;
+  font-family: 'Pretendard-Regular';
+  font-weight: 600;
+  margin: 10px auto;
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.signUpHealthy {
+  background-color: #67C6E3;
+}
+
+.signUpHealthy:hover {
+  background-color: #57a8c1;
+  color: white;
+}
+
+.signUpKakao {
+  background-color: #FEE500;
+  
+}
+.signUpKakao:hover {
+  background-color: #dfc900;
+  color: white;
+}
+
+.signUpNaver {
+  background-color: #2FB14A;
+}
+
+.signUpNaver:hover {
+  background-color: #28993f;
+  color: white;
+}
+
+.realLogoSignUp {
+  height: 20px;
+  margin-right: 10px;
+}
