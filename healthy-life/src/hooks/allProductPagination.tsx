@@ -5,17 +5,19 @@ import { ProductDetailResponseDto, ProductListResponseDto } from "../types/dto";
 interface PaginationScrollProps<T> {
   apiUrl: string;
   limit: number;
+  chooseSort: string;
 }
 
 function useAllproductpaginationHook<T>({
   apiUrl,
   limit,
+  chooseSort,
 }: PaginationScrollProps<T>) {
   const [data, setData] = useState<ProductDetailResponseDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [sortBy, setSortBy] = useState<string>("default");
+  const [sortBy, setSortBy] = useState<string>(chooseSort || "default");
 
   const fetchData = async (page: number) => {
     if (loading) return;
