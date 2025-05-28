@@ -1,0 +1,8 @@
+.searchListBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 10px;
+}

@@ -1,22 +1,27 @@
 import React from 'react'
-import { Link} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 
 import  '../../style/componentStyle/SubNav.css'
   
 export default function SubNav() {
+  const navigate = useNavigate();
+
+  const pCategoryNameNavigate = (pCategoryName:string) => {
+    navigate(`/products/${pCategoryName}`);
+  }
   return (
     <div> 
       <div className='subNavContainer'>
         <ul>
-          <li><Link to='/chicken'>닭가슴살/육류</Link></li>
-          <li><Link to='/lunchbox'>도시락</Link></li>
-          <li><Link to='/snack'>간식</Link></li>
-          <li><Link to='/drink'>음료</Link></li>
-          <li><Link to='/salad'>샐러드</Link></li>
-          <li><Link to='/vegan'>비건</Link></li>
-          <li><Link to='/lowersugar'>저당</Link></li>
-          <li><Link to='/sea'>해산물</Link></li>
-          <li><Link to='/nuts'>견과류</Link></li>
+        <li onClick={() => pCategoryNameNavigate("닭가슴살_육류")}>닭가슴살/육류</li>
+          <li onClick={() => pCategoryNameNavigate("도시락")}>도시락</li>
+          <li onClick={() => pCategoryNameNavigate("간식")}>간식</li>
+          <li onClick={() => pCategoryNameNavigate("음료")}>음료</li>
+          <li onClick={() => pCategoryNameNavigate("샐러드")}>샐러드</li>
+          <li onClick={() => pCategoryNameNavigate("비건")}>비건</li>
+          <li onClick={() => pCategoryNameNavigate("저당")}>저당</li>
+          <li onClick={() => pCategoryNameNavigate("해산물")}>해산물</li>
+          <li onClick={() => pCategoryNameNavigate("견과류")}>견과류</li>
         </ul>
       </div>  
     </div>
