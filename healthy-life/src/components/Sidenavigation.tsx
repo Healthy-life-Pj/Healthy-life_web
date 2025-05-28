@@ -35,7 +35,6 @@ const Sidenavigator:React.FC = () => {
       
       {activeSide === 'side' && 
       <ul className='sideNav'>
-        <li><Link to={'/mypage/current'}><AccessTimeTwoToneIcon/></Link></li>
         <li><Link to={'/cart'}><ShoppingBagTwoToneIcon/></Link></li>
         <li><Link to={'/mypage/wishlist'}><FavoriteTwoToneIcon/></Link></li>
         <li onClick={MoveToTop}><KeyboardArrowUpTwoToneIcon/></li>

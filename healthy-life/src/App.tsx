@@ -33,6 +33,7 @@ import userAuthStore from "./stores/user.store";
 import { jwtDecode } from "jwt-decode";
 import SignUp from "./views/auth/signUp/SignUp";
 import Login from "./views/auth/login/Login";
+import HeaderSearchBar from "./components/HeaderSerch";
 
 function App() {
   interface TokenUser {
@@ -60,6 +61,7 @@ function App() {
     <>
       <Sidenavigation />
       <Header />
+      <HeaderSearchBar />
       <Navigation />
       <Routes>
       <Route path='/' element={<Home />} /> 
