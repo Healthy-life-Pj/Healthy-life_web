@@ -237,7 +237,7 @@
   margin-top: 30px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .categoryButtonList {
     display: flex;
     flex-wrap: wrap;
