@@ -127,17 +127,12 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
               />
             </li>
           </ul>
-          <CartModal
-            cartItem={cartItemData}
-            isOpen={modalIsOpen}
-            onClose={closeModal}
-          />
           <div className="productHoverBtnAllDiv">
             {activeProduct === index && (
               <div
-                className="cartWishHoverBtn"
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLeave}
+              className="cartWishHoverBtn"
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
               >
                 <button
                   className="productHoverBtn"
@@ -151,6 +146,11 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
           </div>
         </div>
       ))}
+      <CartModal
+        cartItem={cartItemData}
+        isOpen={modalIsOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };
