@@ -236,7 +236,7 @@ export interface LoginInResponseDto {
 }
 
 
-//----------------------------------------------------------------
+//----------잠시만 지우지 말기--------------------------------
 export type InFormData = {
   userId: number; // 고유넘버
   username: string; // 사용자 아이디

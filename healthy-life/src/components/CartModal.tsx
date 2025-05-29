@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { CART_PATH, MAIN_APT_PATH, MY_CART } from "../constants";
+import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { CartItemDto, ProductDetailResponseDto } from "../types/dto";
-import "../style/modal/cartModal.css"
+import { CartItemDto } from "../types/dto";
 import SmallPagination from "./SmallPagination";
+import "../style/modal/cartModal.css"
 
 interface CartModalProps {
-  product: ProductDetailResponseDto | null;
+  cartItem: CartItemDto[] | [];
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CartModal: React.FC<CartModalProps> = ({ product, isOpen, onClose }) => {
+const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
   const { pId } = useParams();
-  const [datas, setDatas] = useState<CartItemDto[]>([]);
   const [cookies] = useCookies(["token"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [cartPerPage] = useState<number>(4);
@@ -24,37 +21,13 @@ const CartModal: React.FC<CartModalProps> = ({ product, isOpen, onClose }) => {
   const indexOfLastPost = currentPage * cartPerPage;
   const indexOfFirstPost = indexOfLastPost - cartPerPage;
   
-  const currentPosts = Array.isArray(datas)
-    ? datas.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = Array.isArray(cartItem)
+    ? cartItem.slice(indexOfFirstPost, indexOfLastPost)
     : [];
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  useEffect(() => {
-    if (isOpen && datas.length === 0) {
-      getFetchData();
-    }
-  }, [isOpen]);
-
-  const getFetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-          withCredentials: true,
-        }
-      );
-      setDatas(response.data.data.cartItem || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const closeModal = () => {
-    setDatas([]);
     onClose();
   };
 
@@ -96,7 +69,7 @@ const CartModal: React.FC<CartModalProps> = ({ product, isOpen, onClose }) => {
           <div className="smallPaginationCartModal">
         <SmallPagination
           productPerPage={cartPerPage}
-          totalProducts={datas.length}
+          totalProducts={cartItem.length}
           paginate={paginate}
           currentPage={currentPage}
         />

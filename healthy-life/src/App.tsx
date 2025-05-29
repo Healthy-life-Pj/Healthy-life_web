@@ -20,7 +20,7 @@ import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
 import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
 import NonMember from "./views/nonMemberOrder/NonMember";
 import Payment from "./views/payment/Payment";
-import BestItem from "./views/best/bestItem";
+import BestItem from "./views/best/BestItem";
 import RecommandApp from "./views/recommand/RecommandApp";
 import Bmi from "./views/bmi/Bmi";
 import JoinApp from "./views/join/JoinApp";

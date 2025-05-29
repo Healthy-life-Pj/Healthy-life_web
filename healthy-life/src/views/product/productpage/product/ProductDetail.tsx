@@ -6,13 +6,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { AUTH_PATH, CART_PATH, CART_PRODUCT, MAIN_APT_PATH, PRODUCT_PATH } from "../../../../constants";
+import { AUTH_PATH, CART_PATH, CART_PRODUCT, MAIN_APT_PATH, MY_CART, PRODUCT_PATH } from "../../../../constants";
 import { useCookies } from "react-cookie";
-import { ProductDetailResponseDto } from "../../../../types/dto";
+import { CartItemDto, ProductDetailResponseDto } from "../../../../types/dto";
 import CartModal from "../../../../components/CartModal";
 
 const ProductDetail = () => {
   const { pId } = useParams();
+    const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const [cookies] = useCookies(["token"]);
   const [product, setProduct] = useState<ProductDetailResponseDto | null>(null);
@@ -22,7 +23,7 @@ const ProductDetail = () => {
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
-
+  
   const fetchData = async (id:string) => {
     try {
       const response = await axios.get(
@@ -53,6 +54,17 @@ const ProductDetail = () => {
         },
         withCredentials: true,
       });
+
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setCartItemData(response.data.data.cartItem || []);
       openModal();
     } catch (error) {
       console.error(error);
@@ -165,7 +177,7 @@ const ProductDetail = () => {
         </div>
       </div>
       <ProductTap data={product} />
-      <CartModal product={product} isOpen={modalIsOpen} onClose={closeModal}/>
+      <CartModal cartItem={cartItemData} isOpen={modalIsOpen} onClose={closeModal}/>
     </div>
   );
 };
