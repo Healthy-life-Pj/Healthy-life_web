@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductDetailResponseDto } from "../types/dto";
+import { CartItemDto, ProductDetailResponseDto } from "../types/dto";
 import { Rating } from "@mui/material";
-import "../style/home/allProduct.css"
+import "../style/home/allProduct.css";
 import { useCookies } from "react-cookie";
 import CartModal from "./CartModal";
+import axios from "axios";
+import { CART_PATH, CART_PRODUCT, MAIN_APT_PATH, MY_CART } from "../constants";
 
 interface PaginationScrollProps {
   products: ProductDetailResponseDto[];
@@ -12,11 +14,16 @@ interface PaginationScrollProps {
 
 const PaginationScroller = ({ products }: PaginationScrollProps) => {
   const navigator = useNavigate();
+  const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
   const [cookies] = useCookies(["token"]);
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalProduct, setModalProduct] =
+    useState<ProductDetailResponseDto | null>(null);
 
-  const handleClickProductDetail = (product: ProductDetailResponseDto | null) => {
+  const handleClickProductDetail = (
+    product: ProductDetailResponseDto | null
+  ) => {
     navigator(`/product/productDetail/${product?.pId}`);
   };
 
@@ -27,14 +34,42 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
     setActiveProduct(null);
   };
 
-  const openModal = () =>{
+  const openModal = async (pId: number) => {
     setModalIsOpen(true);
     if (!cookies.token) {
       navigator("/login");
       alert("로그인이 필요합니다.");
     }
-  } 
-    
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`,
+        {
+          productQuantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setCartItemData(response.data.data.cartItem || []);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const closeModal = () => setModalIsOpen(false);
 
   const cutText = (text: string, maxLength: number) => {
@@ -46,11 +81,11 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
 
   const unitPrice = (pPrice: number) => {
     return pPrice.toLocaleString();
-  }
+  };
 
   useEffect(() => {
     setActiveProduct(null);
-    setModalIsOpen(false); 
+    setModalIsOpen(false);
   }, [products]);
 
   return (
@@ -61,51 +96,61 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
           key={product.pId ? product.pId : `product-${index}`}
           className="productDiv"
         >
-            <div
-              className="productImg"
+          <div
+            className="productImg"
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => handleClickProductDetail(product)}
+          >
+            <img
+              src={product.pImgUrl}
+              alt={product.pName}
+              className="allProductImage"
+              onClick={() => handleClickProductDetail(product)}
+            />
+          </div>
+          <div className="productLine"></div>
+          <ul
+            className="productContent"
+            onClick={() => handleClickProductDetail(product)}
+          >
+            <li>
+              <h4>{cutText(product.pName, 11)}</h4>
+              <p>{unitPrice(product.pPrice)}원</p>
+            </li>
+            <li>
+              <Rating
+                name="half-rating-read"
+                defaultValue={product?.averageRating}
+                precision={0.5}
+                readOnly
+              />
+            </li>
+          </ul>
+          <div className="productHoverBtnAllDiv">
+            {activeProduct === index && (
+              <div
+              className="cartWishHoverBtn"
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => handleClickProductDetail(product)}
-            >
-              <img
-                src={product.pImgUrl}
-                alt={product.pName}
-                className="allProductImage"
-                onClick={() => handleClickProductDetail(product)}
-              />
-            </div>
-            <div className="productLine"></div>
-              <ul className="productContent"
-              onClick={() => handleClickProductDetail(product)}
               >
-                <li>
-                  <h4>{cutText(product.pName, 11)}</h4>
-                  <p>{unitPrice(product.pPrice)}원</p>
-                </li>
-                <li>
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={product?.averageRating}
-                    precision={0.5}
-                    readOnly
-                  />
-                </li>
-              </ul>
-              <CartModal product={product} isOpen={modalIsOpen} onClose={closeModal}/>
-          <div
-          className="productHoverBtnAllDiv"
-          >
-            {activeProduct === index && (
-              <div className="cartWishHoverBtn"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}>
-                <button className="productHoverBtn" onClick={openModal}>CART</button>
-                <button className="productHoverBtn" >WISH</button>
+                <button
+                  className="productHoverBtn"
+                  onClick={() => openModal(product.pId)}
+                >
+                  CART
+                </button>
+                <button className="productHoverBtn">WISH</button>
               </div>
             )}
           </div>
         </div>
       ))}
+      <CartModal
+        cartItem={cartItemData}
+        isOpen={modalIsOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };

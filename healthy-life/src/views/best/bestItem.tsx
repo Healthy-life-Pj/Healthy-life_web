@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../style/home/allProduct.css";
 import useAllproductpaginationHook from "../../hooks/allProductPagination";
 import {
