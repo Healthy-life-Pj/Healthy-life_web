@@ -9,7 +9,7 @@ import {
 } from "../../constants";
 import PaginationScroller from "../../components/PaginationScroller";
 
-const BestItem: React.FC = () => {
+const BestItem = () => {
   const [sortBy] = useState<string>("rating");
   const { data, loading } = useAllproductpaginationHook({
     apiUrl: `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`,
