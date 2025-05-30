@@ -18,8 +18,6 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
   const [cookies] = useCookies(["token"]);
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalProduct, setModalProduct] =
-    useState<ProductDetailResponseDto | null>(null);
 
   const handleClickProductDetail = (
     product: ProductDetailResponseDto | null
@@ -115,16 +113,17 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             onClick={() => handleClickProductDetail(product)}
           >
             <li>
-              <h4>{cutText(product.pName, 11)}</h4>
-              <p>{unitPrice(product.pPrice)}원</p>
-            </li>
-            <li>
               <Rating
                 name="half-rating-read"
                 defaultValue={product?.averageRating}
                 precision={0.5}
                 readOnly
+                style={{ fontSize: "13px" }}
               />
+            </li>
+            <li>
+              <h4>{cutText(product.pName, 11)}</h4>
+              <p>{unitPrice(product.pPrice)}원</p>
             </li>
           </ul>
           <div className="productHoverBtnAllDiv">

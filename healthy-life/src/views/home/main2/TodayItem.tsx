@@ -1,125 +1,198 @@
-import React, { useState } from 'react'
-import '../../../style/home/main2.css'
-import { Link } from 'react-router-dom';
-import ReactModal from 'react-modal';
-import '../../../style/home/productList.css'
-interface todayItemSliderProps{
-  images: string[]
-}
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import {
+  ALL_PRODUCTS,
+  AUTH_PATH,
+  CART_PATH,
+  CART_PRODUCT,
+  MAIN_APT_PATH,
+  MY_CART,
+  PRODUCT_PATH,
+} from "../../../constants";
+import { CartItemDto, ProductDetailResponseDto } from "../../../types/dto";
+import "../../../style/home/main1.css";
+import { Rating } from "@mui/material";
+import { Shuffle } from "@mui/icons-material";
+import CartModal from "../../../components/CartModal";
+import { useCookies } from "react-cookie";
 
-const TodayItem: React.FC<todayItemSliderProps> =({images}) => {
+const NewItemSlider = () => {
+  const navigate = useNavigate();
+  const [cookies] = useCookies(["token"]);
+  const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
+  const [datas, setDatas] = useState<ProductDetailResponseDto[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [activeProduct, setActiveProduct] = useState<number | null>(null);
+  const [modalOpen, setModalIsOpen] = useState<boolean>(false);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`
+      );
+      const data = response.data.data;
+      const shuffled = data.sort(() => Math.random() - 0.5);
+      setDatas(shuffled.slice(0, 9));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleMouseEnter = (index: number) => {
     setActiveProduct(index);
   };
-
-  const hanldeMouseLeave = () => {
-  setActiveProduct(null);
-  };
-
-
-  const openModal = () => {
-  setModalOpen(true);
-  };
-
-  const closeModal = () => {
-  setModalOpen(false);
+  const handleMouseLeave = () => {
+    setActiveProduct(null);
   };
 
   const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length -1 : prevIndex -1 ));
-  }
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? datas.length - 1 : prevIndex - 1
+    );
+  };
 
   const handleNextClick = () => {
-    setCurrentIndex((prevIndex)=> (prevIndex === images.length -1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === datas.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const openModal = async (pId: number) => {
+    setModalIsOpen(true);
+    if (!cookies.token) {
+      navigate("/login");
+      alert("로그인이 필요합니다.");
+    }
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`,
+        {
+          productQuantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setCartItemData(response.data.data.cartItem || []);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const visibleProduct = datas.slice(currentIndex, currentIndex + 3);
+  if (visibleProduct.length < 3) {
+    visibleProduct.push(...datas.slice(0, 3 - visibleProduct.length));
   }
 
+  const cutText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
 
-  const visibleImages = images.slice(currentIndex, currentIndex + 3);
-  if(visibleImages.length < 3){
-    visibleImages.push(...images.slice(0, 3 -visibleImages.length));
-  }
+  const handleClickProductDetail = (
+    product: ProductDetailResponseDto | null
+  ) => {
+    navigate(`/product/productDetail/${product?.pId}`);
+  };
+
   return (
-    <div className='todayItemSlider'>
-      <div className='todayItemImagesContainer'>
-        {visibleImages.map((image, index) => (
-          <div key={index} className='todayItemImage'>
-            <Link to={"productdetail"}>
-            <img 
-            src={image}
-            alt={`slide ${index}`}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={() => hanldeMouseLeave}
-            />
-            <h4>product</h4>
-            <p>price: 30000원</p>
-            </Link>
-            <div
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={() => hanldeMouseLeave}
-            >
-              {activeProduct === index && (
-                <div
-                className='allProductHoverBtn1'
-                >
-                <button onClick={openModal}>cart</button>
-                <button>Wish</button>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-        <div className='todayItemButtonContainer'>
-        <button className='mainPrevButton' onClick={handlePrevClick}>&#10094;</button>
-        <button className='mainNextButton' onClick={handleNextClick}>&#10095;</button>
-        </div>
-      <ReactModal
-      isOpen={modalOpen}
-      onRequestClose={closeModal}
-      className="modalContainerCart1"
-      overlayClassName="modalOverlay1"
-      >
-      <div className="modal1">
-        <h2>장바구니</h2>
-          <div className="modalImages1">
-        <div className="modalContainerCart1">
-          <div className='modalFlexBox'>
-          <button className="prevButton1" onClick={handlePrevClick}>
+    <div className="sliderContainer">
+      <div className="h3Container">
+        <h3>오늘의 추천템</h3>
+        <div className="slider">
+          <button className="prev" onClick={handlePrevClick}>
             &#10094;
           </button>
-            {visibleImages.map((image, index) => (
-              <div key={index} className="relatedModalImage1">
-                <img src={image} alt={`Slide ${index}`} />
-                <p>product {index}</p>
+          <div className="sliderImagesContainer">
+            {visibleProduct.map((product, index) => (
+              <div
+                key={product.pId}
+                className="sliderDiv"
+                onClick={() => handleClickProductDetail(product)}
+              >
+                <div
+                  className="productSliderImg"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <img
+                    src={product.pImgUrl}
+                    alt={product.pName}
+                    className="allProductImage"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                  />
+                </div>
+                <div className="productLine"></div>
+                <ul className="productContent">
+                  <li>
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={product?.averageRating}
+                      precision={0.5}
+                      readOnly
+                      style={{ fontSize: "13px" }}
+                    />
+                  </li>
+                  <li className="productContentLi">
+                    <h4>{cutText(product.pName, 11)}</h4>
+                    <p>{product.pPrice.toLocaleString()}원</p>
+                  </li>
+                </ul>
+                {activeProduct === index && (
+                  <div
+                    className="sliderCartWishHoverBtn"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      className="sliderProductHoverBtn"
+                      onClick={() => openModal(product.pId)}
+                    >
+                      CART
+                    </button>
+                    <button className="sliderProductHoverBtn">WISH</button>
+                  </div>
+                )}
               </div>
             ))}
-            <button className="nextButton1" onClick={handleNextClick}>
-              &#10095;
-            </button>
+            <CartModal
+              cartItem={cartItemData}
+              isOpen={modalOpen}
+              onClose={closeModal}
+            />
           </div>
-          
-            
-          <div className="modalButtonContainer1">
-            <Link to={"/payment"}>
-              {" "}
-              <button>바로주문</button>
-            </Link>
-            <Link to={"/cart"}>
-              <button>장바구니 이동</button>
-            </Link>
-            <button onClick={closeModal}>쇼핑계속하기</button>
-          </div>
-          </div>
-
+          <button className="next" onClick={handleNextClick}>
+            &#10095;
+          </button>
         </div>
       </div>
-      </ReactModal>
     </div>
-  )
-}
+  );
+};
 
-export default TodayItem
+export default NewItemSlider;

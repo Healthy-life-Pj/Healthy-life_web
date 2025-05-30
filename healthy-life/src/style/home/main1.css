@@ -6,30 +6,35 @@
 }
 
 .slider {
-  width: 1000px;
   margin: 0 auto;
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1000px;
 }
 
 .sliderImagesContainer {
-  height: 220px;
   display: flex;
-  text-align: center;
+  width: 80% !important;
+  justify-content: space-between; 
+  align-items: center;
+  width: fit-content;
 }
 
-.sliderImage .newItemImages {
-  width: 70%;
-  border-radius: 8px;
+.sliderDiv {
   position: relative;
-  z-index: 1;
-}
-
-.sliderImage {
   display: flex;
   flex-direction: column;
+  font-size: 11px;
+  justify-content: space-between;
+  width: 250px;
+  margin: 20px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
   align-items: center;
 }
-
 
 .newItemSliderHoverBtn{
   display: flex;
@@ -41,7 +46,7 @@
   z-index: 1;
 }
 
-.newItemSliderHoverBtn > button {
+.newItemSliderHoverBtn .allProductSelectBtn  {
   padding: 5px;
   border: none;
   color: #1478FF;
@@ -52,11 +57,19 @@
   font-weight: 600;
 }
 
-.newItemSliderHoverBtn > button:hover {
+.newItemSliderHoverBtn > .allProductSelectBtn:hover {
   background-color: #67C6E3;
   color: #fff;
 }
 
+.productSliderImg{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
 
 .prev, .next {
     display: flex;
@@ -76,6 +89,7 @@
 .sliderContainer{
   margin: 0 auto;
   margin-top: 60px;
+  text-align: center
 }
 .sliderContainer h3 {
   font-family: 'goorm-sans-bold';
@@ -92,10 +106,127 @@
   height: 30px;
   position: relative;
   top: -150px;
+  margin: 0px auto;
+}
+
+.sliderCartWishHoverBtn {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 70px;
+  position: absolute;
+  top: 17%;
+  right: 8%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.todaySliderCartWishHoverBtn {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 70px;
+  position: absolute;
+  top: 30%;
+  right: 8%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.sliderProductHoverBtn {
+  width: 44px;
+  height: 32px;
+  padding: 5px;
+  border: none;
+  color: #1478FF;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  font-family: 'Pretendard-Regular';
+  font-weight: 600;
+  text-align: center;
+}
+
+.sliderProductHoverBtn:hover {
+  background-color: #67C6E3;
+  color: #fff;
 }
 
 .h3Container {
-  width: 900px;
+  width: 1000px;
   margin: 0 auto;
 }
 
+@media (max-width: 1000px) {
+  .slider {
+    align-items: center;
+    width: 90%;
+    height: 90%;
+    margin: 0px;
+  }
+
+  .productContentLi {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+  }
+
+  .productSliderImg {
+    height: 90px;
+  }
+
+  .sliderImagesContainer {
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .sliderDiv {
+    display: flex;
+    align-items: center;
+  }
+
+  .prev, .next {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .btnconatainer {
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    top: -20px;
+  }
+
+  .h3Container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .sliderProductHoverBtnAllDiv {
+    top: -150px;
+    right: -15px;
+  }
+
+  .sliderCartWishHoverBtn {
+    height: 45px;
+    top: 10%;
+    right: 8%;
+  }
+
+  .sliderProductHoverBtn {
+    width: 35px;
+    height: 20px;
+    font-size: 11px;
+    padding: 2px;
+  }
+
+}
+
+.cartWishHoverBtn {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  right: 30%;
+  z-index: 5;
+}

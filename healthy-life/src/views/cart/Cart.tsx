@@ -16,7 +16,7 @@ import {
 } from "../../constants";
 import { useCookies } from "react-cookie";
 
-const CartAPP = () => {
+const Cart = () => {
   const [datas, setDatas] = useState<CartItemDto[]>([]);
   const [stockMap, setStockMap] = useState<Record<number, number>>({});
   const [quantities, setQuantities] = useState<Record<number, number>>({});
@@ -296,4 +296,4 @@ const CartAPP = () => {
   );
 };
 
-export default CartAPP;
+export default Cart;

@@ -5,7 +5,7 @@ import "../../../../style/auth/login/login.css"
 import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FIND_ID_BY_TOKEN, MAIL_PATH, MAIN_APT_PATH } from '../../../../constants';
+import { FIND_ID, FIND_ID_BY_TOKEN, MAIL_PATH, MAIN_APT_PATH } from '../../../../constants';
 
 function FindId() {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ function FindId() {
     }
     setLoading(true);
     try {
-      const response = await axios.post(`${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID_BY_TOKEN}`, formData);
+      const response = await axios.post(`${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID}`, formData);
       const userData = response.data.data;
       if (userData) {
         setModalMessage("이메일 전송이 완료됐습니다.");
@@ -59,7 +59,7 @@ function FindId() {
         label="이름"
         id='userName'
         sx={{ m: 1, width: '25ch'}}
-        inputProps={{
+        InputProps={{
         startAdornment: <InputAdornment position='start'>이름</InputAdornment>
         }}
         value={formData.name}
@@ -70,8 +70,8 @@ function FindId() {
       label="email"
       id='userPhone'
       sx={{ m: 1, width: '25ch'}}
-      inputProps={{
-      startAdornment: <InputAdornment position='start'>이메일일</InputAdornment>
+      InputProps={{
+      startAdornment: <InputAdornment position='start'>이메일</InputAdornment>
       }}
       value={formData.userEmail}
       name='userEmail'

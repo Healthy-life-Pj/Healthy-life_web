@@ -46,25 +46,25 @@ function FindUserIdResult() {
   };
 
   return (
-    <div className="findUserIdContainer">
-      <h4 className='findUserIdTitle'>아이디 찾기</h4>
+    <div className="findUsernameContainer">
+      <h4 className='findUsernameTitle'>아이디 찾기</h4>
       <div className='findUserIdResultBox'>
         {loading ? (
           <p>로딩중....</p>
         ) : isData ? (
           <>
-            <ul className="findUserIdResultUl">
-              <li className="findUserIdResultLi">{result?.name} 님의 아이디는</li>
-              <li className="findUserIdResultLi">
-                <p>{result?.username} 입니다.</p>
+            <ul className="findUsernameResultUl">
+              <li className="findUsernameResultLi"><strong>{result?.name}</strong> 님의 아이디는</li>
+              <li className="findUsernameResultLi">
+                <p><strong>{result?.username}</strong> 입니다.</p>
               </li>
             </ul>
-            <div className='findUserIdResultline'></div>
+      <div className="finUsernameResultLine"></div>
             <button
-              className='findUserIdResultBtn'
-              onClick={() => navigate("/signIn")}
+              className='loginButton findUsernameloginButton'
+              onClick={() => navigate("/login")}
             >
-              로그인하기기
+              로그인하기
             </button>
           </>
         ) : (

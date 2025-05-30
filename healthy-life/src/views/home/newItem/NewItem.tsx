@@ -1,91 +1,205 @@
-import React from 'react'
-import NewItemSlider from './NewItemSlider'
-import '../../../style/home/main1.css'
-export interface ProductProps {
-  id: number;
-  title: string;
-  image: string;
-  price: string;
-  tag: string;
-}
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import {
+  ALL_PRODUCTS,
+  AUTH_PATH,
+  CART_PATH,
+  CART_PRODUCT,
+  MAIN_APT_PATH,
+  MY_CART,
+  PRODUCT_PATH,
+} from "../../../constants";
+import { CartItemDto, ProductDetailResponseDto } from "../../../types/dto";
+import "../../../style/home/allProduct.css";
+import "../../../style/home/main1.css";
+import { Rating } from "@mui/material";
+import CartModal from "../../../components/CartModal";
+import { useCookies } from "react-cookie";
 
-const products: ProductProps[] = [
-  {
-    id: 1,
-    title: "Produt 1",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "20000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 2,
-    title: "Produt 2",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "20000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 3,
-    title: "Produt 3",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "20000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 4,
-    title: "Produt 4",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "30000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 5,
-    title: "Produt 5",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "29,000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 6,
-    title: "Produt 6",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "25,000원",
-    tag: '볶음밥'
-  },
-  {
-    id: 7,
-    title: "Produt 7",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "25,000원",
-    tag: '주먹밥'
-  },
-  {
-    id: 8,
-    title: "Produt 8",
-    image:
-      "https://cdn.pixabay.com/photo/2017/08/17/19/40/ukrainian-dill-potatoes-2652561_1280.jpg",
-    price: "25,000원",
-    tag: '주먹밥'
+const NewItemSlider = () => {
+  const navigate = useNavigate();
+  const [cookies] = useCookies(["token"]);
+  const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
+  const [datas, setDatas] = useState<ProductDetailResponseDto[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeProduct, setActiveProduct] = useState<number | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`
+      );
+      const responseData = response.data.data;
+
+      const sortedNewItems = responseData.sort(
+        (a: ProductDetailResponseDto, b: ProductDetailResponseDto) =>
+          b.pId - a.pId
+      );
+
+      const newItems = sortedNewItems.slice(0, 9);
+
+      setDatas(newItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleMouseEnter = (index: number) => {
+    setActiveProduct(index);
+  };
+  const handleMouseLeave = () => {
+    setActiveProduct(null);
+  };
+
+  const handlePrevClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? datas.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextClick = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === datas.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const openModal = async (pId: number) => {
+    setModalIsOpen(true);
+    if (!cookies.token) {
+      navigate("/login");
+      alert("로그인이 필요합니다.");
+    }
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`,
+        {
+          productQuantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setCartItemData(response.data.data.cartItem || []);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const closeModal = () => setModalIsOpen(false);
+
+  const visibleProduct = datas.slice(currentIndex, currentIndex + 3);
+  if (visibleProduct.length < 3) {
+    visibleProduct.push(...datas.slice(0, 3 - visibleProduct.length));
   }
-]
 
+  const cutText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
 
-  const NewItem: React.FC = () => {
+  const handleClickProductDetail = (
+    product: ProductDetailResponseDto | null
+  ) => {
+    navigate(`/product/productDetail/${product?.pId}`);
+  };
+
   return (
-    <div className='sliderContainer'>
-      <div className='h3Container'>
-      <h3>새로운 상품</h3>
+    <div className="sliderContainer">
+      <div className="h3Container">
+        <h3>새로운 상품</h3>
+        <div className="slider">
+          <button className="prev" onClick={handlePrevClick}>
+            &#10094;
+          </button>
+          <div className="sliderImagesContainer">
+            {visibleProduct.map((product, index) => (
+              <div key={product.pId} className="sliderDiv">
+                <div
+                  className="productSliderImg"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => handleClickProductDetail(product)}
+                >
+                  <img
+                    src={product.pImgUrl}
+                    alt={product.pName}
+                    className="allProductImage"
+                  />
+                </div>
+                <div className="productLine"></div>
+                <ul
+                  className="productContent"
+                  onClick={() => handleClickProductDetail(product)}
+                >
+                  <li>
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={product?.averageRating}
+                      precision={0.5}
+                      readOnly
+                      style={{fontSize: "13px"}}
+                    />
+                  </li>
+                  <li className="productContentLi">
+                    <h4>{cutText(product.pName, 11)}</h4>
+                    <p>{product.pPrice.toLocaleString()}원</p>
+                  </li>
+                </ul>
+                {activeProduct === index && (
+                  <div
+                  className="sliderCartWishHoverBtn"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      className="sliderProductHoverBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(product.pId);
+                      }}
+                    >
+                      CART
+                    </button>
+                    <button className="sliderProductHoverBtn">WISH</button>
+                  </div>
+                )}
+              </div>
+            ))}
+            <CartModal
+              cartItem={cartItemData}
+              isOpen={modalIsOpen}
+              onClose={closeModal}
+            />
+          </div>
+          <button className="next" onClick={handleNextClick}>
+            &#10095;
+          </button>
+        </div>
       </div>
-      <NewItemSlider products={products}  />
     </div>
-  )
-}
+  );
+};
 
-export default NewItem;
+export default NewItemSlider;

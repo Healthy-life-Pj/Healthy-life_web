@@ -318,4 +318,18 @@
   margin: 30px 0px;
 }
 
+.movePhysiqueBtn {
+  background-color: #67C6E3;
+  border-radius: 5px;
+  color: white;
+  width: 120px;
+  height: 40px;
+  border: none;
+  margin-top: 50px;
+}
+
+.movePhysiqueBtn:hover {
+  background-color: #1478FF;
+}
+
 
