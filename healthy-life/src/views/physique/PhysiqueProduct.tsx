@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import useRecommandPaginationHook from "../../hooks/recommandPagiantionHook";
 
-const AllProduct: React.FC = () => {
+const PhysiqueProduct = () => {
   const [btnStatus, setBtnStatus] = useState<string>("default");
     const [cookies] = useCookies(["token"]);
     const hasAlerted = useRef(false);
@@ -77,10 +77,10 @@ const AllProduct: React.FC = () => {
             </div>
           </div>
           :
-          <button>설문조사 하러가기기</button>
+          <button className="movePhysiqueBtn" onClick={() => navigate("recommand")}>설문조사 하기</button>
           }
         </div>
       </div>
   );
 };
-export default AllProduct;
+export default PhysiqueProduct;
