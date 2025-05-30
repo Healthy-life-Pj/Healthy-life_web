@@ -153,7 +153,7 @@ function Login() {
         </form>
         <div 
         className="findDiv">
-          <Link to={"/login/FindId"}>아이디 찾기</Link>
+          <Link to={"/login/find-id"}>아이디 찾기</Link>
           <span>|</span>
           <Link to={"/login/FindPassword"}>비밀번호 찾기</Link>
         </div>

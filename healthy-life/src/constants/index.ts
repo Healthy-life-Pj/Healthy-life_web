@@ -28,7 +28,8 @@ export const LOGIN = "/login";
 export const SIGN_UP = "/sign-up";
 export const SNS_LOGIN = "/sns-login";
 export const SNS_SIGN_UP = "/sns-sign-up";
-export const FIND_ID_BY_TOKEN = "/find-id";
+export const FIND_ID = "/find-id";
+export const FIND_ID_BY_TOKEN = "/find-id/verify-find-username";
 export const RECOVERY_EMAIL = "/recovery-email";
 export const DUPLICATE_NICKNAME = "/duplicate/userNickName/";
 export const DUPLICATE_USERNAME = "/duplicate/username/";
@@ -38,7 +39,7 @@ export const ALL_PRODUCTS = "/all";
 export const PRODUCT_DETAIL = "/products";
 export const CATEGORY_PRODUCTS = "/category";
 export const CATEGORY_DETAIL_PRODUCTS = "/category/category-detail";
-export const PHYSIQUE_PRODUCTS = "/physiques/";
+export const PHYSIQUE_PRODUCTS = "/physiques";
 export const PRODUCT_SEARCH = "/search";
 
 // Order

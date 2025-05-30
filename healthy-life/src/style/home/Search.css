@@ -5,9 +5,10 @@
   font-style: normal;
 }
 
+
+
 .SearchAppInputDiv {
   display: flex;
-  justify-content: space-around;
   width: 400px;
   height: 50px;
   margin: 0 auto;
@@ -38,28 +39,43 @@
   
 }
 
-.currentsearchList {
-  display: flex;
-  justify-content: space-between;
+.searchList {
+  list-style: none;
+  margin: 0 auto;
+  width: 380px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.currentsearchList  .searchDeleteBtn {
+.searchListBtn {
   background-color: rgba(0, 0, 0, 0);
   border: none;
-  font-size: small;
+  font-family: 'Pretendard-Regular';
+  padding: 5px;
 }
 
-@media (max-width: 500px) {
+.searchLi {
+    width: 400;
+    margin: 0px auto;
+}
+
+.borderLine {
+  margin: 5px auto;
+  border-bottom: 2px solid #67C6E3;
+}
+
+@media (max-width: 600px) {
   .SearchAppInputDiv{
-    border: 2px solid #555f57;
-    height: 20px;
-  }
-  .SearchAppInputDiv:active{
-    border: 2px solid #D7DDD2;
-  }
-  .SearchAppInput{
+    width: 60%;
+    height: 30px;
     font-size: 10px;
-  } 
+  }
+  .searchListBtn {
+    width: 80%;
+  }
+  .searchLi {
+    width: 80%;
+  }
   .searchButton{
     font-size: 7px;
   }

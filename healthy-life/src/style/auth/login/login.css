@@ -124,4 +124,35 @@
   background-color: #1478FF;
 }
 
+.findUsernameContainer {
+  width: 300px;
+  margin: 100px auto;
+}
 
+.findUsernameTitle {
+  font-size: 18px;
+  font-family: 'goorm-sans-bold';
+}
+
+.finUsernameResultLine {
+  width: 100%;
+  border: 1px solid #67C6E3;
+  margin: 10px 0px;
+}
+
+.findUserIdResultBox {
+  margin-top: 30px;
+}
+
+.findUsernameResultUl {
+  list-style: none;
+}
+
+.findUsernameResultLi {
+  margin-top: 5px;
+  
+}
+
+.findUsernameloginButton {
+  width: 300px;
+}

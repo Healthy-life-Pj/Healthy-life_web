@@ -21,10 +21,9 @@ import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
 import NonMember from "./views/nonMemberOrder/NonMember";
 import Payment from "./views/payment/Payment";
 import BestItem from "./views/best/BestItem";
-import RecommandApp from "./views/recommand/RecommandApp";
+import RecommandApp from "./views/recommand/Recommand";
 import Bmi from "./views/bmi/Bmi";
-import JoinApp from "./views/join/JoinApp";
-import CartAPP from "./views/cart/CartAPP";
+import CartAPP from "./views/cart/Cart";
 import MyPageMain from "./views/mypage/MyPageMain";
 import Product from "./views/product/Product";
 import ProductDetail from "./views/product/productpage/product/ProductDetail";
@@ -34,6 +33,7 @@ import { jwtDecode } from "jwt-decode";
 import SignUp from "./views/auth/signUp/SignUp";
 import Login from "./views/auth/login/Login";
 import HeaderSearchBar from "./components/HeaderSerch";
+import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
 
 function App() {
   interface TokenUser {
@@ -65,7 +65,9 @@ function App() {
       <Navigation />
       <Routes>
       <Route path='/' element={<Home />} /> 
-      <Route path='/login/*' element={<Login/>}/>
+      <Route path='/login/' element={<Login/>}/>
+      <Route path="/login/find-id" element={<FindId />} />
+      <Route path="/find-id/verify-find-username" element={<FindUserIdResult />} />
       <Route path='/signUp/*' element={<SignUp/>}/>
       <Route path='/all' element={<All />}/>
         <Route path="/survey" element={<SurveyApp />} />
@@ -79,8 +81,6 @@ function App() {
 
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPageMain />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/login/FindId" element={<FindId />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
         <Route path="/productdetail" element={<Review />} />
         <Route path="/productdetail" element={<ReviewWrite />} />
@@ -91,7 +91,6 @@ function App() {
         <Route path="/bestitem" element={<BestItem />} />
         <Route path="/recommand" element={<RecommandApp />} />
         <Route path="/calculator" element={<Bmi />} />
-        <Route path="/join" element={<JoinApp />} />
         <Route path="/cart" element={<CartAPP />} />
       </Routes>
       <Footer />
