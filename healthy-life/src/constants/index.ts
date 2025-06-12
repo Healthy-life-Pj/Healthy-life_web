@@ -13,6 +13,9 @@ export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
 
+//Image
+export const IMG_PATH = "http://localhost:4040/image";
+
 // User
 export const GET_USER = "/users/me";
 export const UPDATE_USER = "/users/me";
@@ -44,6 +47,7 @@ export const PRODUCT_SEARCH = "/search";
 
 // Order
 export const ORDER_SHIPPING = "/shipping";
+export const ORDER_GET_REVIEW = "/review-writable";
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
@@ -65,6 +69,10 @@ export const ALL_REVIEWS = "/all";
 export const MY_REVIEWS = "/me";
 export const REVIEW_PRODUCT = "/products"
 export const REVIEW_AVAILABLE = "/available";
+export const REVIEW_EXISTS = "/duplication";
+export const MY_REVIEW_ONE = "/get-one"
+export const REVIEW_PUT = "/update"
+export const REVIEW_DELETE = "/delete"
 
 // Payment
 export const KAKAO_PAYMENT = "/kakao";

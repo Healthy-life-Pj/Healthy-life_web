@@ -18,7 +18,7 @@ const MypageNav: React.FC = () => {
           <li className="mypageNavLine"></li>
           <li className="mypageNavTitle">활동관리</li>
           <li>
-            <Link to="/mypage/myreview">
+            <Link to="/mypage/my-review">
               <span className="mypageMenue">후기</span>
             </Link>
           </li>

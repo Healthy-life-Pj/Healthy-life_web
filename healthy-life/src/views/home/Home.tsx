@@ -7,7 +7,7 @@ import Search from "./search/Search";
 
 export default function Home() {
   return (
-    <div>``````
+    <div>
       <MainBanner />
       <Search />
       <NewItem />

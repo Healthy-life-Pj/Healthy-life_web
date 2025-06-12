@@ -10,7 +10,7 @@ export interface ProductListResponseDto {
   averageRating: number;
 }
 
-export interface ReviewCreateResponseDto {
+export interface ReviewResponseDto {
   reviewId: number;
   pName: string;
   username: string;
@@ -20,14 +20,25 @@ export interface ReviewCreateResponseDto {
   reviewCreatAt: string; 
 }
 
+export interface ReviewRequestDto {
+  reviewRating: number;
+  reviewContent: string;
+  reviewImgUrl: any;
+}
+
+
+
 export interface ReviewListDto {
   reviewId: number;
+  pId: number;
   pName: string;
+  pImgUrl: string;
   username: string;
   reviewRating: number;
   reviewContent: string;
   reviewImgUrl: string;
   reviewCreatAt: string; 
+  orderDate: string;
 }
 
 export interface ProductDetailResponseDto {
@@ -88,3 +99,4 @@ export interface OrderGetRequestDto {
   startOrderDate: string; 
   endOrderDate: string;  
 }
+

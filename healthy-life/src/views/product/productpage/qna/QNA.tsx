@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import '../../../style/QnA.css'
 import ModalExample from './modal/ModalExample';
 import axios from 'axios';
-import Pagination from './Pagination';
+// import Pagination from './Pagination';
 
 
 // interface PostProps {

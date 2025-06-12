@@ -13,7 +13,7 @@ export default function SubNav() {
     <div> 
       <div className='subNavContainer'>
         <ul>
-        <li onClick={() => pCategoryNameNavigate("닭가슴살_육류")}>닭가슴살/육류</li>
+        <li className='subNavibarCursor' onClick={() => pCategoryNameNavigate("닭가슴살_육류")}>닭가슴살/육류</li>
           <li onClick={() => pCategoryNameNavigate("도시락")}>도시락</li>
           <li onClick={() => pCategoryNameNavigate("간식")}>간식</li>
           <li onClick={() => pCategoryNameNavigate("음료")}>음료</li>
