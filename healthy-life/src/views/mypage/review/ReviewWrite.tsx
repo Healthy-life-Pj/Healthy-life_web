@@ -7,12 +7,11 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { MAIN_APT_PATH, REVIEW_PATH } from "../../../constants";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
 function ReviewWrite() {
   const navigate = useNavigate();
-  const { orderDetailId } = useParams();
+  const { orderDetailId, pName } = useParams();
   const [reviewData, setReviewData] = useState<ReviewRequestDto>({
     reviewContent: "",
     reviewImgUrl: null as File | null,
@@ -91,6 +90,7 @@ function ReviewWrite() {
     <div className="ReviewWriteContainer">
       <h2>후기등록</h2>
       <div className="ReviewStar">
+      <p>{pName}</p>
         <Rating
           name="reviewRating"
           value={reviewData.reviewRating || 0}

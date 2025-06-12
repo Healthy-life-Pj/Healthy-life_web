@@ -38,6 +38,7 @@ export interface ReviewListDto {
   reviewContent: string;
   reviewImgUrl: string;
   reviewCreatAt: string; 
+  orderDate: string;
 }
 
 export interface ProductDetailResponseDto {

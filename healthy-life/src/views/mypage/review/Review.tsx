@@ -137,6 +137,14 @@ function Review() {
     return text;
   };
 
+  function isOver30Days(date: string): boolean {
+    const orderDate = new Date(date);
+    const today = new Date();
+    const diffTime = today.getTime() - orderDate.getTime();
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    return diffDays > 30;
+  }
+
   return (
     <div className="reviewContainer">
       <h2>후기</h2>
@@ -160,11 +168,12 @@ function Review() {
                 </div>
                 <div className="reviewProducNameDiv">
                   <p>{cutText(order.pName, 11)}</p>
+                  <p className="reviewDateP">{order.orderDate}</p>
                 </div>
                 <button
                   className="reviewWrightBtn"
                   onClick={() =>
-                    navigate(`/mypage/my-review/write/${order.orderDetailId}`)
+                    navigate(`/mypage/my-review/write/${order.orderDetailId}/${order.pName}`)
                   }
                 >
                   후기작성
@@ -191,10 +200,10 @@ function Review() {
         <h4>내가 작성한 후기</h4>
         <ul className="reviewAppList">
           {reviewDatas.length > 0 ? 
-          <div>
+          <>
           {currentReview.map((review, index) => (
             <li key={review.reviewId} className="reviewAppListLi">
-            <div className="reivewListLiDiv">
+            <div className="reivewListLiDiv reviewAppListLiHeight">
             <div className="reveiwAppImageDiv">
             <img
             src={review.pImgUrl}
@@ -202,27 +211,34 @@ function Review() {
                     className="reveiwAppImage"
                   />
                 </div>
-                <div className="reviewProducNameDiv">
+                <div className="reviewProducNameDiv forMargin">
                   <p>{cutText(review.pName, 11)}</p>
+                  <p className="reviewDateP">{review.reviewCreatAt}</p>
                 </div>
-                <button onClick={() => openModal(review.reviewId)} className="reviewWrightBtn">후기보기</button>
+                <div className="reviewBtnDiv">
+                <button onClick={() => openModal(review.reviewId)} className="reviewWrightBtn2">보기</button>
+                {!isOver30Days(review.orderDate) ?
                 <button
-                className="reviewWrightBtn"
-                  onClick={() =>
-                    navigate(`/mypage/my-review/update/${review.reviewId}`)
-                    
-                  }
-                  >
-                  후기수정
+                className="reviewWrightBtn2"
+                onClick={() =>
+                  navigate(`/mypage/my-review/update/${review.reviewId}`)
+                  
+                }
+                >
+                  수정
                   </button>
-                <button className="reviewWrightBtn" onClick={() => deleteFetchData(review.reviewId)}>후기삭제</button>
+                :
+                <></>
+                  }
+                <button className="reviewWrightBtn2" onClick={() => deleteFetchData(review.reviewId)}>삭제</button>
+                </div>
                 </div>
               {index < currentReview.length - 1 && (
                 <div className="reviewAListLine"></div>
               )}
               </li>
             ))}
-            </div>
+            </>
             :
             <p style={{color: "#454545"}}>작성한 리뷰가 없습니다.</p>
             }

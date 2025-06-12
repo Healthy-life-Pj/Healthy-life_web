@@ -34,7 +34,7 @@ function MyPageMain() {
         <Route path='/coupon' element={<Cupon />}/>
         <Route path='/membership' element={<Benefit />}/>
         <Route path='/userinformation' element={<Userinformation />}/>
-        <Route path='/my-review/write/:orderDetailId' element={<ReviewWrite />}/>
+        <Route path='/my-review/write/:orderDetailId/:pName' element={<ReviewWrite />}/>
         <Route path='/my-review/update/:reviewId' element={<ReviewUpdate />}/>
       </Routes>
       </div>

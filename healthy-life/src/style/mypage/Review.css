@@ -43,7 +43,18 @@ ont-face {
 }
 
 .reviewProducNameDiv {
-  width: 200px;
+  width: 300px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 63px;
+}
+
+.reviewDateP {
+  color: #b3b3b3;
+  font-size: 12px;
 }
 
 .reviewListContainerDiv {
@@ -88,6 +99,17 @@ ont-face {
   cursor: pointer;
 }
 
+.reviewWrightBtn2 {
+  width: 75px;
+  height: 37px;
+  border-radius: 5px;
+  border: none;
+  background-color: #67C6E3;
+  color: white;
+  font-family: 'goorm-sans-bold';
+  cursor: pointer;
+}
+
 .reviewList {
   list-style: none;
   display: flex;
@@ -110,4 +132,15 @@ ont-face {
 
 .reviewAListLine {
   border-top: 0.1px solid #67C6E3;
+}
+
+.reviewBtnDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 5px 0px;
+}
+
+.reviewAppListLiHeight {
+  height: 130px;
 }
