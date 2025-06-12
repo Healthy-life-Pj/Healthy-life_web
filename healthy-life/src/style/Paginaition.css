@@ -1,35 +1,32 @@
-.productSmallPagination {
+.productPagination1 {
   display: flex;
   gap: 6px;
-  justify-content: center;
-  width: 180px;
-  margin: 0px auto;
   margin-top: 15px;
 }
 
-.productSmallPageLink {
+.productPageLink1 {
   border: none;
   border-radius: 3px;
-  width: 35px;
-  height: 35px;
+  width: 50px;
+  height: 50px;
   background-color: white;
   border: 1px solid #eee;
   transition: background-color 0.3s ease, color 0.3s ease;
   cursor: pointer;
 }
 
-.smallPageLinkdirection{
+.PageLinkdirection1{
   border: none;
   border-radius: 3px;
-  width: 55px;
-  height: 35px;
+  width: 70px;
+  height: 50px;
   background-color: white;
   transition: background-color 0.3s ease, color 0.3s ease;
   border: 1px solid #eee;
   cursor: pointer;
 }
 
-.productSmallPagination .smallPageItem.active .smallPageLink {
+.productPagination1 .pageItem1.active .pageLink1 {
   background-color: #67C6E3;
   color: white;
   border-color: #67C6E3;

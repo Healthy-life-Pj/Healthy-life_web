@@ -8,13 +8,9 @@ import Footer from "./components/Footer";
 import Sidenavigation from "./components/Sidenavigation";
 import Home from "./views/home/Home";
 import SurveyApp from "./views/survey/SurveyApp";
-import ReviewWrite from "./views/mypage/review/ReviewWrite";
 import FindId from "./views/auth/login/find-id/FindId";
 import FindPassword from "./views/auth/login/FindPassword";
-import Review from "./views/product/productpage/review/Review";
-import QNA from "./views/product/productpage/qna/QNA";
 import All from "./views/product/all/All";
-import AllReview from "./views/allreview/AllReview";
 import SurveryListAllerge from "./views/survey/SurveryListAllerge";
 import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
 import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
@@ -34,6 +30,7 @@ import SignUp from "./views/auth/signUp/SignUp";
 import Login from "./views/auth/login/Login";
 import HeaderSearchBar from "./components/HeaderSerch";
 import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
+import AllReviewList from "./views/allreview/AllReviewList";
 
 function App() {
   interface TokenUser {
@@ -78,14 +75,12 @@ function App() {
         {/*상품*/}
         <Route path="/products/:pCategoryName/*" element={<Product />} />
         <Route path="/product/productDetail/:pId" element={<ProductDetail />} />
+        {/* 전체 리뷰 */}
+        <Route path="/reviews" element={<AllReviewList />} />
 
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
-        <Route path="/productdetail" element={<Review />} />
-        <Route path="/productdetail" element={<ReviewWrite />} />
-        <Route path="/productdetail" element={<QNA />} />
-        <Route path="/reviews" element={<AllReview />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/nonMember" element={<NonMember />} />
         <Route path="/bestitem" element={<BestItem />} />

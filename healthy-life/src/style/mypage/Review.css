@@ -1,4 +1,5 @@
-@font-face {
+
+ont-face {
   font-family: 'goorm-sans-bold';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
   font-weight: 700;
@@ -23,8 +24,8 @@
   margin-bottom: 20px;
 }
 
-.reviewAppList .reveiwAppImage {
-  width: 20%;
+.reveiwAppImage {
+  width: 100%;
   margin: 0;
 }
 
@@ -32,23 +33,48 @@
   font-family: 'goorm-sans-bold';
 }
 
+.reveiwAppImageDiv {
+  width: 70px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.reviewProducNameDiv {
+  width: 200px;
+}
+
+.reviewListContainerDiv {
+  margin: 50px auto;
+}
+
 .reviewAppList {
   list-style: none;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 10px;
   overflow: hidden;
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
+  min-height: 80px;
 }
 
-.reviewAppList li {
+.reviewAppListLi {
+  width: 95%;
+  font-family: 'Pretendard-Regular';
+}
+
+.reivewListLiDiv {
+  width: 95%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 10px;
-  font-family: 'Pretendard-Regular';
+  justify-content: space-between;
+  padding: 10px 5px; 
+  margin: 0px auto;
 }
 
 .reviewWrightBtn {
@@ -60,15 +86,6 @@
   color: white;
   font-family: 'goorm-sans-bold';
   cursor: pointer;
-}
-
-
-/* ReviewList */
-
-
-.reviewList .reviewImage {
-  width: 20%;
-  margin: 0;
 }
 
 .reviewList {
@@ -91,11 +108,6 @@
   background-color: #1478FF;
 }
 
-.reviewList li {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
-  font-family: 'Pretendard-Regular';
+.reviewAListLine {
+  border-top: 0.1px solid #67C6E3;
 }
-

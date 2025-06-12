@@ -35,3 +35,7 @@
   margin: 0 auto;
   left: 0;
 }
+
+.subNavibarCursor {
+  cursor: pointer;
+}

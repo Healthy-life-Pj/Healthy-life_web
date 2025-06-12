@@ -2,8 +2,6 @@
   width: 1000px;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 0px auto;
   margin-top: 60px;
 }
@@ -26,39 +24,34 @@
 /* List */
 .reviewImageContainer{
   display: flex;
-  align-items: center;
   border-top: 3px solid #DFF5FF;
   border-bottom: 3px solid #DFF5FF;
 }
+
+.reviewPnameLink {
+  cursor: pointer;
+}
+
 .allProductImageList {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
-  width: 1000px;
+  width: 900px;
   margin: 0 auto;
   margin-top: 30px;
 }
 
 .allProductImageList > .reviewBox {
-  margin-bottom: 30px;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  width: 23%;
-  height: 250px;
+  width: 207px;
+  height: 210px;
   border: 1px solid #eee;
-  border-radius: 5px;
+  border-radius: 4px;
   overflow: hidden;
-  margin: 0 auto;
   margin-bottom: 30px;
-}
-
-.allProductImageList > img {
-  list-style: none;
-  width: 100%;
-  display: flex;
-  margin:  0 auto;
 }
 
 .productInform {
@@ -72,58 +65,43 @@
   gap: 5px;
 }
 
-.allProductImageList h4 {
+.allProductImageList > h4 {
   display: flex;
   margin: 0 auto;
   margin-bottom: 30px;
 }
 
-.pagination {
+.reviewImgDiv {
+  width: 160px;
+  height: 120px;
   display: flex;
   justify-content: center;
-  flex-direction: row;
   align-items: center;
-  margin: 20px auto;
-}
-
-.allProductHoverButton {
-  position: relative;
-  top: 35%;
-  right: -30%;
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  z-index: 10;
-}
-
-.reveiwModal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin:  0 auto;
-}
-
-.modalImage {
-  width: 300px;
-}
-
-.reviewModalInfpo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.countInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.closeReviewModalBtn {
-  width: 150px;
-  height: 35px;
+  border: 1px solid #efefeff0;
   margin-top: 20px;
-  border-radius: 5px;
-  background-color: #67C6E3;
-  border: none;
-  color: white;
+}
+
+.reviewImgUrl{
+  width: 160px;
+}
+
+.reviewStar {
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  margin: 0 auto;
+}
+
+.reviewImgSpanDiv > pre {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.reviewListPNameRatingDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
