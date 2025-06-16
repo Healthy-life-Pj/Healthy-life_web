@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import MypageNav from './mypage-main/MypageNav'
 import OrderApp from './order/OrderApp'
 import WishApp from './wish/WishApp'
-import CurrentProduct from './currentProducts/CurrentProduct'
 import Reserves from './cupon,reserves,benefit/Reserves'
 import Cupon from './cupon,reserves,benefit/Cupon'
 import Benefit from './cupon,reserves,benefit/Benefit'
@@ -14,6 +13,7 @@ import Mypage from './mypage-main/Mypage'
 import MypageUp from './mypage-main/MypageUp'
 import ReviewList from './review/Review'
 import ReviewUpdate from './review/ReviewUpdate'
+import MyQnA from './my-qna/MyQnA'
 
 
 function MyPageMain() {
@@ -29,7 +29,7 @@ function MyPageMain() {
         <Route path='/orderApp' element={<OrderApp />}/> 
         <Route path='/my-review' element={<ReviewList />}/>
         <Route path='/wishlist' element={<WishApp />}/>
-        <Route path='/current' element={<CurrentProduct />}/>
+        <Route path='/my-qna' element={<MyQnA />}/>
         <Route path='/mileage' element={<Reserves />}/>
         <Route path='/coupon' element={<Cupon />}/>
         <Route path='/membership' element={<Benefit />}/>

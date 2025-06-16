@@ -79,3 +79,6 @@ export const KAKAO_PAYMENT = "/kakao";
 
 //Qna 
 export const QNA_POST = "/create"
+export const QNA_GET_MINE = "/me"
+export const QNA_UPDATE = "/update-qna"
+export const QNA_DELETE = "/delete-qna"

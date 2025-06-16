@@ -68,6 +68,9 @@ export interface QnaResponseDto {
   qnaTitle: string;
   qnaContent: string;
   qnaAnswer: string;
+  pId: number;
+  pName: string;
+  pImgUrl: string;
 }
 
 export interface CartItemDto {

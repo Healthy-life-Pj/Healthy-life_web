@@ -16,8 +16,8 @@ import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import "../../../style/mypage/ReviewWrite.css";
 
 function ReviewUpdate() {
-  const navigate = useNavigate();
   const { reviewId } = useParams();
+  const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
 
   const [reviewData, setReviewData] = useState<ReviewResponseDto | null>(null);
