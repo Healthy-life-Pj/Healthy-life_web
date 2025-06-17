@@ -7,8 +7,6 @@ interface body {
   height: string | number;
 }
 
-
-
 const initialValue: body = {
   weight: '',
   height: ''
@@ -30,9 +28,6 @@ export default function Bmi(){
     }
     )
   }
-
-  
-
 
   const bmiCalculator = (e: React.FormEvent) => {
     e.preventDefault(); 
@@ -82,49 +77,51 @@ export default function Bmi(){
   return (
     <div>
       <h1 style={{marginTop: '75px', textAlign: 'center'}}>체제방 계산기</h1>
-      <br />
       <Box>
-
       <form className='bmiCalculator'>
-        <br />
         <TextField
           label="몸무게"
           id="weight"
           sx={{ m: 1, width: '40ch' }}
           InputProps={{
-            startAdornment: <InputAdornment position="start">kg</InputAdornment>,
+            endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+            inputProps: {
+              style: {
+                textAlign: 'right',
+                padding: '12px 14px', 
+                lineHeight: '1.5' 
+              }
+            }
           }}
           variant="filled"
           value={weight}
           name='weight'
           onChange={inputHandler}
         />
-
         <TextField
           label="신장"
           id="height"
           sx={{ m: 1, width: '40ch' }}
           InputProps={{
-            startAdornment: <InputAdornment position="start">cm</InputAdornment>,
+            endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+            inputProps: {
+              style: {
+                textAlign: 'right',
+                padding: '12px 14px', 
+                lineHeight: '1.5' 
+              }
+            } 
           }}
           variant="filled"
           value={height}
           name='height'
           onChange={inputHandler}
         />
-        <br />
-        <br />
         <button className='bmiButton' onClick={bmiCalculator}>결과 확인</button>
-        <br />
-        <br />
       </form>
-        <br />
         <p className='result'>{result}</p>
-
       </Box>
     </div>
 
-
-    // bmi = 몸무게 / 신장(제곱)
   )
 }
