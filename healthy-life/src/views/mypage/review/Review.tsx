@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../style/mypage/Review.css";
 import { OrderDetailResponseDto, ReviewListDto } from "../../../types/dto";
 import { useCookies } from "react-cookie";
@@ -47,11 +47,6 @@ function Review() {
     setReviewCurrentPage(pageNumber);
 
   const orderFetchData = async () => {
-    if (!cookies.token) {
-      navigate("/login");
-      alert("로그인이 필요합니다.");
-    }
-
     try {
       const response = await axios.get(
         `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_GET_REVIEW}`,
@@ -70,7 +65,6 @@ function Review() {
   };
 
   const reviewFetchData = async () => {
-    if (cookies.token) {
       try {
         const response = await axios.get(
           `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEWS}`,
@@ -89,7 +83,6 @@ function Review() {
       } catch (error) {
         console.error(error);
       }
-    }
   };
 
   const deleteFetchData = async (reviewId: number) => {
@@ -109,11 +102,22 @@ function Review() {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    orderFetchData();
-    reviewFetchData();
-  }, []);
+  
+    const didRun = useRef(false); 
+      
+    useEffect(() => {
+      if (didRun.current) return;
+      didRun.current = true;
+  
+      if (!cookies.token) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
+  
+      orderFetchData();
+      reviewFetchData();
+    }, []);
 
   const openModal = async (id: number) => {
     if (reviewDatas == null) return null;

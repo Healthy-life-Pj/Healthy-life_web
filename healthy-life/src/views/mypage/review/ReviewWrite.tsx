@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../style/mypage/ReviewWrite.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
@@ -76,7 +76,17 @@ function ReviewWrite() {
     }));
   };
 
+  const didRun = useRef(false);
+
   useEffect(() => {
+    if (didRun.current) return;
+    didRun.current = true;
+    
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
     const fileReader = new FileReader();
     fileReader.onload = (e) => {
       setReviewImg(e.target?.result);
@@ -85,7 +95,9 @@ function ReviewWrite() {
     if (!!reviewData.reviewImgUrl) {
       fileReader.readAsDataURL(reviewData.reviewImgUrl);
     }
+    if(!cookies.token) navigate("/login");
   }, [reviewData.reviewImgUrl]);
+
   return (
     <div className="ReviewWriteContainer">
       <h2>후기등록</h2>

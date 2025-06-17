@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SmallPagination from "../../../components/SmallPagination";
 import { QnaResponseDto } from "../../../types/dto";
 import { useNavigate } from "react-router-dom";
@@ -38,11 +38,7 @@ function MyQnA() {
   };
 
   const getFetchData = async () => {
-    if (!cookies.token) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
+
     setLoading(true);
     try {
       const response = await axios.get(
@@ -60,7 +56,17 @@ function MyQnA() {
     }
   };
 
+  const didRun = useRef(false);
+
   useEffect(() => {
+    if (didRun.current) return;
+    didRun.current = true;
+    
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
     getFetchData();
   }, []);
 
