@@ -1,8 +1,11 @@
 .bmiCalculator{
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
   flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  margin: 20px auto;
+  width: 40ch;
 }
 
 
@@ -11,6 +14,7 @@
   text-align: center;
   font-size: 25px;
   font-weight: bold;
+  margin: 50px auto;
 }
 
 
@@ -19,9 +23,9 @@
   border-radius: 5px;
   color: white;
   border: none;
-  width: 150px;
+  width: 344px;
   height: 45px;
-  margin-left: 103px;
+  margin-top: 40px;
 }
 
 
