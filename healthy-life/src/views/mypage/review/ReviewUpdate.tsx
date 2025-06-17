@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { useCookies } from "react-cookie";
@@ -16,8 +16,8 @@ import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import "../../../style/mypage/ReviewWrite.css";
 
 function ReviewUpdate() {
-  const navigate = useNavigate();
   const { reviewId } = useParams();
+  const navigate = useNavigate();
   const [cookies] = useCookies(["token"]);
 
   const [reviewData, setReviewData] = useState<ReviewResponseDto | null>(null);
@@ -28,17 +28,21 @@ function ReviewUpdate() {
   });
   const [reviewImgPreview, setReviewImgPreview] = useState<string>("");
 
-  useEffect(() => {
-    getFetchData();
-  }, []);
+  const didRun = useRef(false); 
 
-  const getFetchData = async () => {
+  useEffect(() => {
+    if (didRun.current) return;
+    didRun.current = true;
+
     if (!cookies.token) {
       alert("로그인이 필요합니다.");
       navigate("/login");
       return;
     }
+    getFetchData();
+  }, []);
 
+  const getFetchData = async () => {
     try {
       const response = await axios.get(
         `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEW_ONE}/${reviewId}`,

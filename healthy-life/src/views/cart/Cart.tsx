@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/cart.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,11 +25,6 @@ const Cart = () => {
   const navigator = useNavigate();
 
   const fetchCartData = async () => {
-    if (!cookies.token) {
-      navigator("/login");
-      alert("로그인 후 사용해주세요.");
-      return;
-    }
     try {
       const response = await axios.get(
         `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
@@ -155,6 +150,18 @@ const Cart = () => {
     }
   };
 
+  const didRun = useRef(false);
+
+  useEffect(() => {
+    if (didRun.current) return;
+    didRun.current = true;
+    if (!cookies.token) {
+      navigator("/login");
+      alert("로그인 후 사용해주세요.");
+      return;
+    }
+  })
+
   useEffect(() => {
     const init = async () => {
       await fetchCartData();
@@ -200,7 +207,7 @@ const Cart = () => {
                 type="checkbox"
                 className="cartCheckbox"
               />
-              <div className="cartImgDiv">
+              <div className="cartImgDiv">git
                 <img
                   src={data.pImgUrl}
                   alt={data.pName}

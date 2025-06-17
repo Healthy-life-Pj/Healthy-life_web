@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../style/mypage/Review.css";
 import { OrderDetailResponseDto, ReviewListDto } from "../../../types/dto";
 import { useCookies } from "react-cookie";
@@ -47,11 +47,6 @@ function Review() {
     setReviewCurrentPage(pageNumber);
 
   const orderFetchData = async () => {
-    if (!cookies.token) {
-      navigate("/login");
-      alert("로그인이 필요합니다.");
-    }
-
     try {
       const response = await axios.get(
         `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_GET_REVIEW}`,
@@ -70,10 +65,30 @@ function Review() {
   };
 
   const reviewFetchData = async () => {
-    if (cookies.token) {
+      try {
+        const response = await axios.get(
+          `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEWS}`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+              withCredentials: true,
+            },
+          }
+        );
+        const reversDatas = response.data.data;
+        setReviewModal(reversDatas);
+
+        const reversedList = [...reversDatas.reviewListDto].reverse();
+        setReviewDatas(reversedList);
+      } catch (error) {
+        console.error(error);
+      }
+  };
+
+  const deleteFetchData = async (reviewId: number) => {
     try {
-      const response = await axios.get(
-        `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEWS}`,
+      await axios.delete(
+        `${MAIN_APT_PATH}${REVIEW_PATH}${REVIEW_DELETE}/${reviewId}`,
         {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
@@ -81,59 +96,50 @@ function Review() {
           },
         }
       );
-      const reversDatas = response.data.data;
-      setReviewModal(reversDatas);
 
-      const reversedList = [...reversDatas.reviewListDto].reverse()
-      setReviewDatas(reversedList);
+      reviewFetchData();
     } catch (error) {
       console.error(error);
     }
-  }
   };
+  
+    const didRun = useRef(false); 
+      
+    useEffect(() => {
+      if (didRun.current) return;
+      didRun.current = true;
+  
+      if (!cookies.token) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
+  
+      orderFetchData();
+      reviewFetchData();
+    }, []);
 
-  const deleteFetchData = async (reviewId: number) => {
-    try {
-          await axios.delete(
-        `${MAIN_APT_PATH}${REVIEW_PATH}${REVIEW_DELETE}/${reviewId}`, {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-            withCredentials: true,
-          },
-        }
-      );
-
-      reviewFetchData()
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    orderFetchData();
-    reviewFetchData();
-  }, []);
-
-  const openModal = async(id: number) => {
+  const openModal = async (id: number) => {
     if (reviewDatas == null) return null;
-    const review:ReviewListDto | undefined = reviewDatas.find((r) => r?.reviewId === id);
+    const review: ReviewListDto | undefined = reviewDatas.find(
+      (r) => r?.reviewId === id
+    );
 
     if (review) {
       setReviewModal(review);
       setModalIsOpen(true);
     }
-
-  }
+  };
 
   const closeModal = () => {
     setModalIsOpen(false);
     setReviewModal(null);
-  }
-  
+  };
+
   const cutText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {
       return text.slice(0, maxLength) + "...";
-    } 
+    }
     return text;
   };
 
@@ -151,43 +157,50 @@ function Review() {
       <div className="reviewListContainerDiv">
         <h4>작성할 후기</h4>
         <ul className="reviewAppList">
-        {orderDatas.length > 0 ? 
-          <>
-          {currentOrder.map((order, index) => (
-            <li
-              key={`${order.orderDetailId}${index}`}
-              className="reviewAppListLi"
-            >
-              <div className="reivewListLiDiv">
-                <div className="reveiwAppImageDiv">
-                  <img
-                    src={order.pImgUrl}
-                    alt={order.pName}
-                    className="reveiwAppImage"
-                  />
-                </div>
-                <div className="reviewProducNameDiv">
-                  <p>{cutText(order.pName, 11)}</p>
-                  <p className="reviewDateP">{order.orderDate}</p>
-                </div>
-                <button
-                  className="reviewWrightBtn"
-                  onClick={() =>
-                    navigate(`/mypage/my-review/write/${order.orderDetailId}/${order.pName}`)
-                  }
+          {orderDatas.length > 0 ? (
+            <>
+              {currentOrder.map((order, index) => (
+                <li
+                  key={`${order.orderDetailId}${index}`}
+                  className="reviewAppListLi"
                 >
-                  후기작성
-                </button>
-              </div>
-              {index < currentOrder.length - 1 && (
-                <div className="reviewAListLine"></div>
-              )}
-            </li>
-          ))}
-          </>
-          :
-          <p style={{color: "#454545"}}>작성한 리뷰가 없습니다.</p>
-          }
+                  <div className="reivewListLiDiv">
+                    <div
+                      className="reveiwAppImageDiv"
+                      onClick={() =>
+                        navigate(`/product/productDetail/${order.pId}`)
+                      }
+                    >
+                      <img
+                        src={order.pImgUrl}
+                        alt={order.pName}
+                        className="reveiwAppImage"
+                      />
+                    </div>
+                    <div className="reviewProducNameDiv">
+                      <p>{cutText(order.pName, 11)}</p>
+                      <p className="reviewDateP">{order.orderDate}</p>
+                    </div>
+                    <button
+                      className="reviewWrightBtn"
+                      onClick={() =>
+                        navigate(
+                          `/mypage/my-review/write/${order.orderDetailId}/${order.pName}`
+                        )
+                      }
+                    >
+                      후기작성
+                    </button>
+                  </div>
+                  {index < currentOrder.length - 1 && (
+                    <div className="reviewAListLine"></div>
+                  )}
+                </li>
+              ))}
+            </>
+          ) : (
+            <p style={{ color: "#454545" }}>작성한 리뷰가 없습니다.</p>
+          )}
         </ul>
       </div>
       <SmallPagination
@@ -199,49 +212,65 @@ function Review() {
       <div className="reviewListContainerDiv">
         <h4>내가 작성한 후기</h4>
         <ul className="reviewAppList">
-          {reviewDatas.length > 0 ? 
-          <>
-          {currentReview.map((review, index) => (
-            <li key={review.reviewId} className="reviewAppListLi">
-            <div className="reivewListLiDiv reviewAppListLiHeight">
-            <div className="reveiwAppImageDiv">
-            <img
-            src={review.pImgUrl}
-                    alt={review.pName}
-                    className="reveiwAppImage"
-                  />
-                </div>
-                <div className="reviewProducNameDiv forMargin">
-                  <p>{cutText(review.pName, 11)}</p>
-                  <p className="reviewDateP">{review.reviewCreatAt}</p>
-                </div>
-                <div className="reviewBtnDiv">
-                <button onClick={() => openModal(review.reviewId)} className="reviewWrightBtn2">보기</button>
-                {!isOver30Days(review.orderDate) ?
-                <button
-                className="reviewWrightBtn2"
-                onClick={() =>
-                  navigate(`/mypage/my-review/update/${review.reviewId}`)
-                  
-                }
-                >
-                  수정
-                  </button>
-                :
-                <></>
-                  }
-                <button className="reviewWrightBtn2" onClick={() => deleteFetchData(review.reviewId)}>삭제</button>
-                </div>
-                </div>
-              {index < currentReview.length - 1 && (
-                <div className="reviewAListLine"></div>
-              )}
-              </li>
-            ))}
+          {reviewDatas.length > 0 ? (
+            <>
+              {currentReview.map((review, index) => (
+                <li key={review.reviewId} className="reviewAppListLi">
+                  <div className="reivewListLiDiv reviewAppListLiHeight">
+                    <div
+                      className="reveiwAppImageDiv"
+                      onClick={() =>
+                        navigate(`/product/productDetail/${review.pId}`)
+                      }
+                    >
+                      <img
+                        src={review.pImgUrl}
+                        alt={review.pName}
+                        className="reveiwAppImage"
+                      />
+                    </div>
+                    <div className="reviewProducNameDiv forMargin">
+                      <p>{cutText(review.pName, 11)}</p>
+                      <p className="reviewDateP">{review.reviewCreatAt}</p>
+                    </div>
+                    <div className="reviewBtnDiv">
+                      <button
+                        onClick={() => openModal(review.reviewId)}
+                        className="reviewWrightBtn2"
+                      >
+                        보기
+                      </button>
+                      {!isOver30Days(review.orderDate) ? (
+                        <button
+                          className="reviewWrightBtn2"
+                          onClick={() =>
+                            navigate(
+                              `/mypage/my-review/update/${review.reviewId}`
+                            )
+                          }
+                        >
+                          수정
+                        </button>
+                      ) : (
+                        <></>
+                      )}
+                      <button
+                        className="reviewWrightBtn2"
+                        onClick={() => deleteFetchData(review.reviewId)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </div>
+                  {index < currentReview.length - 1 && (
+                    <div className="reviewAListLine"></div>
+                  )}
+                </li>
+              ))}
             </>
-            :
-            <p style={{color: "#454545"}}>작성한 리뷰가 없습니다.</p>
-            }
+          ) : (
+            <p style={{ color: "#454545" }}>작성한 리뷰가 없습니다.</p>
+          )}
         </ul>
       </div>
       <SmallPagination
@@ -251,13 +280,13 @@ function Review() {
         currentPage={reviewCurrentPage}
       />
 
-    <ReactModal
+      <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className="reviewModalBackgroundBox"
         overlayClassName="modal-overlay"
-    >
-      <div className="reveiwModal">
+      >
+        <div className="reveiwModal">
           {reviewModal ? (
             <div className="reviewModalContainer">
               <div className="reviewTitle">
@@ -278,9 +307,14 @@ function Review() {
                 </div>
                 <div className="reviewModalInfo">
                   <div className="reviewPNameRatingDiv">
-                  <h6 className="reviewPnameLink" onClick={() => navigate(`/product/productDetail/${reviewModal.pId}`)}>
-                  {reviewModal.pName}
-                  </h6>
+                    <h6
+                      className="reviewPnameLink"
+                      onClick={() =>
+                        navigate(`/product/productDetail/${reviewModal.pId}`)
+                      }
+                    >
+                      {reviewModal.pName}
+                    </h6>
                     <Rating
                       style={{ fontSize: "12px" }}
                       name="half-rating-read"
@@ -301,7 +335,9 @@ function Review() {
                 </div>
                 <div className="reviewInfoDiv">
                   <div className="reviewPreLine"></div>
-                  <div className="reviewContentDiv">{reviewModal.reviewContent}</div>
+                  <div className="reviewContentDiv">
+                    {reviewModal.reviewContent}
+                  </div>
                 </div>
               </div>
             </div>
@@ -309,7 +345,7 @@ function Review() {
             <p>Loading Post</p>
           )}
         </div>
-    </ReactModal>
+      </ReactModal>
     </div>
   );
 }

@@ -28,8 +28,8 @@ const MypageNav: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link to="/mypage/current">
-              <span className="mypageMenue">최근 상품목록</span> 
+            <Link to="/mypage/my-qna">
+              <span className="mypageMenue">나의 qna</span> 
             </Link>
           </li>
           <li className="mypageNavLine"></li>

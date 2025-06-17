@@ -1,35 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
-import "./ModalExample.css";
-import { useNavigate, useParams } from "react-router-dom";
+import "../../../style/ModalExample.css";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { MAIN_APT_PATH, QNA_PATH, QNA_POST } from "../../../../../constants";
+import { MAIN_APT_PATH, QNA_PATH, QNA_UPDATE } from "../../../constants";
 import { useCookies } from "react-cookie";
-import { QnaReqestDto } from "../../../../../types/dto";
+import { QnaReqestDto, QnaResponseDto } from "../../../types/dto";
 
 ReactModal.setAppElement("#root");
 
-const ModalExample: React.FC = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { pId } = useParams();
+interface QnAModalProps {
+  data : QnaResponseDto;
+  isOpen: boolean;
+  onClose: () => void;
+  get: () => void; 
+}
+
+const MyQnAModal: React.FC<QnAModalProps> = ({data, isOpen, onClose, get}) => {
   const [qnaData, setQnaData] = useState<QnaReqestDto>({
     qnaTitle: "",
     qnaContent: "",
   });
   const [cookies] = useCookies(["token"]);
-  const navigator = useNavigate();
-
-  const openModal = () => {
-    if (!cookies.token) {
-      alert("로그인이 필여합니다.");
-      navigator("/login");
-    }
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  const navigate = useNavigate();
 
   const handleQnaChange = (
     e:
@@ -42,44 +35,58 @@ const ModalExample: React.FC = () => {
       [name]: value,
     }));
   };
-
-  const fetchData = async () => {
-    try {
-      const resposne = await axios.post(
-        `${MAIN_APT_PATH}${QNA_PATH}${QNA_POST}/${pId}`,
-        {
-          qnaTitle: qnaData.qnaTitle,
-          qnaContent: qnaData.qnaContent,
-        },
-        {
+  
+  const updateFetchData = async(qnaId: number) => {
+    if (cookies.token) {
+      const trimmedTitle = qnaData.qnaTitle.trim();
+      const trimmedContent = qnaData.qnaContent.trim();
+      if (
+        trimmedTitle === "" ||
+        trimmedContent === "" ||
+        (trimmedTitle === data.qnaTitle && trimmedContent === data.qnaContent)
+      ) {
+        alert("변경된 내용이 없거나 빈 제목/내용은 수정할 수 없습니다.");
+        return;
+      }
+      try {
+        await axios.put(`${MAIN_APT_PATH}${QNA_PATH}${QNA_UPDATE}/${qnaId}`, {...qnaData}, {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
-      );
-      alert("QNA 등록 성공");
-      closeModal();
-    } catch (error) {
-      console.log(error);
+        });
+        alert("QNA 수정 성공");
+        onClose();
+        get();
+      } catch (error) {
+        console.error(error);
+      }
     }
-  };
+  }
+
+  useEffect(() => {
+    if (data) {
+      setQnaData({
+        qnaTitle: data.qnaTitle,
+        qnaContent: data.qnaContent,
+      });
+    }
+  }, [data]);
+  
 
   return (
     <div className="modal-container">
-      <button onClick={openModal} className="openModalBtn">
-        문의하기
-      </button>
       <ReactModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={isOpen}
+        onRequestClose={onClose}
         className="modal-content"
         overlayClassName="modal-overlay"
+        ariaHideApp={false}  
       >
         <div className="qnaModalTotal">
-          <h2>문의하기</h2>
+          <h2>문의 수정</h2>
           <h4>
-            제목:
+            제목: 
             <input
               type="text"
               name="qnaTitle"
@@ -94,11 +101,11 @@ const ModalExample: React.FC = () => {
             onChange={handleQnaChange}
           />
           <div className="modalBtn">
-            <button onClick={closeModal} className="commandModalBtn">
-              취소하기
+            <button className="commandModalBtn" onClick={() => updateFetchData(data.qnaId)}>
+              수정
             </button>
-            <button className="commandModalBtn" onClick={fetchData}>
-              등록하기
+            <button onClick={onClose} className="commandModalBtn">
+              취소
             </button>
           </div>
           <div className="qnaFooter">
@@ -119,4 +126,4 @@ const ModalExample: React.FC = () => {
   );
 };
 
-export default ModalExample;
+export default MyQnAModal;
