@@ -100,14 +100,42 @@
 .orderListUl {
   list-style: none;
   width: 100%;
-  height: 100px;
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
   font-family: 'Pretendard-Regular';
+  padding: 0px 15px;
+  box-sizing: border-box;
 }
 
-.orderListUl li {
-  padding: 10px;
+.orderProductImgDiv {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orderProductImg {
+  width: 100%;
+}
+
+.orderListUlLiP {
+  width: 120px;
+  font-size: 12px;
+}
+
+.orderListUlLiPName {
+  font-size: 12px;
+}
+
+.orderListUlLiPPrice {
+  
+}
+
+.orderListLine {
+  width: 100%;
+  border: 1px solid #eee;
 }
 
 .orderListCotainer h4 {
@@ -139,6 +167,65 @@
 .orderArrow {
   font-size: 30px;
   color: gray;
+}
+
+.myPageOrderInfoBox {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.myPageOrderStatusP {
+  font-weight: 700;
+  font-size: 17px;
+  color: #757575;
+  font-family: 'Pretendard-Regular';
+}
+
+.myOrderLi {
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
+  border:  none;
+  height: 120px;
+  align-items: center;
+}
+
+.myPageOrderInfoDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.myPageOrderDateP {
+  margin-bottom: 20px;
+}
+
+.myPageOrderDateP {
+  color: #757575;
+  font-family: 'Pretendard-Regular';
+}
+
+.myPageOrderBtnDiv {
+  display: flex;
+  gap: 5px 2px;
+  margin: 10px 0px;
+}
+
+.myPageOrderBtn {
+  width: 200px;
+  height: 35px;
+  background-color: #67C6E3;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+  margin-right: 10px;
+  color: white;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.myPageOrderBtn:hover {
+  background-color: #1478FF;
 }
 
 @media (max-width: 700px) {

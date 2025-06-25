@@ -15,7 +15,7 @@ import SurveryListAllerge from "./views/survey/SurveryListAllerge";
 import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
 import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
 import NonMember from "./views/nonMemberOrder/NonMember";
-import Payment from "./views/payment/Payment";
+import Payment from "./views/order/Order";
 import BestItem from "./views/best/bestItem";
 import RecommandApp from "./views/physique/PhysiqueProduct";
 import Bmi from "./views/bmi/Bmi";
@@ -31,6 +31,7 @@ import Login from "./views/auth/login/Login";
 import HeaderSearchBar from "./components/HeaderSerch";
 import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
 import AllReviewList from "./views/allreview/AllReviewList";
+import Order from "./views/order/Order";
 
 function App() {
   interface TokenUser {
@@ -43,9 +44,9 @@ function App() {
   useEffect(() => {
     if (cookies.token) {
       try {
-        const decodedToken: TokenUser = jwtDecode<TokenUser>(cookies.token);  
+        const decodedToken: TokenUser = jwtDecode<TokenUser>(cookies.token);
         login(decodedToken.username);
-      }catch (e) {
+      } catch (e) {
         console.error("Invalid Token", e);
         logout();
       }
@@ -61,12 +62,15 @@ function App() {
       <HeaderSearchBar />
       <Navigation />
       <Routes>
-      <Route path='/' element={<Home />} /> 
-      <Route path='/login/' element={<Login/>}/>
-      <Route path="/login/find-id" element={<FindId />} />
-      <Route path="/find-id/verify-find-username" element={<FindUserIdResult />} />
-      <Route path='/signUp/*' element={<SignUp/>}/>
-      <Route path='/all' element={<All />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/login/" element={<Login />} />
+        <Route path="/login/find-id" element={<FindId />} />
+        <Route
+          path="/find-id/verify-find-username"
+          element={<FindUserIdResult />}
+        />
+        <Route path="/signUp/*" element={<SignUp />} />
+        <Route path="/all" element={<All />} />
         <Route path="/survey" element={<SurveyApp />} />
         <Route path="/survey/allerge" element={<SurveryListAllerge />} />
         <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
@@ -75,6 +79,10 @@ function App() {
         {/*상품*/}
         <Route path="/products/:pCategoryName/*" element={<Product />} />
         <Route path="/product/productDetail/:pId" element={<ProductDetail />} />
+
+        {/*주문*/}
+        <Route path="/order/:pId/:quantity" element={<Order/>}/>
+
         {/* 전체 리뷰 */}
         <Route path="/reviews" element={<AllReviewList />} />
 

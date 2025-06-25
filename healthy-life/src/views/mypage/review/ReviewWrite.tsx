@@ -76,12 +76,7 @@ function ReviewWrite() {
     }));
   };
 
-  const didRun = useRef(false);
-
   useEffect(() => {
-    if (didRun.current) return;
-    didRun.current = true;
-    
     if (!cookies.token) {
       alert("로그인이 필요합니다.");
       navigate("/login");
@@ -127,7 +122,7 @@ function ReviewWrite() {
       <div className="ImgContainer">
         <div className="ImgContainerDiv">
           {reviewImg ? 
-          <img className="imgPreview" src={reviewImg} alt="미리보기" />
+          <img className="imgPreview" src={reviewImg} alt="리뷰사진진" />
           : <ImageNotSupportedIcon style={{fontSize: "50px" , color: "#a2a2a2"}}/>}
         </div>
         <div className="fileBox">

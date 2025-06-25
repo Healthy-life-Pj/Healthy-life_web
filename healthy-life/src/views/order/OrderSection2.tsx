@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-function Pay2() {
+function OrderSection2() {
   const[isOpen, setIsOpen] = useState<boolean>(false)
 
 
@@ -65,4 +65,4 @@ function Pay2() {
   )
 }
 
-export default Pay2
+export default OrderSection2

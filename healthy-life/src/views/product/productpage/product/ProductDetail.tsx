@@ -159,7 +159,7 @@ const ProductDetail = () => {
               <span> 원</span> 
               </span>
             </div>
-            <div className="deliveryKind">일반배송 | 2500원</div>
+            <div className="deliveryKind">일반배송 | 2000원</div>
             <div className="productDetailbutton">
               <div className="putinCartButton">
                 <button 
@@ -171,7 +171,7 @@ const ProductDetail = () => {
                     WISH
                 </button>
               </div>
-                  <button onClick={() => navigator(`/payment/${pId}`)} className="orderButton">주문</button>
+                  <button onClick={() => navigator(`/order/${pId}/${quantity}`)} className="orderButton">주문</button>
             </div>
           </div>
         </div>

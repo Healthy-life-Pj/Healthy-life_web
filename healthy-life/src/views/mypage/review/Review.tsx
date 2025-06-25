@@ -157,7 +157,7 @@ function Review() {
       <div className="reviewListContainerDiv">
         <h4>작성할 후기</h4>
         <ul className="reviewAppList">
-          {orderDatas.length > 0 ? (
+          {currentOrder.length > 0 ? (
             <>
               {currentOrder.map((order, index) => (
                 <li

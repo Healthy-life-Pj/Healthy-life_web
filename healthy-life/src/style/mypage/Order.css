@@ -90,21 +90,30 @@
 .orderListBtn {
   display: flex;
   gap: 5px 2px;
-  width: 130px;
-  flex-wrap: wrap;
+  margin: 10px 0px;
 }
 
 .orderBtn {
-  width: 60px;
+  width: 200px;
+  height: 35px;
   background-color: #67C6E3;
-  border: none;
-  margin-right: 10px;
   border-radius: 5px;
   padding: 5px;
+  border: none;
+  margin-right: 10px;
   color: white;
   margin: 0 auto;
+  cursor: pointer;
 }
 
-.orderList {
+.orderBtn:hover {
+  background-color: #1478FF;
+}
+
+.OrderLi {
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
   border:  none;
+  height: 120px;
 }
