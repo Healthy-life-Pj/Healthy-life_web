@@ -38,6 +38,7 @@ import SaladApp from './views/allproduct/L-salad/SaladApp';
 import MyPageMain from './views/mypage/MyPageMain';
 import Lowersugar from './views/allproduct/j-lowersugar/LowerSugar';
 import Lunchbox from './views/allproduct/j-lunchbox/Lunchbox';
+import OAuthCallback from './components/auth/OAuthCallback';
 
 function App() {
   return (
@@ -90,6 +91,10 @@ function App() {
         <Route path='/calculator' element={<Bmi />}/>
         <Route path='/join' element={<JoinApp />}/>        
         <Route path='/cart' element={<CartAPP />}/>
+
+        <Route path="/api/v1/auth/google" element={<OAuthCallback />} />
+        <Route path="/api/v1/auth/kakao" element={<OAuthCallback />} />
+        <Route path="/api/v1/auth/naver" element={<OAuthCallback />} />
       </Routes> 
     <Footer />
     </>

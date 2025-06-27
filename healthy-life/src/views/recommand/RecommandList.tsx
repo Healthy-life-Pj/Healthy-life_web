@@ -3,7 +3,6 @@ import { ProductProps } from "./RecommandApp";
 import "../../style/recommandList.css";
 import { useState } from "react";
 import { idText } from "typescript";
-import index from "../../hooks";
 import { Link } from "react-router-dom";
 
 const RecommandList: React.FC<{ products: ProductProps[] }> = ({

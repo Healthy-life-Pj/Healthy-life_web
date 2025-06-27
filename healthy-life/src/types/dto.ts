@@ -88,3 +88,43 @@ export interface OrderGetRequestDto {
   startOrderDate: string; 
   endOrderDate: string;  
 }
+
+export interface OAuthLoginResponse {
+  result: boolean;
+  message: string;
+  data?: {
+    userId: number;
+    username: string;
+    userNickName: string;
+    userEmail: string;
+    token: string;
+    exprTime: number;
+  };
+}
+
+// OAuth 요청 타입
+export interface OAuthLoginRequest {
+  email: string;
+  name: string;
+  snsId: string;
+}
+
+// Google 사용자 정보 타입
+export interface GoogleUserInfo {
+  email: string;
+  name: string;
+  sub: string;
+  picture?: string;
+}
+
+export interface SafeUser {
+  userId?: number | null;
+  username?: string | null;
+  name?: string | null;
+  userNickName?: string | null;
+  userEmail?: string | null;
+  userPhone?: string | null;
+  userGender?: 'M' | 'F' | null;
+  userBirth?: string | null;
+  userMemberGrade?: string | null;
+}
