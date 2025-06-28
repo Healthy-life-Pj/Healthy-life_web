@@ -26,8 +26,6 @@ export interface ReviewRequestDto {
   reviewImgUrl: any;
 }
 
-
-
 export interface ReviewListDto {
   reviewId: number;
   pId: number;
@@ -103,3 +101,35 @@ export interface OrderGetRequestDto {
   endOrderDate: string;  
 }
 
+export interface OrderDto {
+  orderId: number;
+  orderRecipientName: string;
+  orderRecipientPhone: string;
+  shippingRequest: string;
+  deliverAddress: DeliverAddressDto;
+  shippingCost: number;
+  totalAmount: number;
+  orderDate: string;
+  orderDetails: OrderDetailDto[];
+}
+
+export type OrderStatus = 'ORDERED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'RETURNED';
+
+export interface DeliverAddressDto {
+  address: string;
+  addressDetail: string;
+  postNum: string;
+} 
+
+export interface OrderDetailDto {
+  orderId: number;
+  orderDetailId: number;
+  pId: number;
+  pName: string;
+  pImgUrl: string;
+  price: number;
+  quantity: number;
+  totalPrice: number;
+  orderStatus: OrderStatus;
+  orderDate: string;
+}

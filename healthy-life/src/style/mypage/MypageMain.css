@@ -194,10 +194,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-left: 20px;
 }
 
 .myPageOrderDateP {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .myPageOrderDateP {
@@ -226,6 +227,19 @@
 
 .myPageOrderBtn:hover {
   background-color: #1478FF;
+}
+
+.orderDetailBtn {
+  border: none;
+  background-color: #616161;
+  height: 25px;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.orderDetailBtn:hover {
+  background-color: #404040;
 }
 
 @media (max-width: 700px) {

@@ -147,7 +147,8 @@ export interface Order {
   userId: number;
   cartId?: number;
   orderDate: Date;
-  orderStatus: OrderStatus;
+  orderRecipientName: string;
+  orderRecipientPhone: string;
   orderTotalAmount: number;
   orderShippingCost: number;
   orderShippingRequest: string;
@@ -160,6 +161,7 @@ export interface OrderDetail {
   productId: number;
   quantity: number;
   price: number;
+  orderStatus: OrderStatus;
   totalPrice: number;
 }
 

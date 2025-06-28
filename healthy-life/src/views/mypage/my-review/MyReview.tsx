@@ -33,14 +33,17 @@ function Review() {
 
   const orderIndexOfLast = orderCurrentPage * productPerPage;
   const orderIndexOfFirst = orderIndexOfLast - productPerPage;
-  const currentOrder = orderDatas.slice(orderIndexOfFirst, orderIndexOfLast);
 
   const reviewIndexOfLast = reviewCurrentPage * productPerPage;
   const reviewIndexOfFirst = reviewIndexOfLast - productPerPage;
-  const currentReview = reviewDatas.slice(
-    reviewIndexOfFirst,
-    reviewIndexOfLast
-  );
+
+  const currentOrder = Array.isArray(orderDatas)
+    ? orderDatas.slice(orderIndexOfFirst, orderIndexOfLast)
+    : [];
+
+  const currentReview = Array.isArray(reviewDatas)
+    ? reviewDatas.slice(reviewIndexOfFirst, reviewIndexOfLast)
+    : [];
 
   const orderPaginate = (pageNumber: number) => setOrderCurrentPage(pageNumber);
   const reviewPaginate = (pageNumber: number) =>
@@ -65,24 +68,29 @@ function Review() {
   };
 
   const reviewFetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEWS}`,
-          {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-              withCredentials: true,
-            },
-          }
-        );
-        const reversDatas = response.data.data;
-        setReviewModal(reversDatas);
+    try {
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${REVIEW_PATH}${MY_REVIEWS}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+            withCredentials: true,
+          },
+        }
+      );
+      const reversDatas = response.data.data;
+      setReviewModal(reversDatas);
 
-        const reversedList = [...reversDatas.reviewListDto].reverse();
-        setReviewDatas(reversedList);
-      } catch (error) {
-        console.error(error);
-      }
+      const reviewList = reversDatas.reviewListDto;
+
+      const reversedList = Array.isArray(reviewList) 
+        ? [...reviewList].reverse()
+        : [];
+
+      setReviewDatas(reversedList);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const deleteFetchData = async (reviewId: number) => {
@@ -102,22 +110,22 @@ function Review() {
       console.error(error);
     }
   };
-  
-    const didRun = useRef(false); 
-      
-    useEffect(() => {
-      if (didRun.current) return;
-      didRun.current = true;
-  
-      if (!cookies.token) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      }
-  
-      orderFetchData();
-      reviewFetchData();
-    }, []);
+
+  const didRun = useRef(false);
+
+  useEffect(() => {
+    if (didRun.current) return;
+    didRun.current = true;
+
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+
+    orderFetchData();
+    reviewFetchData();
+  }, []);
 
   const openModal = async (id: number) => {
     if (reviewDatas == null) return null;
@@ -199,13 +207,13 @@ function Review() {
               ))}
             </>
           ) : (
-            <p style={{ color: "#454545" }}>작성한 리뷰가 없습니다.</p>
+            <p style={{ color: "#454545" }}>작성할 후기가가 없습니다.</p>
           )}
         </ul>
       </div>
       <SmallPagination
         productPerPage={productPerPage}
-        totalProducts={orderDatas.length}
+        totalProducts={Array.isArray(orderDatas) ? orderDatas.length : 0}
         paginate={orderPaginate}
         currentPage={orderCurrentPage}
       />
@@ -269,13 +277,13 @@ function Review() {
               ))}
             </>
           ) : (
-            <p style={{ color: "#454545" }}>작성한 리뷰가 없습니다.</p>
+            <p style={{ color: "#454545" }}>작성한 후기가 없습니다.</p>
           )}
         </ul>
       </div>
       <SmallPagination
         productPerPage={productPerPage}
-        totalProducts={reviewDatas.length}
+        totalProducts={Array.isArray(reviewDatas) ? reviewDatas.length : 0}
         paginate={reviewPaginate}
         currentPage={reviewCurrentPage}
       />
