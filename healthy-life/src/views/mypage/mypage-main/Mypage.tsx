@@ -225,7 +225,7 @@ function Mypage() {
                         </div>
                         <div>
                           <p>수령인: {orderDatas.find(order => order.orderId === data.orderId)?.orderRecipientName}</p>
-                          <p>주소: {orderDatas.find(order => order.orderId === data.orderId)?.deliverAddress}</p>
+                          {/* <p>주소: {orderDatas.find(order => order.orderId === data.orderId)?.deliverAddress}</p> */}
                         </div>
                       </div>
 
