@@ -100,8 +100,6 @@
 .orderListUl {
   list-style: none;
   width: 100%;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
   font-family: 'Pretendard-Regular';
   padding: 0px 15px;
   box-sizing: border-box;
@@ -122,7 +120,16 @@
 
 .orderListUlLiP {
   width: 120px;
-  font-size: 12px;
+  font-family: 'Pretendard-Regular';
+}
+
+.myPageOrderInfoDiv > .orderListPname {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.myPageOrderInfoDiv > .orderListTotalAmount {
+  font-size: 24px;
 }
 
 .orderListUlLiPName {
@@ -170,8 +177,12 @@
 }
 
 .myPageOrderInfoBox {
-  padding: 10px;
+  width: 100%;
+  height: 190px;
   box-sizing: border-box;
+  margin-bottom: 30px;
+  box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 }
 
 .myPageOrderStatusP {
@@ -181,29 +192,30 @@
   font-family: 'Pretendard-Regular';
 }
 
-.myOrderLi {
+.myOrderOrderDateDetailBtnDiv {
+  width: 100%;
   display: flex;
-  padding: 20px;
-  box-sizing: border-box;
-  border:  none;
-  height: 120px;
   align-items: center;
+  height: 70px;
+  justify-content: space-between;
+  margin: 15px auto;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #e0e0e0;
 }
 
 .myPageOrderInfoDiv {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
   margin-left: 20px;
+  
 }
 
 .myPageOrderDateP {
-  margin-bottom: 10px;
-}
-
-.myPageOrderDateP {
+  font-size: 20px;
   color: #757575;
-  font-family: 'Pretendard-Regular';
+  font-weight: 700;
 }
 
 .myPageOrderBtnDiv {
@@ -231,16 +243,12 @@
 
 .orderDetailBtn {
   border: none;
-  background-color: #616161;
   height: 25px;
   border-radius: 2px;
   color: #fff;
   cursor: pointer;
 }
 
-.orderDetailBtn:hover {
-  background-color: #404040;
-}
 
 @media (max-width: 700px) {
   .mypageMainContainer li{

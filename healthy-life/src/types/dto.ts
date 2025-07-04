@@ -106,10 +106,10 @@ export interface OrderDto {
   orderRecipientName: string;
   orderRecipientPhone: string;
   shippingRequest: string;
-  deliverAddress: DeliverAddressDto;
   shippingCost: number;
   totalAmount: number;
   orderDate: string;
+  deliverAddress: DeliverAddressDto;
   orderDetails: OrderDetailDto[];
 }
 
@@ -131,5 +131,4 @@ export interface OrderDetailDto {
   quantity: number;
   totalPrice: number;
   orderStatus: OrderStatus;
-  orderDate: string;
 }
