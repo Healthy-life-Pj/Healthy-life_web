@@ -6,24 +6,39 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import {
-  OrderDetailDto,
   OrderDto,
   OrderGetRequestDto,
 } from "../../../types/dto";
 import { MAIN_APT_PATH, ORDER_PATH } from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ReactModal from "react-modal";
+import { idText } from "typescript";
 
 function Mypage() {
   const [cookies] = useCookies(["token"]);
   const navigator = useNavigate();
   const [orderDatas, setOrderDatas] = useState<OrderDto[]>([]);
+  const [selectOrderDetail, setSelectOrderDetail] = useState<number[]>([]);
   const [orderChangeBtn, setOrderChangeBtn] = useState<String>("");
-  const [openOrderDetailId, setOpenOrderDetailId] = useState<number | null>(
-    null
-  );
+  const [openOrderDetailId, setOpenOrderDetailId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(5);
+
+  function formatDateToLocalYYYYMMDD(date: Date): string {
+    const offset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - offset);
+    return localDate.toISOString().split("T")[0];
+  }
+
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
+
+  const [orderDate] = useState<OrderGetRequestDto>({
+    startOrderDate: formatDateToLocalYYYYMMDD(thirtyDaysAgo),
+    endOrderDate: formatDateToLocalYYYYMMDD(today),
+  });
 
   const indexOfLastPsot = currentPage * postsPerPage;
   const indexOfFitstPost = indexOfLastPsot - postsPerPage;
@@ -34,24 +49,11 @@ function Mypage() {
 
   const paginate = (pateNumber: number) => setCurrentPage(pateNumber);
 
-  const today = new Date();
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(today.getDate() - 30);
-  const [orderDate, setOrderDate] = useState<OrderGetRequestDto>({
-    startOrderDate: thirtyDaysAgo.toISOString().split("T")[0],
-    endOrderDate: today.toISOString().split("T")[0],
-  });
-
   const toggleOpen = (id: number) => {
     setOpenOrderDetailId((prev) => (prev === id ? null : id));
   };
 
   const getfetchData = async (orderDate: OrderGetRequestDto) => {
-    if (!cookies.token) {
-      alert("로그인이 필요합니다.");
-      navigator(`/login`);
-      return;
-    }
     try {
       const response = await axios.get(`${MAIN_APT_PATH}${ORDER_PATH}`, {
         params: orderDate,
@@ -65,6 +67,16 @@ function Mypage() {
     } catch (error) {
       console.error(error);
     }
+  };
+  
+  const openOrder = orderDatas.find((order) => order.orderId === openOrderDetailId);
+
+  const handleCheckBoxChange = (orderDetailId:number) => {
+    setSelectOrderDetail(prev => 
+      prev.includes(orderDetailId)
+      ? prev.filter(id => id !== orderDetailId)
+      : [...prev, orderDetailId]
+    );
   };
 
   const putFetchData = async (orderDetailId: number, newStatus: string) => {
@@ -92,16 +104,13 @@ function Mypage() {
   }
 
   useEffect(() => {
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigator(`/login`);
+      return;
+    }
     getfetchData(orderDate);
   }, []);
-  
-useEffect(() => {
-  console.log("🔎 전체 주문 수:", orderDatas.length);
-  orderDatas.forEach((o) => {
-    console.log(`📦 주문번호 ${o.orderId}: 상품 수 = ${o.orderDetails?.length}`);
-  });
-}, [orderDatas]);
-
 
   function getOrderSummaryName(order: OrderDto) {
     const firstProductName = order.orderDetails[0].pName;
@@ -110,6 +119,16 @@ useEffect(() => {
     return extraCount > 0
       ? `${firstProductName} 외 ${extraCount}개`
       : `${firstProductName}`;
+  }
+
+  function orderStatusButtonContent(orderStatus: string) {
+    if(orderStatus === "RETURN") {
+      return "반품취소"
+    } else if (orderStatus === "EXCHANGE") {
+      return "교환취소"
+    } else {
+    return "";
+    }
   }
 
   function orderStateKorean(word: string) {
@@ -195,6 +214,7 @@ useEffect(() => {
           </div>
         </div>
         <div className="orderListCotainer">
+          <p className="mypageCommentP">당일 기준 30일이내의 주문건만 조회 됩니다.</p>
           <ul className="orderListUl">
             {currentPosts.map((data, index) => (
               <li className="myPageOrderInfoBox" key={data.orderId}>
@@ -218,7 +238,10 @@ useEffect(() => {
                 <div className="myPageOrderInfoDiv">
                   <div>
                     <div>
-                      <img src={data.orderDetails?.[0]?.pImgUrl || "/default.jpg"} alt="" />
+                      <img
+                        src={data.orderDetails[0].pImgUrl}
+                        alt={data.orderDetails[0].pName}
+                      />
                     </div>
                     <p className="orderListUlLiP orderListPname">
                       {getOrderSummaryName(data)}
@@ -231,68 +254,89 @@ useEffect(() => {
               </li>
             ))}
           </ul>
-          {/* <ReactModal
+          <ReactModal
             isOpen={openOrderDetailId != null}
             onRequestClose={() => setOpenOrderDetailId(null)}
-            className="modal-content"
+            className="orderDetailmodalContent"
             overlayClassName="modal-overlay"
           >
-            {orderDatas && (
-              <div>
-                <div>
-                  <div>
-                    <img
-                      src={openOrderDetail.pImgUrl}
-                      alt={openOrderDetail.pName}
+            {openOrder && (
+              <>
+                <div className="orderDetailModalInfoDiv">
+                  <p className="orderDetailModalInfoP">
+                    <span>수령인 : </span>
+                    {openOrder.orderRecipientName}
+                  </p>
+                  <p className="orderDetailModalInfoP">
+                    <span>연락처 : </span>
+                    {openOrder.orderRecipientPhone}
+                  </p>
+                  <p className="orderDetailModalInfoP">
+                    <span>주소 : </span>
+                    {openOrder.deliverAddress?.postNum}
+                    {openOrder.deliverAddress?.address}
+                    {openOrder.deliverAddress?.addressDetail}
+                  </p>
+                  <p className="orderDetailModalInfoP">
+                    {openOrder.orderDate}
+                  </p>
+                </div>
+                <div className="orderDetailModalOrderContent">
+                {openOrder.orderDetails.map(orderDetail => (
+                <div className="orderDetailModalContainer" key={orderDetail.orderDetailId}>
+                  <p>{orderStateKorean(orderDetail.orderStatus)}</p>
+                  <div className="orderDetailModlaImgPDiv">
+                  <input type="checkbox" onChange={() => handleCheckBoxChange(orderDetail.orderDetailId)}/>
+                  <div className="orderDetailModalImgDiv">
+                    <img className="orderDetailModalImg"
+                      src={orderDetail.pImgUrl}
+                      alt={orderDetail.pName}
                     />
                   </div>
-                  <div>
-                    <p>
-                      <span>수령인 : </span>
-                      {openOrderDetail.orderRecipientName}
-                    </p>
-                    <p>
-                      <span>연락처 : </span>
-                      {openOrderDetail.orderRecipientPhone}
-                    </p>
-                    <p>
-                      <span>주소 : </span>
-                      {openOrderDetail.deliverAddress.postNum}
-                      {openOrderDetail.deliverAddress.address}
-                      {openOrderDetail.deliverAddress.addressDetail}
-                    </p>
+                  <div className="orderDetailModalPNameDiv">
+                    <p className="orderDetailModalPName">{orderDetail.pName}</p>
                   </div>
-                  <div className="myPageOrderBtnDiv">
-                    <button
-                      className="myPageOrderBtn"
-                      onClick={(e) =>
-                        putFetchData(data.orderDetailId, "CANCELLED")
-                      }
-                    >
-                      취소
-                    </button>
-                    <button
-                      className="myPageOrderBtn"
-                      onClick={(e) =>
-                        putFetchData(data.orderDetailId, "RETURN")
-                      }
-                    >
-                      반품
-                    </button>
-                    <button
-                      className="myPageOrderBtn"
-                      onClick={(e) =>
-                        putFetchData(data.orderDetailId, "EXCHANGE")
-                      }
-                    >
-                      교환
-                    </button>
+                  <div className="orderModalCancelBtnDiv">
+                  {["CANCELLED", "RETURN", "EXCHANGE"].includes(orderDetail.orderStatus) 
+                  ?
+                  <button
+                    className="orderStatusChangeCancelBtn"
+                    onClick={() => putFetchData(orderDetail.orderDetailId, "DELIVERED") 
+                    }
+                  >{orderStatusButtonContent(orderDetail.orderStatus)}</button>
+                  : null
+                  }
+                  </div>
                   </div>
                 </div>
-              </div>
+                ))}
+                </div>
+                <div className="orderStatusChangeBtnDiv">
+                  <button
+                    className="orderStatusChangeBtn"
+                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id, "CANCELLED")) 
+                    }
+                  >
+                    취소
+                  </button>
+                  <button
+                    className="orderStatusChangeBtn"
+                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id,  "RETURN"))
+                    }
+                  >
+                    반품
+                  </button>
+                  <button
+                    className="orderStatusChangeBtn"
+                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id, "EXCHANGE"))
+                    }
+                  >
+                    교환
+                  </button>
+                </div>
+              </>
             )}
-          </ReactModal> */}
-          {}
+          </ReactModal>
           <SmallPagination
             currentPage={currentPage}
             paginate={paginate}

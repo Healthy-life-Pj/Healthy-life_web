@@ -97,6 +97,11 @@
   margin: 50px auto;
 }
 
+.mypageCommentP {
+  font-size: 11px;
+  color: #585858;
+}
+
 .orderListUl {
   list-style: none;
   width: 100%;
@@ -249,6 +254,130 @@
   cursor: pointer;
 }
 
+.orderDetailmodalContent {
+  width: 620px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  margin: auto;
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.orderDetailModalInfoDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.orderDetailModalInfoP {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.orderDetailModalOrderContent {
+  max-height: 40vh;
+  overflow: scroll;
+}
+
+.orderDetailModalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+}
+
+.orderDetailModlaImgPDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.orderDetailModalPNameDiv {
+  width: 320px;
+}
+
+.orderDetailModalImgDiv {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.orderDetailModalImg {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.orderDetailModalPName {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.orderModalCancelBtnDiv {
+  width: 120px;
+}
+
+.orderStatusChangeCancelBtn {
+  width: 90px;
+  flex: 1;
+  background-color: #90d4ec;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orderStatusChangeBtnDiv {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.orderStatusChangeBtn {
+  flex: 1;
+  background-color: #90d4ec;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orderStatusChangeBtn:hover, .orderStatusChangeCancelBtn:hover {
+  background-color: #4fc0e8;
+}
 
 @media (max-width: 700px) {
   .mypageMainContainer li{
