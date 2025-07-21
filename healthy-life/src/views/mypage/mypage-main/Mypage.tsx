@@ -13,7 +13,6 @@ import { MAIN_APT_PATH, ORDER_PATH } from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ReactModal from "react-modal";
-import { idText } from "typescript";
 
 function Mypage() {
   const [cookies] = useCookies(["token"]);
