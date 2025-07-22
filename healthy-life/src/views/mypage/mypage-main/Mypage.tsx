@@ -9,7 +9,7 @@ import {
   OrderDto,
   OrderGetRequestDto,
 } from "../../../types/dto";
-import { MAIN_APT_PATH, ORDER_PATH } from "../../../constants";
+import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS } from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ReactModal from "react-modal";
@@ -78,9 +78,9 @@ function Mypage() {
     );
   };
 
-  const putFetchData = async (orderDetailId: number, newStatus: string) => {
+  const putFetchData = async (orderDetailId: number[], newStatus: string) => {
     try {
-      await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}/${orderDetailId}`, null, {
+      await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_ORDER_STATUS}`, {orderDetailIds : orderDetailId}, {
         params: { orderStatus: newStatus },
         headers: {
           Authorization: `Bearer ${cookies.token}`,
@@ -300,7 +300,7 @@ function Mypage() {
                   ?
                   <button
                     className="orderStatusChangeCancelBtn"
-                    onClick={() => putFetchData(orderDetail.orderDetailId, "DELIVERED") 
+                    onClick={() => putFetchData([orderDetail.orderDetailId], "DELIVERED") 
                     }
                   >{orderStatusButtonContent(orderDetail.orderStatus)}</button>
                   : null
@@ -313,21 +313,21 @@ function Mypage() {
                 <div className="orderStatusChangeBtnDiv">
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id, "CANCELLED")) 
+                    onClick={() => putFetchData(selectOrderDetail, "CANCELLED") 
                     }
                   >
                     취소
                   </button>
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id,  "RETURN"))
+                    onClick={() =>  putFetchData(selectOrderDetail,  "RETURN")
                     }
                   >
                     반품
                   </button>
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() => selectOrderDetail.forEach(id => putFetchData(id, "EXCHANGE"))
+                    onClick={() => putFetchData(selectOrderDetail, "EXCHANGE")
                     }
                   >
                     교환

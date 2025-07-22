@@ -48,6 +48,7 @@ export const PRODUCT_SEARCH = "/search";
 // Order
 export const ORDER_SHIPPING = "/shipping";
 export const ORDER_GET_REVIEW = "/review-writable";
+export const ORDER_PUT_ORDER_STATUS = "/order-status";
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
