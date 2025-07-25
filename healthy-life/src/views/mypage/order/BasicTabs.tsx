@@ -2,11 +2,8 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Order from './Order';
-import OrderList from './OrderList';
+import OrderSearch from './OrderSearch';
 import Return from './Return';
-import ReturnOrderList from './ReturnOrderList';
-import { backdropClasses } from '@mui/material';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -76,8 +73,7 @@ export default function BasicTabs() {
       </div>
       <CustomTabPanel value={value} index={0}>
       <div>
-        <Order />
-        <OrderList />
+        <OrderSearch />
       </div>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

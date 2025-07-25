@@ -283,7 +283,7 @@ function Mypage() {
                 <div className="orderDetailModalOrderContent">
                 {openOrder.orderDetails.map(orderDetail => (
                 <div className="orderDetailModalContainer" key={orderDetail.orderDetailId}>
-                  <p>{orderStateKorean(orderDetail.orderStatus)}</p>
+                  <p className="orderDetailModalOrderStatus">{orderStateKorean(orderDetail.orderStatus)}</p>
                   <div className="orderDetailModlaImgPDiv">
                   <input type="checkbox" onChange={() => handleCheckBoxChange(orderDetail.orderDetailId)}/>
                   <div className="orderDetailModalImgDiv">
@@ -296,7 +296,7 @@ function Mypage() {
                     <p className="orderDetailModalPName">{orderDetail.pName}</p>
                   </div>
                   <div className="orderModalCancelBtnDiv">
-                  {["CANCELLED", "RETURN", "EXCHANGE"].includes(orderDetail.orderStatus) 
+                  {["RETURN", "EXCHANGE"].includes(orderDetail.orderStatus) 
                   ?
                   <button
                     className="orderStatusChangeCancelBtn"
@@ -307,6 +307,11 @@ function Mypage() {
                   }
                   </div>
                   </div>
+                  <ul className="orderDetailModalList">
+                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">수량 :</span> {orderDetail.quantity}개</li>
+                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">제품가 :</span> {orderDetail.price.toLocaleString()}원</li>
+                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">총 상품금액 :</span> {orderDetail.totalPrice.toLocaleString()}원</li>
+                  </ul>
                 </div>
                 ))}
                 </div>

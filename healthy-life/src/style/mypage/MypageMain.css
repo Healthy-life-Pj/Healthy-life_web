@@ -124,7 +124,7 @@
 }
 
 .orderListUlLiP {
-  width: 120px;
+  width: 150px;
   font-family: 'Pretendard-Regular';
 }
 
@@ -377,6 +377,28 @@
 
 .orderStatusChangeBtn:hover, .orderStatusChangeCancelBtn:hover {
   background-color: #4fc0e8;
+}
+
+.orderDetailModalList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.orderDetailModalListLi {
+  display: flex;
+  justify-content: space-between;
+  width: 170px;
+}
+
+.orderDetailModalOrderStatus {
+  margin-bottom: 10px;
+}
+
+.orderDetailModalListLiSpan {
+  text-align: right;
+  width: 90px;
 }
 
 @media (max-width: 700px) {
