@@ -195,7 +195,7 @@ const Cart = () => {
           <button onClick={handleSelectAll}>{checkedItems.size === datas.length ? "모두해제" : "모두선택"}</button>
           <button onClick={handlecartDeleteSelected}>선택삭제</button>
           <button onClick={handleCartDeleteAll}>
-            전체삭제제
+            전체삭제
           </button>
         </div>
         <ul className="cartList">
@@ -207,7 +207,7 @@ const Cart = () => {
                 type="checkbox"
                 className="cartCheckbox"
               />
-              <div className="cartImgDiv">git
+              <div className="cartImgDiv">
                 <img
                   src={data.pImgUrl}
                   alt={data.pName}

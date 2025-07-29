@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 
 
 function Order() {
-    const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const [orderDatas, setOrderDatas] = useState<OrderDto[]>([]);
 
   function formatDateToLocalYYYYMMDD(date: Date): string {
@@ -40,6 +40,27 @@ function Order() {
       }
     };
 
+    const orderDateChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+      const {name, value} = e.target;
+      setOrderDate((prev) => ({
+        ...prev,
+        [name] : value,
+      }))
+    }
+
+    const month = (month: number) => {
+      const today = new Date();
+      const thirtyDaysAgo = new Date();
+      const minusDay = 30 * month;
+      thirtyDaysAgo.setDate(today.getDate() - minusDay)
+      const newDates = {
+        startOrderDate : formatDateToLocalYYYYMMDD(thirtyDaysAgo),
+        endOrderDate : formatDateToLocalYYYYMMDD(today),
+      };
+      setOrderDate(newDates);
+      getfetchData(newDates);
+    }
+
     useEffect(() => {
       getfetchData(orderDate);
     }, []);
@@ -48,14 +69,16 @@ function Order() {
     <div>
     <div className='orderSearchContainer'>
     <div className='monthBtn'>
-    <button>1개월</button>
-    <button>6개월</button>
-    <button>12개월</button>
+    <button onClick={() => month(1)}>1개월</button>
+    <button onClick={() => month(6)}>6개월</button>
+    <button onClick={() => month(12)}>12개월</button>
     </div>
     <div className='orderDate'>
-    <input type="date" value={orderDate.startOrderDate}/><span>~</span><input type="date" value={orderDate.endOrderDate}/>
+    <input type="date" name='startOrderDate' value={orderDate.startOrderDate} onChange={orderDateChange}/>
+    <span>~</span>
+    <input type="date" name='endOrderDate' value={orderDate.endOrderDate} onChange={orderDateChange}/>
     </div>
-    <button className='searchBtn'>조회</button>
+    <button type='submit' onClick={() => getfetchData(orderDate)} className='searchBtn'>조회</button>
   </div>
   <div className='orderListContainerBox'>
     <OrderList orderDatas={orderDatas}/>

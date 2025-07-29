@@ -121,7 +121,7 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
                     style={{
                       backgroundColor: "#e0e0e0",
                       color: "black",
-                      border: "none",
+                      border: "none"
                     }}
                   />
                 </button>
