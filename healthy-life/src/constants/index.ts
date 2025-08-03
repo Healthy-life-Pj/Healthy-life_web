@@ -17,7 +17,7 @@ export const QNA_PATH = "/qnas";
 export const IMG_PATH = "http://localhost:4040/image";
 
 // User
-export const GET_USER = "/users/me";
+export const GET_USER = "/me";
 export const UPDATE_USER = "/users/me";
 export const UPDATE_PASSWORD = "/users/me/password";
 export const UPDATE_PASSWORD_BY_EMAIL = "/users/me/password/email";
@@ -49,6 +49,8 @@ export const PRODUCT_SEARCH = "/search";
 export const ORDER_SHIPPING = "/shipping";
 export const ORDER_GET_REVIEW = "/review-writable";
 export const ORDER_PUT_ORDER_STATUS = "/order-status";
+export const ORDER_POST_CART = "/carts";
+
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
@@ -64,6 +66,7 @@ export const MY_CART = "/me";
 export const CART_PRODUCT_QUANTITY = "/quantity";
 export const CART_DELETE = "/cartItemIds";
 export const CART_DELETE_ALL = "/all";
+export const CART_CARTITEMS_LIST = "/search/cartItems";
 
 // Review
 export const ALL_REVIEWS = "/all";

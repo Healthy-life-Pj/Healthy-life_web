@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../style/payment/payment.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { DeliveryAddress, Product, User } from "../../types";
+import "../../../style/payment/payment.css";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { DeliveryAddress, Product, User } from "../../../types";
 import axios from "axios";
 import {
   AUTH_PATH,
+  GET_USER,
   MAIN_APT_PATH,
+  ORDER_PATH,
+  ORDER_POST_CART,
   PRODUCT_PATH,
   USER_PATH,
-} from "../../constants";
+} from "../../../constants";
 import { useCookies } from "react-cookie";
 import {
   Box,
@@ -20,17 +23,17 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import "../../style/Order.css";
-import AddressSearch from "../auth/signUp/AddressSearch";
+import "../../../style/Order.css";
+import AddressSearch from "../../auth/signUp/AddressSearch";
 import ReactModal from "react-modal";
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-function Order() {
+function DirectOrder() {
   const { pId, quantity } = useParams();
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();
   const [productData, setProductData] = useState<Product>();
-  const[isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>({
     userId: 0,
     username: "",
@@ -47,13 +50,9 @@ function Order() {
     snsId: null,
   });
 
-    const openModal = () => {
-      setIsOpen(true)
-    }
-  
-    const closeModal = () => {
-      setIsOpen(!isOpen)
-    }
+  const closeModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   const [option, setOption] = React.useState("");
   const [addressData, setAddressData] = useState<DeliveryAddress>({
@@ -64,7 +63,9 @@ function Order() {
     userId: 0,
   });
 
-  const userdataForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const userdataForm = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     setUserData((prev) => ({
@@ -90,13 +91,38 @@ function Order() {
 
   const userFetchData = async () => {
     try {
-      const response = await axios.get(`${MAIN_APT_PATH}${USER_PATH}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${USER_PATH}${GET_USER}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
       setUserData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const orderFetchData = async () => {
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${ORDER_PATH}/${pId}`,
+        {
+          quantity: quantity,
+          orderRecipientName: userData.name,
+          orderRecipientPhone: userData.userPhone,
+          shippingRequest: option,
+          deliverAddressId: 2, // 임시
+        },
+        {
+          headers: { Authorization: `Bearer ${cookies.token}` },
+          withCredentials: true,
+        }
+      );
+      setIsOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -132,14 +158,18 @@ function Order() {
                 className="deliveryTextField"
                 label="성함"
                 variant="standard"
-                value={userData.name}
-                style={{fontSize: "13px"}}
+                name="name"
+                value={userData.name ?? ""}
+                onChange={userdataForm}
+                style={{ fontSize: "13px" }}
               />
               <TextField
                 className="deliveryTextField"
                 label="전화번호"
+                name="userPhone"
                 variant="standard"
-                value={userData.userPhone}
+                onChange={userdataForm}
+                value={userData.userPhone ?? ""}
               />
             </Box>
           </div>
@@ -172,7 +202,8 @@ function Order() {
                   {productData?.pPrice}
                 </li>
                 <li className="dailyPrice">
-                  <span className="orderProductInfo">주문수량: </span> {quantity}
+                  <span className="orderProductInfo">주문수량: </span>{" "}
+                  {quantity}
                 </li>
                 <li className="orderProduct">
                   <span className="orderProductInfo">총 금액: </span>{" "}
@@ -196,11 +227,18 @@ function Order() {
                   label="option"
                   onChange={handleChange}
                 >
-                  <MenuItem value={10}>직접 수령하겠습니다</MenuItem>
-                  <MenuItem value={20}>부재 시 경비실에 맡겨주세요</MenuItem>
-                  <MenuItem value={30}>배송 전 연락 바랍니다</MenuItem>
-                  <MenuItem value={40}>문 앞에 놔두십시오</MenuItem>
-                  <MenuItem value={50}>요청사항을 선택하세요.</MenuItem>
+                  <MenuItem value="직접 수령하겠습니다">
+                    직접 수령하겠습니다
+                  </MenuItem>
+                  <MenuItem value="부재 시 경비실에 맡겨주세요">
+                    부재 시 경비실에 맡겨주세요
+                  </MenuItem>
+                  <MenuItem value="배송 전 연락 바랍니다">
+                    배송 전 연락 바랍니다
+                  </MenuItem>
+                  <MenuItem value="문 앞에 놔두십시오">
+                    문 앞에 놔두십시오
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -214,47 +252,50 @@ function Order() {
             </div>
           </div>
         </div>
-        <div className='payInformation'>
-        <h3>결제 정보</h3>
-        <ul>
-          <li className="payInformationLi">
-          <span className="orderProductInfo">상품금액 : </span>
-          {productData?.pPrice ? productData?.pPrice * Number(quantity) 
-          :null} 개         
-          </li>
-          <li className="payInformationLi">
-          <span className="orderProductInfo">배송비 : </span>
-          3,000원
-          </li>
-          <li className="payInformationLi">
-          <span className="orderProductInfo">총 결제 금액 : </span>
-          {productData?.pPrice ? productData?.pPrice * Number(quantity) + 3000
-          :null}  
-          </li>
-        </ul>
-        <div className='checkBoxFlexBox'>
-          <Checkbox {...label} />
-          <span>구매약관조건 동의</span>
+        <div className="payInformation">
+          <h3>결제 정보</h3>
+          <ul>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">상품금액 : </span>
+              {productData?.pPrice
+                ? productData?.pPrice * Number(quantity)
+                : null}{" "}
+              개
+            </li>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">배송비 : </span>
+              3,000원
+            </li>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">총 결제 금액 : </span>
+              {productData?.pPrice
+                ? productData?.pPrice * Number(quantity) + 3000
+                : null}
+            </li>
+          </ul>
+          <div className="checkBoxFlexBox">
+            <Checkbox {...label} />
+            <span>구매약관조건 동의</span>
+          </div>
+          <button onClick={orderFetchData}>결제하기</button>
         </div>
-        <button onClick={openModal}>결제하기</button>
-      </div>
-      <ReactModal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        className='modalContent'
-        overlayClassName='modalOverlay'
-      >
-        <div className='paymentModalFlexBox'>
-          <h2>결제가 완료되었습니다.</h2>
-          <Link to='/'>
-            <button onClick={closeModal} className='paymentModalCloseButton'>
-              닫기
-            </button>
-          </Link>
-        </div>
-      </ReactModal>
+        <ReactModal
+          isOpen={isOpen}
+          onRequestClose={closeModal}
+          className="modalContent"
+          overlayClassName="modalOverlay"
+        >
+          <div className="paymentModalFlexBox">
+            <h2>결제가 완료되었습니다.</h2>
+            <Link to="/">
+              <button onClick={closeModal} className="paymentModalCloseButton">
+                닫기
+              </button>
+            </Link>
+          </div>
+        </ReactModal>
       </div>
     </div>
   );
 }
-export default Order;
+export default DirectOrder;

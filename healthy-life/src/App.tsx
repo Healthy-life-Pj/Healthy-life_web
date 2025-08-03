@@ -15,7 +15,7 @@ import SurveryListAllerge from "./views/survey/SurveryListAllerge";
 import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
 import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
 import NonMember from "./views/nonMemberOrder/NonMember";
-import Payment from "./views/order/Order";
+import Payment from "./views/order/direct-order/DirectOrder";
 import BestItem from "./views/best/bestItem";
 import RecommandApp from "./views/physique/PhysiqueProduct";
 import Bmi from "./views/bmi/Bmi";
@@ -31,7 +31,9 @@ import Login from "./views/auth/login/Login";
 import HeaderSearchBar from "./components/HeaderSerch";
 import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
 import AllReviewList from "./views/allreview/AllReviewList";
-import Order from "./views/order/Order";
+import Order from "./views/order/direct-order/DirectOrder";
+import DirectOrder from "./views/order/direct-order/DirectOrder";
+import CartOrder from "./views/order/cart-order/CartOrder";
 
 function App() {
   interface TokenUser {
@@ -81,7 +83,8 @@ function App() {
         <Route path="/product/productDetail/:pId" element={<ProductDetail />} />
 
         {/*주문*/}
-        <Route path="/order/:pId/:quantity" element={<Order/>}/>
+        <Route path="/order/:pId/:quantity" element={<DirectOrder/>}/>
+        <Route path="/order" element={<CartOrder/>}/>
 
         {/* 전체 리뷰 */}
         <Route path="/reviews" element={<AllReviewList />} />

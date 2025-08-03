@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import '../../style/Order.css';
+import '../../../style/Order.css';
 
 function OrderSection1() {
   const [option, setOption] = React.useState('');

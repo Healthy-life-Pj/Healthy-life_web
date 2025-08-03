@@ -22,7 +22,7 @@ const Cart = () => {
   const [quantities, setQuantities] = useState<Record<number, number>>({});
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
   const [cookies] = useCookies(["token"]);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const fetchCartData = async () => {
     try {
@@ -156,7 +156,7 @@ const Cart = () => {
     if (didRun.current) return;
     didRun.current = true;
     if (!cookies.token) {
-      navigator("/login");
+      navigate("/login");
       alert("로그인 후 사용해주세요.");
       return;
     }
@@ -204,6 +204,8 @@ const Cart = () => {
               <input
                 onChange={(e) => handleCheck(e, data.cartItemId)}
                 key={data.cartItemId}
+                name="cartitemId"
+                value={data.cartItemId}
                 type="checkbox"
                 className="cartCheckbox"
               />
@@ -294,9 +296,9 @@ const Cart = () => {
           </ul>
         </div>
         <div className="processBtn">
-          <Link to={"/payment"}>
-            <button className="processButton">결제하기</button>
-          </Link>
+            <button className="processButton" onClick={() => {
+              const selectedIds = Array.from(checkedItems);
+              navigate("/order", { state: { cartItemIds: selectedIds }})}}>결제하기</button>
         </div>
       </div>
     </div>
