@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../../style/payment/payment.css";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DeliveryAddress, Product, User } from "../../../types";
 import axios from "axios";
 import {
   AUTH_PATH,
+  DELIVER_ADDRESS_GET,
+  DELIVER_ADDRESS_PATH,
   GET_USER,
   MAIN_APT_PATH,
   ORDER_PATH,
-  ORDER_POST_CART,
   PRODUCT_PATH,
   USER_PATH,
 } from "../../../constants";
@@ -24,8 +25,8 @@ import {
   TextField,
 } from "@mui/material";
 import "../../../style/Order.css";
-import AddressSearch from "../../auth/signUp/AddressSearch";
 import ReactModal from "react-modal";
+import DeliverAddressModal from "../DeliverAddressModal";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function DirectOrder() {
@@ -34,6 +35,7 @@ function DirectOrder() {
   const navigate = useNavigate();
   const [productData, setProductData] = useState<Product>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isAddressOpen, setIsAddressOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>({
     userId: 0,
     username: "",
@@ -50,17 +52,22 @@ function DirectOrder() {
     snsId: null,
   });
 
-  const closeModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleOpenAddressModal = () => {
+    setIsAddressOpen(true);
+  }
+
+  const closeAddressModal = () => {
+    setIsAddressOpen(!isAddressOpen);
+  }
 
   const [option, setOption] = React.useState("");
   const [addressData, setAddressData] = useState<DeliveryAddress>({
-    addressDeliverId: 0,
+    deliverAddressId: 0,
     address: "",
     addressDetail: "",
     postNum: 0,
     userId: 0,
+    default: false,
   });
 
   const userdataForm = (
@@ -106,6 +113,22 @@ function DirectOrder() {
     }
   };
 
+    const deliverAddressFetchData = async () => {
+    try {
+      const response = await axios.get(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_GET}`, {
+        headers : {
+          Authorization: `Bearer ${cookies.token}`,
+          withCredentials: true,
+        }
+      });
+      const addressList = response.data.data.deliverAddressDto
+      const defaultAddress = addressList.filter((a:DeliveryAddress) => a.default === true)[0];
+      setAddressData(defaultAddress);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const orderFetchData = async () => {
     try {
       await axios.post(
@@ -115,7 +138,7 @@ function DirectOrder() {
           orderRecipientName: userData.name,
           orderRecipientPhone: userData.userPhone,
           shippingRequest: option,
-          deliverAddressId: 2, // 임시
+          deliverAddressId: addressData.deliverAddressId, 
         },
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
@@ -137,6 +160,7 @@ function DirectOrder() {
       navigate("/login");
       alert("로그인이 필요합니다.");
     }
+    deliverAddressFetchData();
     productFetchData();
     userFetchData();
   }, []);
@@ -174,14 +198,12 @@ function DirectOrder() {
             </Box>
           </div>
 
-          {/* <div className='deliveryAddress'>
-<AddressSearch
-              addressData={addressData}
-              setAddressData={setAddressData}
-              validMessage={validAddress}
-            />
-</div> */}
-
+          <ul className='deliveryAddress' key={addressData.deliverAddressId}>
+            <li>{addressData.postNum}</li>
+            <li>{addressData.address}</li>
+            <li>{addressData.addressDetail}</li>
+          </ul>
+          <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
           <div className="productInformationContainer section">
             <h3>상품정보</h3>
             <div className="productInformation">
@@ -189,7 +211,7 @@ function DirectOrder() {
                 <div className="orderProductImgDiv">
                   <img
                     src={productData?.pImageUrl}
-                    alt="상품정보이미지1"
+                    alt={productData?.pName}
                     className="orderProductImg"
                   />
                 </div>
@@ -281,19 +303,24 @@ function DirectOrder() {
         </div>
         <ReactModal
           isOpen={isOpen}
-          onRequestClose={closeModal}
+          onRequestClose={closeAddressModal}
           className="modalContent"
           overlayClassName="modalOverlay"
         >
           <div className="paymentModalFlexBox">
             <h2>결제가 완료되었습니다.</h2>
-            <Link to="/">
-              <button onClick={closeModal} className="paymentModalCloseButton">
+              <button onClick={closeAddressModal} className="paymentModalCloseButton">
                 닫기
               </button>
-            </Link>
           </div>
         </ReactModal>
+        <DeliverAddressModal 
+        isOpen={isAddressOpen} 
+        onClose={closeAddressModal} 
+        onOpen={handleOpenAddressModal}
+        AddressFetchData={deliverAddressFetchData}
+        onSelectAddress={(selectedAddress) => setAddressData(selectedAddress)}
+        />
       </div>
     </div>
   );

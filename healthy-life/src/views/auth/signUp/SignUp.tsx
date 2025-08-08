@@ -59,11 +59,12 @@ function SignUp() {
     snsId: null,
   });
   const [addressData, setAddressData] = useState<DeliveryAddress>({
-    addressDeliverId: 0,
+    deliverAddressId: 0,
     address: "",
     addressDetail: "",
     postNum: 0,
     userId: 0,
+    default: true,
   });
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -12,6 +12,7 @@ export const CART_PATH = "/carts";
 export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
+export const DELIVER_ADDRESS_PATH = "/deliver-addresses"
 
 //Image
 export const IMG_PATH = "http://localhost:4040/image";
@@ -87,5 +88,9 @@ export const QNA_GET_MINE = "/me"
 export const QNA_UPDATE = "/update-qna"
 export const QNA_DELETE = "/delete-qna"
 
-//BMI
-export const BMIAPI = "https://fitness-calculator.p.rapidapi.com/bmi"
+//DeliverAddress
+export const DELIVER_ADDRESS_GET = "/all";
+export const DELIVER_ADDRESS_PUT = "/all";
+export const DELIVER_ADDRESS_DEFAULT_PUT = "/all";
+export const DELIVER_ADDRESS_DELETE = "/delete";
+export const DELIVER_ADDRESS_IS_DEFAULT = "/is-default";

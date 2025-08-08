@@ -109,16 +109,18 @@ export interface OrderDto {
   shippingCost: number;
   totalAmount: number;
   orderDate: string;
-  deliverAddress: DeliverAddressDto;
+  deliverAddress: DeliveryAddressDto;
   orderDetails: OrderDetailDto[];
 }
 
 export type OrderStatus = 'ORDERED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'RETURNED';
 
-export interface DeliverAddressDto {
+export interface DeliveryAddressDto {
+  deliverAddressId: number;
   address: string;
   addressDetail: string;
   postNum: string;
+  default: boolean;
 } 
 
 export interface OrderDetailDto {

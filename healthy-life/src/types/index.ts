@@ -224,11 +224,12 @@ export interface UserPhysiqueTag {
 
 // Delivery Address Interface
 export interface DeliveryAddress {
-  addressDeliverId: number;
+  deliverAddressId: number;
   userId: number;
   address: string;
   addressDetail: string;
   postNum: number;
+  default: boolean;
 }
 
 export interface LoginInResponseDto {

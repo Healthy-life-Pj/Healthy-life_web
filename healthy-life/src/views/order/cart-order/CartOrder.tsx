@@ -54,11 +54,12 @@ function CartOrder() {
   });
   const [option, setOption] = React.useState("");
   const [addressData, setAddressData] = useState<DeliveryAddress>({
-    addressDeliverId: 0,
+    deliverAddressId: 0,
     address: "",
     addressDetail: "",
     postNum: 0,
     userId: 0,
+    default: false,
   });
 
   const closeModal = () => {
