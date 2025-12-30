@@ -113,7 +113,19 @@ export interface OrderDto {
   orderDetails: OrderDetailDto[];
 }
 
-export type OrderStatus = 'ORDERED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'RETURNED';
+export type OrderStatus =
+  | 'PENDING'
+  | 'CONFIRMED'
+  | 'PREPARING'
+  | 'SHIPPED'
+  | 'DELIVERED'
+  | 'CANCELLED'
+  | 'RETURN_REQUEST'
+  | 'RETURN_IN_PROGRESS'
+  | 'RETURNED'
+  | 'EXCHANGE_REQUEST'
+  | 'EXCHANGE_IN_PROGRESS'
+  | 'EXCHANGED';
 
 export interface DeliveryAddressDto {
   deliverAddressId: number;

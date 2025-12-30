@@ -10,8 +10,10 @@ import {
   CART_DELETE_ALL,
   CART_PATH,
   CART_PRODUCT_QUANTITY,
+  IMG_PATH,
   MAIN_APT_PATH,
   MY_CART,
+  PRODUCT_IMG,
   PRODUCT_PATH,
 } from "../../constants";
 import { useCookies } from "react-cookie";
@@ -211,7 +213,7 @@ const Cart = () => {
               />
               <div className="cartImgDiv">
                 <img
-                  src={data.pImgUrl}
+                  src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
                   alt={data.pName}
                   className="cartImage"
                 />

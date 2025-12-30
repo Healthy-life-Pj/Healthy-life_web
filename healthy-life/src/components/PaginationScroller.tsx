@@ -6,7 +6,7 @@ import "../style/home/allProduct.css";
 import { useCookies } from "react-cookie";
 import CartModal from "./CartModal";
 import axios from "axios";
-import { CART_PATH, CART_PRODUCT, MAIN_APT_PATH, MY_CART } from "../constants";
+import { CART_PATH, CART_PRODUCT, IMG_PATH, MAIN_APT_PATH, MY_CART, PRODUCT_IMG } from "../constants";
 
 interface PaginationScrollProps {
   products: ProductDetailResponseDto[];
@@ -80,7 +80,6 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
   const unitPrice = (pPrice: number) => {
     return pPrice.toLocaleString();
   };
-
   useEffect(() => {
     setActiveProduct(null);
     setModalIsOpen(false);
@@ -101,7 +100,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             onClick={() => handleClickProductDetail(product)}
           >
             <img
-              src={product.pImgUrl}
+              src={`${IMG_PATH}${PRODUCT_IMG}/${product.pImgUrl}`}
               alt={product.pName}
               className="allProductImage"
               onClick={() => handleClickProductDetail(product)}

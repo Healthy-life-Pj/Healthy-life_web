@@ -1,5 +1,6 @@
 export const MAIN_APT_PATH = "http://localhost:4040/api/v1";
 
+
 // Resource
 export const USER_PATH = "/users";
 export const AUTH_PATH = "/auth";
@@ -12,7 +13,8 @@ export const CART_PATH = "/carts";
 export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
-export const DELIVER_ADDRESS_PATH = "/deliver-addresses"
+export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
+export const PRODUCT_IMG = "/productImg";
 
 //Image
 export const IMG_PATH = "http://localhost:4040/image";
@@ -50,6 +52,7 @@ export const PRODUCT_SEARCH = "/search";
 export const ORDER_SHIPPING = "/shipping";
 export const ORDER_GET_REVIEW = "/review-writable";
 export const ORDER_PUT_ORDER_STATUS = "/order-status";
+export const ORDER_PUT_RETURN_EXCHAGE = "/cancel"
 export const ORDER_POST_CART = "/carts";
 
 

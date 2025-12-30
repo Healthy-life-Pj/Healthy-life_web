@@ -22,16 +22,17 @@
   justify-content: space-around;
 }
 
-.DivProductImage {
+.divProductImage {
   width: 40%;
   height: 240px;
   display: flex;
   flex-direction: center!important;
+  overflow: hidden;
   align-items: center;
 }
 
 .productImgInDiv {
-  width: 90%;
+  width: 100%;
 }
 
 .productData {

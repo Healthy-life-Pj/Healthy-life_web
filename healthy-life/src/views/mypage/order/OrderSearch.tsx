@@ -81,7 +81,7 @@ function Order() {
     <button type='submit' onClick={() => getfetchData(orderDate)} className='searchBtn'>조회</button>
   </div>
   <div className='orderListContainerBox'>
-    <OrderList orderDatas={orderDatas}/>
+    <OrderList orderDatas={orderDatas} getfetchData={() => getfetchData(orderDate)}/>
   </div>
   </div>
   )

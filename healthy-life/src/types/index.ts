@@ -30,7 +30,7 @@ export interface Product {
   pUsage: string;
   pExpirationDate: Date;
   pManufacturer: string;
-  pImageUrl: string;
+  pImgUrl: string;
   pStockStatus: number;
 }
 
@@ -138,9 +138,12 @@ export type OrderStatus =
   | 'SHIPPED'
   | 'DELIVERED'
   | 'CANCELLED'
-  | 'REFUNDED'
-  | 'RETURN'
-  | 'EXCHANGE';
+  | 'RETURN_REQUEST'
+  | 'RETURN_IN_PROGRESS'
+  | 'RETURNED'
+  | 'EXCHANGE_REQUEST'
+  | 'EXCHANGE_IN_PROGRESS'
+  | 'EXCHANGED';
 
 export interface Order {
   orderId: number;
@@ -152,6 +155,7 @@ export interface Order {
   orderTotalAmount: number;
   orderShippingCost: number;
   orderShippingRequest: string;
+  shippingCost: 3000;
 }
 
 // Order Detail Interface

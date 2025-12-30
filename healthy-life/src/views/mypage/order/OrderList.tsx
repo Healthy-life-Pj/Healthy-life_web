@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../style/mypage/Order.css";
 import {
   OrderDto,
-  OrderGetRequestDto,
+  OrderGetRequestDto
 } from "../../../types/dto";
 import SmallPagination from "../../../components/SmallPagination";
 import ReactModal from "react-modal";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
-import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS } from "../../../constants";
+import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS, ORDER_PUT_RETURN_EXCHAGE } from "../../../constants";
 import { useCookies } from "react-cookie";
+import Order from "./OrderSearch";
 
 interface OrderSearchResultProps {
   orderDatas: OrderDto[];
+  getfetchData: () => Promise<void>;
 }
 
-const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
+const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
     const [cookies] = useCookies(["token"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(4);
@@ -23,17 +25,19 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
     null
   );
   const [selectOrderDetail, setSelectOrderDetail] = useState<number[]>([]);
-
+  const [orders, setOrders] = useState<OrderDto[]|undefined>(undefined);
+  
   const toggleOpen = (id: number) => {
     setOpenOrderDetailId((prev) => (prev === id ? null : id));
   };
-
+  
   const indexOfLastPsot = currentPage * postsPerPage;
   const indexOfFitstPost = indexOfLastPsot - postsPerPage;
-
-  const currentPosts = Array.isArray(orderDatas)
-    ? orderDatas.slice(indexOfFitstPost, indexOfLastPsot)
-    : [];
+  
+  const currentPosts = Array.isArray(orders)
+  ? orders.slice(indexOfFitstPost, indexOfLastPsot)
+  : [];
+  const openOrder = orders?.find((order) => order.orderId === openOrderDetailId);
 
   const paginate = (pateNumber: number) => setCurrentPage(pateNumber);
 
@@ -46,10 +50,29 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
           },
           withCredentials: true,
         });
+        getfetchData();
       } catch (error) {
         console.error(error);
       }
     };
+
+  const cancelReturnAndExchage = async(orderDetailId:number) => {
+    try{
+      await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_RETURN_EXCHAGE}/${orderDetailId}`, {
+        headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+      });
+        getfetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+useEffect(() => {
+  setOrders(orderDatas);
+}, [orderDatas]);
 
   function getOrderSummaryName(order: OrderDto) {
     const firstProductName = order.orderDetails[0].pName;
@@ -60,40 +83,50 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
       : `${firstProductName}`;
   }
 
+
   function orderStatusButtonContent(orderStatus: string) {
-    if (orderStatus === "RETURN") {
+    if (orderStatus === "RETURN_REQUEST") {
       return "반품취소";
-    } else if (orderStatus === "EXCHANGE") {
+    } else if (orderStatus === "EXCHANGE_REQUEST") {
       return "교환취소";
     } else {
       return "";
     }
   }
 
-  function orderStateKorean(word: string) {
-    switch (word) {
-      case "PENDING":
-        return "대기중";
-      case "CONFIRMED":
-        return "확인됨";
-      case "PREPARING":
-        return "준비중";
-      case "SHIPPED":
-        return "배송중";
-      case "DELIVERED":
-        return "배송 완료";
-      case "CANCELLED":
-        return "주문 취소";
-      case "REFUNDED":
-        return "환불";
-      case "RETURN":
-        return "반품";
-      case "EXCHANGE":
-        return "교환";
-    }
+function orderStateKorean(word: string) {
+  switch (word) {
+    case "PENDING":
+      return "대기중";
+    case "CONFIRMED":
+      return "확인됨";
+    case "PREPARING":
+      return "준비중";
+    case "SHIPPED":
+      return "배송중";
+    case "DELIVERED":
+      return "배송 완료";
+    case "CANCELLED":
+      return "주문 취소";
+
+    case "RETURN_REQUEST":
+      return "반품 신청";
+    case "RETURN_IN_PROGRESS":
+      return "반품 진행중";
+    case "RETURNED":
+      return "반품 완료";
+
+    case "EXCHANGE_REQUEST":
+      return "교환 신청";
+    case "EXCHANGE_IN_PROGRESS":
+      return "교환 진행중";
+    case "EXCHANGED":
+      return "교환 완료";
+
+    default:
+      return "";
   }
-    
-  const openOrder = orderDatas.find((order) => order.orderId === openOrderDetailId);
+}
 
     const handleCheckBoxChange = (orderDetailId:number) => {
     setSelectOrderDetail(prev => 
@@ -189,7 +222,7 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
                       <div className="orderDetailModalImgDiv">
                         <img
                           className="orderDetailModalImg"
-                          src={orderDetail.pImgUrl}
+                          src={``}
                           alt={orderDetail.pName}
                         />
                       </div>
@@ -199,16 +232,13 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
                         </p>
                       </div>
                       <div className="orderModalCancelBtnDiv">
-                        {["RETURN", "EXCHANGE"].includes(
+                        {["RETURNED", "EXCHANGED"].includes(
                           orderDetail.orderStatus
                         ) ? (
                           <button
                             className="orderStatusChangeCancelBtn"
                             onClick={() =>
-                              putFetchData(
-                                [orderDetail.orderDetailId],
-                                "DELIVERED"
-                              )
+                              cancelReturnAndExchage(orderDetail.orderDetailId)
                             }
                           >
                             {orderStatusButtonContent(orderDetail.orderStatus)}
@@ -248,13 +278,13 @@ const OrderList = ({ orderDatas }: OrderSearchResultProps) => {
                 </button>
                 <button
                   className="orderStatusChangeBtn"
-                  onClick={() => putFetchData(selectOrderDetail, "RETURN")}
+                  onClick={() => putFetchData(selectOrderDetail, "RETURN_REQUEST")}
                 >
                   반품
                 </button>
                 <button
                   className="orderStatusChangeBtn"
-                  onClick={() => putFetchData(selectOrderDetail, "EXCHANGE")}
+                  onClick={() => putFetchData(selectOrderDetail, "EXCHANGE_REQUEST")}
                 >
                   교환
                 </button>

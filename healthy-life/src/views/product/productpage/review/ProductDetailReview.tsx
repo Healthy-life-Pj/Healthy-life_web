@@ -5,6 +5,7 @@ import { ReviewResponseDto } from "../../../../types/dto";
 import axios from "axios";
 import {
   AUTH_PATH,
+  IMG_PATH,
   MAIN_APT_PATH,
   REVIEW_PATH,
   REVIEW_PRODUCT,
@@ -108,7 +109,7 @@ function Review() {
               >
                 <img
                   className="reivewImg"
-                  src={review.reviewImgUrl}
+                  src={`${IMG_PATH}/${review.reviewImgUrl}`}
                   alt={String(review.reviewId)}
                 />
               </div>

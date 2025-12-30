@@ -6,7 +6,9 @@ import MyQnAContent from "./MyQnAContent";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import {
+  IMG_PATH,
   MAIN_APT_PATH,
+  PRODUCT_IMG,
   QNA_DELETE,
   QNA_GET_MINE,
   QNA_PATH,
@@ -90,7 +92,7 @@ function MyQnA() {
                     >
                       <div className="qnaImgDiv">
                         <img
-                          src={qna.pImgUrl}
+                          src={`${IMG_PATH}${PRODUCT_IMG}/${qna.pImgUrl}`}
                           alt={qna.pName}
                           className="qnaImgPDivImg"
                         />

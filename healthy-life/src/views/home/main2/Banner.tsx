@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../../style/home/main2.css'
 import { ProductDetailResponseDto, ProductListResponseDto } from '../../../types/dto';
 import axios from 'axios';
-import { ALL_PRODUCTS, AUTH_PATH, MAIN_APT_PATH, PRODUCT_PATH } from '../../../constants';
+import { ALL_PRODUCTS, AUTH_PATH, IMG_PATH, MAIN_APT_PATH, PRODUCT_IMG, PRODUCT_PATH } from '../../../constants';
 import { useNavigate } from 'react-router-dom';
 
 const Banner= () => {
@@ -55,7 +55,9 @@ const Banner= () => {
         className='bannerImgDiv'
         onClick={() => handleClickProductDetail(data)}
         >
-          <img className='bannerImagesljw' key={data.pId} src={data.pImgUrl} alt={data.pName}/>
+          <img className='bannerImagesljw' key={data.pId}             
+          src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
+          alt={data.pName}/>
         </div>
       ))}
       <button className='bannerNextButton1' onClick={handleNextClick}>&#10095;</button>

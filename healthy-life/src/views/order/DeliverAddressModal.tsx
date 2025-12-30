@@ -113,7 +113,7 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
             <div>{a.addressDetail}</div>
             <button onClick={() => isDefaultAddressFetchData(a.deliverAddressId) }>{a.default ? <p>기본배송지</p> : <p>기본배송지 설정</p> }</button>
             <button onClick={() => deleteDeliverAddressFetchData(a.deliverAddressId)}>삭제</button>
-            <button onClick={() => deleteDeliverAddressFetchData(a.deliverAddressId)}>수정ㅂ</button>
+            <button onClick={() => deleteDeliverAddressFetchData(a.deliverAddressId)}>수정</button>
           </li>
           )}
         </ul>

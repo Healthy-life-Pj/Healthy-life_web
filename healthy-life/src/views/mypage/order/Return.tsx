@@ -98,7 +98,7 @@ function Return() {
         </button>
       </div>
       <div className="orderListContainerBox">
-        <OrderList orderDatas={orderDatas} />
+        <OrderList orderDatas={orderDatas} getfetchData={() => getfetchData(orderDate)}/>
       </div>
     </div>
   );
