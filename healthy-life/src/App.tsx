@@ -22,7 +22,7 @@ import Review from './views/productpage/review/Review';
 import QNA from './views/productpage/qna/QNA';
 import All from './views/allproduct/all/All';
 import AllReview from './views/allreview/AllReview';
-import LoginNav from './views/login/LoginNav';
+import LoginNav from './views/login/Login';
 import SurveryListAllerge from './views/survey/SurveryListAllerge';
 import SurveryListDiabetes from './views/survey/SurveryListDiabetes';
 import SurveryListDietGoal from './views/survey/SurveryListDietGoal';

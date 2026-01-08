@@ -123,3 +123,416 @@
 }
 
 
+/* Login 스타일 */
+.login-container {
+  /* 기존 loginContainer 스타일 상속 */
+}
+
+.login-form {
+  /* 기존 loginForm 스타일 상속 */
+}
+
+/* 로그인 버튼 */
+.login-button {
+  position: relative;
+  padding: 12px 24px;
+  margin: 10px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.login-button:not(:disabled) {
+  background-color: #1976d2;
+}
+
+.login-button:not(:disabled):hover {
+  background-color: #1565c0;
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.login-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* OAuth 섹션 */
+.oauth-section {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.oauth-section-title {
+  text-align: center;
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.oauth-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* OAuth 버튼 공통 스타일 */
+.oauth-button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid;
+}
+
+.oauth-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.oauth-button-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Google 버튼 */
+.oauth-button.google {
+  border-color: #4285f4;
+}
+
+.oauth-button.google:not(:disabled) {
+  background-color: #4285f4;
+  color: white;
+}
+
+.oauth-button.google:not(:disabled):hover {
+  background-color: #3367d6;
+}
+
+.oauth-button.google:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+/* Kakao 버튼 */
+.oauth-button.kakao {
+  border-color: #FEE500;
+}
+
+.oauth-button.kakao:not(:disabled) {
+  background-color: #FEE500;
+  color: #3c1e1e;
+}
+
+.oauth-button.kakao:not(:disabled):hover {
+  background-color: #fdd835;
+}
+
+.oauth-button.kakao:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+/* Naver 버튼 */
+.oauth-button.naver {
+  border-color: #03C75A;
+}
+
+.oauth-button.naver:not(:disabled) {
+  background-color: #03C75A;
+  color: white;
+}
+
+.oauth-button.naver:not(:disabled):hover {
+  background-color: #02a048;
+}
+
+.oauth-button.naver:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+/* 모달 스타일 */
+.modal-container {
+  /* 기존 modalContainer 스타일 상속 */
+}
+
+.modal-content {
+  /* 기존 modalContent 스타일 상속 */
+}
+
+.modal-overlay {
+  /* 기존 modalOverlay 스타일 상속 */
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.modal-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.modal-user-info {
+  text-align: left;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.modal-user-info p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.modal-user-info strong {
+  color: #333;
+}
+
+.modal-success-message {
+  color: #4caf50;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #e8f5e8;
+  border-radius: 6px;
+  margin: 15px 0;
+  border: 1px solid #4caf50;
+  text-align: center;
+}
+
+.modal-welcome {
+  font-size: 18px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.modal-welcome strong {
+  color: #1976d2;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-button.primary {
+  background-color: #4CAF50;
+}
+
+.modal-button.primary:hover {
+  background-color: #45a049;
+}
+
+.modal-button.secondary {
+  background-color: #2196F3;
+}
+
+.modal-button.secondary:hover {
+  background-color: #1976d2;
+}
+
+.modal-button.default {
+  background-color: #6c757d;
+}
+
+.modal-button.default:hover {
+  background-color: #5a6268;
+}
+
+.modal-loading {
+  text-align: center;
+}
+
+.modal-loading h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-loading p {
+  color: #666;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* 하단 링크 섹션 */
+.bottom-links {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.bottom-links p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.bottom-links a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bottom-links a.link-primary {
+  color: #1976d2;
+}
+
+.bottom-links a.link-primary:hover {
+  color: #1565c0;
+  text-decoration: underline;
+}
+
+.bottom-links a.link-success {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.bottom-links a.link-success:hover {
+  color: #218838;
+  text-decoration: underline;
+}
+
+/* 로딩 상태 */
+.loading-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-text {
+  font-size: 14px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .login-button {
+    min-width: 180px;
+    padding: 10px 20px;
+    margin: 8px;
+  }
+
+  .oauth-button {
+    min-width: 200px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .oauth-buttons-container {
+    gap: 8px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-button {
+    width: 100%;
+  }
+
+  .modal-user-info {
+    padding: 12px;
+    margin: 15px 0;
+  }
+
+  .modal-welcome {
+    font-size: 16px;
+  }
+
+  .bottom-links {
+    margin-top: 20px;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-button {
+    min-width: 160px;
+    font-size: 14px;
+  }
+
+  .oauth-button {
+    min-width: 180px;
+    font-size: 12px;
+  }
+
+  .oauth-section {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  .modal-user-info {
+    font-size: 13px;
+  }
+
+  .bottom-links p {
+    font-size: 13px;
+  }
+}
+
+/* 접근성 개선 */
+.login-button:focus,
+.oauth-button:focus,
+.modal-button:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+.oauth-button:focus {
+  outline-color: inherit;
+}
+
+.oauth-button.google:focus {
+  outline-color: #4285f4;
+}
+
+.oauth-button.kakao:focus {
+  outline-color: #FEE500;
+}
+
+.oauth-button.naver:focus {
+  outline-color: #03C75A;
+}

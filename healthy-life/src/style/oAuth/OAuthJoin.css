@@ -1,0 +1,221 @@
+/* OAuth Join 스타일 */
+.oauth-join-container {
+  /* 기존 loginContainer 스타일 상속 */
+}
+
+.oauth-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  border: 1px solid #2196f3;
+}
+
+.oauth-header h2 {
+  margin: 0 0 10px 0;
+  color: #1976d2;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.oauth-header p {
+  margin: 5px 0;
+  color: #1976d2;
+  font-size: 14px;
+}
+
+.oauth-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.gender-section {
+  margin: 10px 0;
+}
+
+.gender-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.gender-options {
+  display: flex;
+  gap: 20px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.gender-option input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.gender-option:hover {
+  color: #1976d2;
+}
+
+.address-container {
+  display: flex;
+  gap: 10px;
+}
+
+.address-input {
+  flex: 1;
+}
+
+.address-search-btn {
+  padding: 10px 15px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.address-search-btn:hover:not(:disabled) {
+  background-color: #1976d2;
+}
+
+.address-search-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-button {
+  flex: 1;
+  padding: 12px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:not(:disabled) {
+  background-color: #28a745;
+}
+
+.submit-button:not(:disabled):hover {
+  background-color: #218838;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.back-button {
+  padding: 12px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:not(:disabled):hover {
+  background-color: #5a6268;
+}
+
+.back-button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #f44336;
+  font-size: 12px;
+  margin: 5px 0 0 0;
+}
+
+.loading-text {
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+/* Auto-fill indicator */
+.auto-fill-indicator {
+  font-size: 12px;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .oauth-form-container {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  
+  .oauth-header {
+    margin-bottom: 15px;
+    padding: 12px;
+  }
+  
+  .oauth-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .button-container {
+    flex-direction: column;
+  }
+  
+  .back-button {
+    width: 100%;
+  }
+  
+  .address-container {
+    flex-direction: column;
+  }
+  
+  .address-search-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .oauth-form-container {
+    padding: 0 15px;
+  }
+  
+  .oauth-header {
+    padding: 10px;
+  }
+  
+  .oauth-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .gender-options {
+    gap: 15px;
+  }
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-// 타입 정의
 interface OAuthConfig {
   googleClientId?: string;
   kakaoClientId?: string;
@@ -8,7 +7,6 @@ interface OAuthConfig {
   apiBaseUrl?: string;
 }
 
-// 🎯 백엔드 응답 타입 정의
 interface OAuthErrorResponse {
   message?: string;
   error?: string;
@@ -30,8 +28,7 @@ interface OAuthResult {
   error?: string;
   needsSignup?: boolean;
   oauthData?: any;
-  errorType?: 'SERVER_ERROR' | 'VALIDATION_ERROR' | 'USER_NOT_FOUND' | 'MISSING_REQUIRED_FIELDS';
-  debugInfo?: any;
+  errorType?: 'SERVER_ERROR' | 'VALIDATION_ERROR' | 'USER_NOT_FOUND' | 'MISSING_REQUIRED_FIELDS' | 'AUTH_FAILED';
 }
 
 interface SafeUser {
@@ -52,7 +49,6 @@ interface UseOAuthReturn {
   oauthResult: SafeUser | null;
   needsSignup: boolean;
   oauthSignupData: any;
-  debugInfo: any;
   loginWithGoogle: () => void;
   loginWithKakao: () => void;
   loginWithNaver: () => void;
@@ -62,121 +58,101 @@ interface UseOAuthReturn {
   proceedToSignup: () => void;
 }
 
+const safeStorage = {
+  getItem: (key: string, storage: Storage = localStorage): string | null => {
+    try {
+      return storage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+
+  setItem: (key: string, value: string, storage: Storage = localStorage): boolean => {
+    try {
+      storage.setItem(key, value);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+
+  removeItem: (key: string, storage: Storage = localStorage): boolean => {
+    try {
+      storage.removeItem(key);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+};
+
 export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [oauthResult, setOauthResult] = useState<SafeUser | null>(null);
   const [needsSignup, setNeedsSignup] = useState<boolean>(false);
   const [oauthSignupData, setOauthSignupData] = useState<any>(null);
-  const [debugInfo, setDebugInfo] = useState<any>(null);
-  
-  // 팝업 창과 타이머 참조
+
   const popupRef = useRef<Window | null>(null);
   const popupTimerRef = useRef<NodeJS.Timeout | null>(null);
   const popupMonitorRef = useRef<NodeJS.Timeout | null>(null);
+  const processingRef = useRef<Map<string, boolean>>(new Map());
 
-  // 설정값들 (useCallback 의존성에서 안정적이도록)
   const GOOGLE_CLIENT_ID = config?.googleClientId || process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const KAKAO_CLIENT_ID = config?.kakaoClientId || process.env.REACT_APP_KAKAO_CLIENT_ID;
   const NAVER_CLIENT_ID = config?.naverClientId || process.env.REACT_APP_NAVER_CLIENT_ID;
-  const API_BASE_URL = config?.apiBaseUrl || 'http://localhost:4040/api/v1/auth';
+  const API_BASE_URL = config?.apiBaseUrl || process.env.REACT_APP_API_BASE_URL || 'http://localhost:4040/api/v1/auth';
 
-  // 리다이렉트 URL들
   const KAKAO_REDIRECT_URL = `${window.location.origin}/api/v1/auth/kakao`;
   const NAVER_REDIRECT_URL = `${window.location.origin}/api/v1/auth/naver`;
   const GOOGLE_REDIRECT_URL = `${window.location.origin}/api/v1/auth/google`;
 
-  // 🔍 디버깅 정보 저장 함수 (useCallback)
-  const saveDebugInfo = useCallback((info: any) => {
-    const timestamp = new Date().toISOString();
-    const debugData = {
-      timestamp,
-      ...info
-    };
-    setDebugInfo(debugData);
-    console.log('🔧 디버깅 정보 저장:', debugData);
+  const validateClientId = useCallback((provider: string, clientId?: string): boolean => {
+    if (!clientId?.trim()) {
+      setError(`${provider} 로그인 설정이 올바르지 않습니다. 관리자에게 문의하세요.`);
+      return false;
+    }
+    return true;
   }, []);
 
-  // 🎯 에러 타입 분석 함수 (useCallback)
-  const analyzeError = useCallback((status: number, responseData: OAuthErrorResponse, requestData: any): { errorType: string, needsSignup: boolean } => {
-    console.log('🔍 상세 에러 분석:', { status, responseData, requestData });
-    
-    // 디버깅 정보 저장
-    saveDebugInfo({
-      type: 'error_analysis',
-      status,
-      responseData,
-      requestData,
-      timestamp: Date.now()
-    });
-    
-    // 400 에러들 분석
+  const analyzeError = useCallback((status: number, responseData: OAuthErrorResponse): { errorType: string, needsSignup: boolean } => {
     if (status === 400) {
       const message = responseData?.message || responseData?.error || '';
       const code = responseData?.code || responseData?.errorCode || '';
-      
-      console.log('📝 400 에러 상세 분석:', { message, code });
-      
-      // 🎯 회원가입 필요 패턴들
-      const signupPatterns = [
-        // 영어 패턴
+
+      const signupRequiredPatterns = [
+        /sign in failed/i,
+        /signin failed/i,
         /user.*not.*found/i,
+        /account.*not.*found/i,
         /missing.*required.*field/i,
-        /phone.*required/i,
         /additional.*info.*required/i,
-        /profile.*incomplete/i,
-        /signup.*required/i,
         /registration.*needed/i,
-        
-        // 한국어 패턴
         /사용자.*찾을.*수.*없/i,
-        /필수.*정보.*부족/i,
-        /전화번호.*필요/i,
-        /추가.*정보.*필요/i,
-        /프로필.*완성.*않/i,
-        /회원가입.*필요/i,
-        
-        // 코드 패턴
+        /계정.*없/i,
+        /가입.*필요/i,
+        /등록.*필요/i,
         /USER_NOT_FOUND/i,
-        /MISSING_REQUIRED_FIELDS/i,
-        /PHONE_REQUIRED/i,
-        /ADDITIONAL_INFO_REQUIRED/i,
-        /INCOMPLETE_PROFILE/i,
+        /ACCOUNT_NOT_FOUND/i,
         /SIGNUP_REQUIRED/i
       ];
-      
-      const needsSignup = signupPatterns.some(pattern => 
+
+      const needsSignup = signupRequiredPatterns.some(pattern =>
         pattern.test(message) || pattern.test(code)
       );
-      
-      console.log('🎯 회원가입 필요 여부:', needsSignup);
-      
-      if (needsSignup) {
-        return { errorType: 'USER_NOT_FOUND', needsSignup: true };
-      } else {
-        return { errorType: 'VALIDATION_ERROR', needsSignup: false };
-      }
-    }
-    
-    // 401: 인증 실패
-    if (status === 401) {
-      return { errorType: 'VALIDATION_ERROR', needsSignup: false };
-    }
-    
-    // 404: 사용자 없음 (회원가입 필요)
-    if (status === 404) {
-      return { errorType: 'USER_NOT_FOUND', needsSignup: true };
-    }
-    
-    // 5xx: 서버 오류
-    if (status >= 500) {
-      return { errorType: 'SERVER_ERROR', needsSignup: false };
-    }
-    
-    return { errorType: 'SERVER_ERROR', needsSignup: false };
-  }, [saveDebugInfo]);
 
-  // 🎯 안전한 사용자 데이터 처리 함수 (useCallback)
+      return needsSignup
+        ? { errorType: 'USER_NOT_FOUND', needsSignup: true }
+        : { errorType: 'AUTH_FAILED', needsSignup: false };
+    }
+
+    if (status === 401) return { errorType: 'AUTH_FAILED', needsSignup: false };
+    if (status === 404) return { errorType: 'USER_NOT_FOUND', needsSignup: true };
+    if (status >= 500) return { errorType: 'SERVER_ERROR', needsSignup: false };
+
+    return { errorType: 'AUTH_FAILED', needsSignup: false };
+  }, []);
+
   const sanitizeUserData = useCallback((userData: any): SafeUser => {
     if (!userData || typeof userData !== 'object') {
       return {
@@ -195,8 +171,8 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
     return {
       userId: userData.userId || null,
       username: userData.username || null,
-      name: userData.name || userData.nickname || userData.userNickName || '사용자',
-      userNickName: userData.userNickName || userData.nickname || userData.name || '닉네임 없음',
+      name: userData.userNickName || userData.name || '사용자',
+      userNickName: userData.userNickName || '닉네임 없음',
       userEmail: userData.userEmail || userData.email || null,
       userPhone: userData.userPhone || userData.phone || null,
       userGender: userData.userGender || userData.gender || null,
@@ -205,250 +181,211 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
     };
   }, []);
 
-  // 팝업 정리 함수
   const cleanupPopup = useCallback(() => {
-    if (popupRef.current && !popupRef.current.closed) {
+    if (popupRef.current) {
       try {
-        popupRef.current.close();
-      } catch (error) {
-        console.warn('팝업 닫기 실패:', error);
+        if (!popupRef.current.closed) {
+          popupRef.current.close();
+        }
+      } catch {
+        // Ignore errors when closing popup
       }
+      popupRef.current = null;
     }
-    popupRef.current = null;
 
     if (popupTimerRef.current) {
       clearTimeout(popupTimerRef.current);
       popupTimerRef.current = null;
     }
-    
+
     if (popupMonitorRef.current) {
       clearInterval(popupMonitorRef.current);
       popupMonitorRef.current = null;
     }
   }, []);
 
-  // 🚀 백엔드로 코드 전송하는 함수 (✅ useCallback으로 최적화!)
+  const isProcessing = useCallback((key: string): boolean => {
+    return processingRef.current.get(key) === true;
+  }, []);
+
+  const setProcessing = useCallback((key: string, value: boolean) => {
+    if (value) {
+      processingRef.current.set(key, true);
+    } else {
+      processingRef.current.delete(key);
+    }
+  }, []);
+
   const sendCodeToBackend = useCallback(async (provider: string, code: string): Promise<OAuthResult> => {
-    console.log(`🚀 ${provider} 로그인 처리 시작`);
-    console.log('🌍 현재 환경:', { 
-      NODE_ENV: process.env.NODE_ENV,
-      origin: window.location.origin,
-      API_BASE_URL
-    });
-    
+    const requestKey = `${provider}-${code}`;
+
+    if (isProcessing(requestKey)) {
+      return { success: false, error: '이미 처리 중인 요청입니다.' };
+    }
+
+    setProcessing(requestKey, true);
+
     try {
-      // 🔍 요청 데이터 상세 준비
-      let requestBody: any = { 
-        code,
-        provider,
+      const requestBody: any = {
+        code: code,
+        provider: provider.toUpperCase(),
         timestamp: Date.now()
       };
-      
-      if (provider === 'naver') {
-        const savedState = sessionStorage.getItem('naver_state');
+
+      if (provider.toLowerCase() === 'naver') {
+        const savedState = safeStorage.getItem('naver_state', sessionStorage);
         if (savedState) {
           requestBody.state = savedState;
-          console.log('🔐 Naver state 추가:', savedState);
-        } else {
-          console.warn('⚠️ Naver state가 sessionStorage에 없습니다!');
         }
       }
 
-      // 🔍 요청 정보 상세 로깅
-      const requestInfo = {
-        method: 'POST',
-        url: `${API_BASE_URL}/oauth/${provider}`,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'User-Agent': navigator.userAgent,
-          'Referer': window.location.href
-        },
-        body: requestBody,
-        codeLength: code.length,
-        codePrefix: code.substring(0, 10) + '...'
-      };
-      
-      console.log('📤 상세 요청 정보:', requestInfo);
-      
-      // 디버깅 정보 저장
-      saveDebugInfo({
-        type: 'request',
-        provider,
-        requestInfo,
-        timestamp: Date.now()
-      });
+      const endpoint = `${API_BASE_URL}/oauth/${provider.toLowerCase()}`;
 
-      const response = await fetch(`${API_BASE_URL}/oauth/${provider}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(requestBody),
-      });
+      let response: Response;
+      try {
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(requestBody),
+        });
+      } catch (fetchError) {
+        const errorMessage = fetchError instanceof TypeError && fetchError.message.includes('fetch')
+          ? '서버에 연결할 수 없습니다. 네트워크 상태를 확인해주세요.'
+          : '네트워크 오류가 발생했습니다.';
 
-      // 🔍 응답 정보 상세 로깅
-      const responseInfo = {
-        status: response.status,
-        statusText: response.statusText,
-        headers: Object.fromEntries(response.headers.entries()),
-        url: response.url,
-        ok: response.ok
-      };
-      
-      console.log('📡 상세 응답 정보:', responseInfo);
+        setError(errorMessage);
+        cleanupPopup();
+
+        return {
+          success: false,
+          error: errorMessage,
+          errorType: 'SERVER_ERROR'
+        };
+      }
 
       const responseText = await response.text();
-      console.log('📄 응답 본문:', responseText);
-
-      // 디버깅 정보 저장
-      saveDebugInfo({
-        type: 'response',
-        provider,
-        responseInfo,
-        responseText,
-        timestamp: Date.now()
-      });
 
       if (!response.ok) {
         let responseData: OAuthErrorResponse = {};
         try {
           responseData = JSON.parse(responseText) as OAuthErrorResponse;
-        } catch (e) {
+        } catch {
           responseData = { message: responseText };
         }
 
-        // 🎯 에러 타입 분석
-        const { errorType, needsSignup } = analyzeError(response.status, responseData, requestBody);
-        console.log('🔍 에러 분석 결과:', { errorType, needsSignup });
+        const { errorType, needsSignup } = analyzeError(response.status, responseData);
 
         if (needsSignup) {
-          // 🎉 회원가입이 필요한 경우
-          console.log('✨ 회원가입 필요 - OAuth 데이터 저장');
-          
           const signupData = {
-            provider,
+            provider: provider.toUpperCase(),
             oauthCode: code,
-            ...(provider === 'naver' && { state: requestBody.state }),
-            ...(responseData?.oauthData || {}),
-            timestamp: Date.now()
+            ...(provider.toLowerCase() === 'naver' && { state: requestBody.state }),
+            timestamp: Date.now(),
+            ...(responseData?.oauthData || {})
           };
-          
+
           setOauthSignupData(signupData);
           setNeedsSignup(true);
           setError('');
+
+          safeStorage.setItem('oauthSignupData', JSON.stringify(signupData), sessionStorage);
           cleanupPopup();
-          
-          return { 
-            success: false, 
-            needsSignup: true, 
+
+          return {
+            success: false,
+            needsSignup: true,
             oauthData: signupData,
-            errorType: errorType as any,
-            debugInfo: { requestInfo, responseInfo, responseData }
+            errorType: errorType as any
           };
         } else {
-          // 🚨 진짜 오류인 경우
           let errorMessage = `${provider} 로그인에 실패했습니다.`;
-          
+
           if (errorType === 'SERVER_ERROR') {
             errorMessage = '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+          } else if (errorType === 'AUTH_FAILED') {
+            errorMessage = `${provider} 로그인에 실패했습니다. 다시 시도해주세요.`;
           } else if (errorType === 'VALIDATION_ERROR') {
             errorMessage = responseData.message || `${provider} 로그인 정보가 올바르지 않습니다.`;
+          } else {
+            errorMessage = responseData.message || responseData.error || errorMessage;
           }
-          
+
           setError(errorMessage);
           cleanupPopup();
-          
-          return { 
-            success: false, 
-            error: errorMessage, 
-            errorType: errorType as any,
-            debugInfo: { requestInfo, responseInfo, responseData }
+
+          return {
+            success: false,
+            error: errorMessage,
+            errorType: errorType as any
           };
         }
       }
 
-      // 성공 처리
       let result;
       try {
         result = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error('❌ JSON 파싱 실패:', parseError);
+      } catch {
         throw new Error('서버 응답을 처리할 수 없습니다.');
       }
 
-      console.log('✅ 파싱된 응답:', result);
-
       if (result.result && result.data) {
-        const { token, exprTime, user } = result.data;
-        const safeUser = sanitizeUserData(user);
-        
-        console.log('🎉 로그인 성공:', { hasToken: !!token, exprTime, safeUser });
-        
-        // 토큰 저장
+        const { token, exprTime, deliverAddress, ...userData } = result.data;
+        const safeUser = sanitizeUserData(userData);
         if (token) {
-          localStorage.setItem('accessToken', token);
+          safeStorage.setItem('accessToken', token);
           if (exprTime) {
-            localStorage.setItem('tokenExpiry', new Date(Date.now() + exprTime * 1000).toISOString());
+            safeStorage.setItem('tokenExpiry', new Date(Date.now() + exprTime * 1000).toISOString());
           }
-          localStorage.setItem('user', JSON.stringify(safeUser));
+          safeStorage.setItem('user', JSON.stringify(safeUser));
         }
-        
+
         setOauthResult(safeUser);
         setError('');
         setNeedsSignup(false);
         cleanupPopup();
-        
-        return { 
-          success: true, 
-          user: safeUser,
-          debugInfo: { requestInfo, responseInfo, result }
+
+        return {
+          success: true,
+          user: safeUser
         };
       } else {
         const errorMessage = result.message || `${provider} 로그인에 실패했습니다.`;
-        console.log('❌ 로그인 실패:', result);
         setError(errorMessage);
         cleanupPopup();
-        
-        return { 
-          success: false, 
-          error: errorMessage,
-          debugInfo: { requestInfo, responseInfo, result }
+
+        return {
+          success: false,
+          error: errorMessage
         };
       }
-      
+
     } catch (error) {
-      console.error(`❌ ${provider} 로그인 오류:`, error);
-      
-      let errorMessage = '네트워크 오류가 발생했습니다.';
-      if (error instanceof Error) {
-        if (error.message.includes('Failed to fetch')) {
-          errorMessage = '서버에 연결할 수 없습니다. 네트워크 상태를 확인해주세요.';
-        } else {
-          errorMessage = error.message;
-        }
-      }
-      
+      const errorMessage = error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다.';
+
       setError(errorMessage);
       cleanupPopup();
-      
-      return { 
-        success: false, 
-        error: errorMessage, 
-        errorType: 'SERVER_ERROR',
-        debugInfo: { error: error?.toString() }
+
+      return {
+        success: false,
+        error: errorMessage,
+        errorType: 'SERVER_ERROR'
       };
     } finally {
       setIsLoading(false);
+      setProcessing(requestKey, false);
     }
-  }, [API_BASE_URL, saveDebugInfo, analyzeError, sanitizeUserData, cleanupPopup]);
+  }, [API_BASE_URL, analyzeError, sanitizeUserData, cleanupPopup, isProcessing, setProcessing]);
 
-  // 팝업 모니터링 함수
   const startPopupMonitoring = useCallback((popup: Window, provider: string) => {
     if (popupMonitorRef.current) {
       clearInterval(popupMonitorRef.current);
     }
+
+    let crossOriginAttempts = 0;
+    const maxCrossOriginAttempts = 3;
 
     popupMonitorRef.current = setInterval(() => {
       try {
@@ -456,21 +393,24 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
           clearInterval(popupMonitorRef.current!);
           popupMonitorRef.current = null;
           popupRef.current = null;
-          
+
           if (isLoading) {
             setIsLoading(false);
             setError(`${provider} 로그인이 취소되었습니다.`);
           }
         }
-      } catch (error) {
-        console.warn('팝업 상태 확인 실패:', error);
+        crossOriginAttempts = 0;
+      } catch {
+        crossOriginAttempts++;
+
+        if (crossOriginAttempts >= maxCrossOriginAttempts) {
+          clearInterval(popupMonitorRef.current!);
+          popupMonitorRef.current = null;
+        }
       }
     }, 1000);
 
     popupTimerRef.current = setTimeout(() => {
-      if (popup && !popup.closed) {
-        popup.close();
-      }
       cleanupPopup();
       if (isLoading) {
         setIsLoading(false);
@@ -479,14 +419,11 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
     }, 5 * 60 * 1000);
   }, [isLoading, cleanupPopup]);
 
-  // 범용 OAuth 로그인 함수
   const performOAuthLogin = useCallback((provider: string, url: string, clientId?: string) => {
-    if (!clientId) {
-      setError(`${provider} 클라이언트 ID가 설정되지 않았습니다.`);
+    if (!validateClientId(provider, clientId)) {
       return;
     }
 
-    // 기존 상태 초기화
     setNeedsSignup(false);
     setOauthSignupData(null);
     cleanupPopup();
@@ -495,11 +432,11 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
 
     try {
       const popup = window.open(
-        url, 
-        `${provider.toLowerCase()}Login`, 
+        url,
+        `${provider.toLowerCase()}Login`,
         'width=500,height=600,scrollbars=yes,resizable=yes,top=100,left=100'
       );
-      
+
       if (popup) {
         popupRef.current = popup;
         startPopupMonitoring(popup, provider);
@@ -508,14 +445,12 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
         setIsLoading(false);
         setError('팝업이 차단되었습니다. 팝업 차단을 해제해주세요.');
       }
-    } catch (error) {
-      console.error(`${provider} 팝업 열기 실패:`, error);
+    } catch {
       setIsLoading(false);
       setError(`${provider} 로그인 창을 열 수 없습니다.`);
     }
-  }, [cleanupPopup, startPopupMonitoring]);
+  }, [cleanupPopup, startPopupMonitoring, validateClientId]);
 
-  // OAuth 로그인 함수들
   const loginWithGoogle = useCallback((): void => {
     const googleLoginUrl = "https://accounts.google.com/o/oauth2/auth?" +
       `client_id=${GOOGLE_CLIENT_ID}&` +
@@ -524,7 +459,7 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
       `scope=openid email profile&` +
       `access_type=offline&` +
       `prompt=select_account`;
-    
+
     performOAuthLogin('Google', googleLoginUrl, GOOGLE_CLIENT_ID);
   }, [GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URL, performOAuthLogin]);
 
@@ -535,33 +470,31 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
       `response_type=code&` +
       `scope=profile_nickname,account_email&` +
       `prompt=login`;
-    
+
     performOAuthLogin('Kakao', kakaoAuthUrl, KAKAO_CLIENT_ID);
   }, [KAKAO_CLIENT_ID, KAKAO_REDIRECT_URL, performOAuthLogin]);
 
   const loginWithNaver = useCallback((): void => {
     const state = Math.random().toString(36).substr(2, 11) + Date.now().toString(36);
-    sessionStorage.setItem('naver_state', state);
-    
+    safeStorage.setItem('naver_state', state, sessionStorage);
+
     const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?` +
       `response_type=code&` +
       `client_id=${NAVER_CLIENT_ID}&` +
       `redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URL)}&` +
       `state=${state}`;
-    
+
     performOAuthLogin('Naver', naverLoginUrl, NAVER_CLIENT_ID);
   }, [NAVER_CLIENT_ID, NAVER_REDIRECT_URL, performOAuthLogin]);
 
-  // 🎉 회원가입으로 진행
   const proceedToSignup = useCallback((): void => {
     if (oauthSignupData) {
       const signupUrl = `/join?oauth=true&provider=${oauthSignupData.provider}`;
-      sessionStorage.setItem('oauthSignupData', JSON.stringify(oauthSignupData));
+      safeStorage.setItem('oauthSignupData', JSON.stringify(oauthSignupData), sessionStorage);
       window.location.href = signupUrl;
     }
   }, [oauthSignupData]);
 
-  // 상태 초기화 함수들
   const clearError = useCallback((): void => {
     setError('');
   }, []);
@@ -573,9 +506,9 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
   const clearSignupData = useCallback((): void => {
     setNeedsSignup(false);
     setOauthSignupData(null);
+    safeStorage.removeItem('oauthSignupData', sessionStorage);
   }, []);
 
-  // ✅ postMessage 이벤트 리스너 설정 (의존성 최적화)
   useEffect(() => {
     const handleMessage = async (event: MessageEvent) => {
       if (event.origin !== window.location.origin) {
@@ -585,6 +518,10 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
       const { type, provider, code, error: messageError } = event.data;
 
       if (type === 'OAUTH_SUCCESS' && code && provider) {
+        const requestKey = `${provider}-${code}`;
+        if (isProcessing(requestKey)) {
+          return;
+        }
         await sendCodeToBackend(provider, code);
       } else if (type === 'OAUTH_ERROR') {
         setError(messageError || `${provider} 로그인 중 오류가 발생했습니다.`);
@@ -594,13 +531,12 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
     };
 
     window.addEventListener('message', handleMessage);
-    
+
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [sendCodeToBackend, cleanupPopup]); // ✅ 의존성 배열 명시
+  }, [sendCodeToBackend, cleanupPopup, isProcessing]);
 
-  // ✅ OAuth 콜백 처리 (직접 접근 시) - 의존성 최적화
   useEffect(() => {
     const handleDirectCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -610,16 +546,16 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
       if (code && currentPath.includes('/api/v1/auth/')) {
         if (currentPath.includes('kakao')) {
           await sendCodeToBackend('kakao', code);
-        } 
+        }
         else if (currentPath.includes('naver')) {
           const state = urlParams.get('state');
-          const savedState = sessionStorage.getItem('naver_state');
-          
+          const savedState = safeStorage.getItem('naver_state', sessionStorage);
+
           if (state !== savedState) {
             setError('네이버 로그인 보안 검증에 실패했습니다.');
             return;
           }
-          
+
           await sendCodeToBackend('naver', code);
         }
         else if (currentPath.includes('google')) {
@@ -629,47 +565,38 @@ export const useOAuth = (config?: OAuthConfig): UseOAuthReturn => {
     };
 
     handleDirectCallback();
-  }, [sendCodeToBackend]); // ✅ 의존성 배열 명시
+  }, [sendCodeToBackend]);
 
-  // 컴포넌트 언마운트 시 정리
   useEffect(() => {
     return () => {
       cleanupPopup();
+      processingRef.current.clear();
     };
   }, [cleanupPopup]);
 
-  // 페이지 언로드 시 팝업 정리
   useEffect(() => {
     const handleBeforeUnload = () => {
       cleanupPopup();
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
-    
+
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [cleanupPopup]);
 
   return {
-    // 기존 상태
     isLoading,
     error,
     oauthResult,
-    
-    // 새로운 상태
     needsSignup,
     oauthSignupData,
-    debugInfo,
-    
-    // 기존 함수
     loginWithGoogle,
     loginWithKakao,
     loginWithNaver,
     clearError,
     clearResult,
-    
-    // 새로운 함수
     clearSignupData,
     proceedToSignup
   };
