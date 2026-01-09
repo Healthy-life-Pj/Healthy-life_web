@@ -30,7 +30,7 @@ export interface Product {
   pUsage: string;
   pExpirationDate: Date;
   pManufacturer: string;
-  pImageUrl: string;
+  pImgUrl: string;
   pStockStatus: number;
 }
 
@@ -138,19 +138,24 @@ export type OrderStatus =
   | 'SHIPPED'
   | 'DELIVERED'
   | 'CANCELLED'
-  | 'REFUNDED'
-  | 'RETURN'
-  | 'EXCHANGE';
+  | 'RETURN_REQUEST'
+  | 'RETURN_IN_PROGRESS'
+  | 'RETURNED'
+  | 'EXCHANGE_REQUEST'
+  | 'EXCHANGE_IN_PROGRESS'
+  | 'EXCHANGED';
 
 export interface Order {
   orderId: number;
   userId: number;
   cartId?: number;
   orderDate: Date;
-  orderStatus: OrderStatus;
+  orderRecipientName: string;
+  orderRecipientPhone: string;
   orderTotalAmount: number;
   orderShippingCost: number;
   orderShippingRequest: string;
+  shippingCost: 3000;
 }
 
 // Order Detail Interface
@@ -160,6 +165,7 @@ export interface OrderDetail {
   productId: number;
   quantity: number;
   price: number;
+  orderStatus: OrderStatus;
   totalPrice: number;
 }
 
@@ -222,11 +228,12 @@ export interface UserPhysiqueTag {
 
 // Delivery Address Interface
 export interface DeliveryAddress {
-  addressDeliverId: number;
+  deliverAddressId: number;
   userId: number;
   address: string;
   addressDetail: string;
   postNum: number;
+  default: boolean;
 }
 
 export interface LoginInResponseDto {

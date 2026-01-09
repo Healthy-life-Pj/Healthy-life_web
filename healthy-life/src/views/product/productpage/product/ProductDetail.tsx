@@ -6,14 +6,23 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { AUTH_PATH, CART_PATH, CART_PRODUCT, MAIN_APT_PATH, MY_CART, PRODUCT_PATH } from "../../../../constants";
+import {
+  AUTH_PATH,
+  CART_PATH,
+  CART_PRODUCT,
+  IMG_PATH,
+  MAIN_APT_PATH,
+  MY_CART,
+  PRODUCT_IMG,
+  PRODUCT_PATH,
+} from "../../../../constants";
 import { useCookies } from "react-cookie";
 import { CartItemDto, ProductDetailResponseDto } from "../../../../types/dto";
 import CartModal from "../../../../components/CartModal";
 
 const ProductDetail = () => {
   const { pId } = useParams();
-    const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
+  const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const [cookies] = useCookies(["token"]);
   const [product, setProduct] = useState<ProductDetailResponseDto | null>(null);
@@ -23,8 +32,8 @@ const ProductDetail = () => {
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
-  
-  const fetchData = async (id:string) => {
+
+  const fetchData = async (id: string) => {
     try {
       const response = await axios.get(
         `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}/${id}`
@@ -40,20 +49,24 @@ const ProductDetail = () => {
     }
   };
 
-  const addToCart = async() => {
-    if(!cookies.token) {
+  const addToCart = async () => {
+    if (!cookies.token) {
       navigator("/login");
-      alert("로그인이 필요합니다.")
+      alert("로그인이 필요합니다.");
     }
     try {
-      await axios.post(`${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`, {
-        productQuantity: quantity,
-      },{
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
+      await axios.post(
+        `${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`,
+        {
+          productQuantity: quantity,
         },
-        withCredentials: true,
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
       const response = await axios.get(
         `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
@@ -69,7 +82,7 @@ const ProductDetail = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (pId) {
@@ -100,16 +113,16 @@ const ProductDetail = () => {
   return (
     <div className="prodcutDetailPageContainer">
       <div className="productDetailPage">
-        <div className="DivProductImage">
+        <div className="divProductImage">
           <img
             className="productImgInDiv"
-            src={product?.pImgUrl}
+            src={`${IMG_PATH}${PRODUCT_IMG}/${product.pImgUrl}`}
             alt={product?.pName}
           />
         </div>
         <div className="productData">
           <div className="productNameRating">
-            <p>{cutText(product.pName,8)}</p>
+            <p>{cutText(product.pName, 8)}</p>
             <Box
               sx={{
                 "& > legend": { mt: 4 },
@@ -128,56 +141,60 @@ const ProductDetail = () => {
           <div className="productDataLine"></div>
           <div className="producPriceDiv">
             <div className="productPriceBox">
-            <div>
-              가격 : 
+              <div>가격 :</div>
+              <div>{priceUnit(product?.pPrice)} 원</div>
             </div>
             <div>
-              {priceUnit(product?.pPrice)} 원
+              <label>주문수량 : </label>
+              <input
+                className="countInput"
+                type="number"
+                name="quantit"
+                value={quantity}
+                min={1}
+                max={product?.pStockStatus}
+                onChange={handleCartChange}
+              />
             </div>
-            </div>
-            <div>
-            <label>주문수량 : </label>
-            <input
-              className="countInput"
-              type="number"
-              name="quantit"
-              value={quantity}
-              min={1}
-              max={product?.pStockStatus}
-              onChange={handleCartChange}
-            />
-            </div>
-            </div>
+          </div>
           <div className="productDataLine"></div>
           <div className="deliveryMethod">
             <div className="totalPrieDiv">
-            <div className="totalPriceD">
-              총 상품 금액 :
-            </div>
+              <div className="totalPriceD">총 상품 금액 :</div>
               <span className="totalPriceSpan">
-                {priceUnit(product?.pPrice * quantity)} 
-              <span> 원</span> 
+                {priceUnit(product?.pPrice * quantity)}
+                <span> 원</span>
               </span>
             </div>
-            <div className="deliveryKind">일반배송 | 2500원</div>
+            <div className="deliveryKind">일반배송 | 2000원</div>
             <div className="productDetailbutton">
               <div className="putinCartButton">
-                <button 
-                className="wishCartBtn"
-                onClick={addToCart}>CART</button>
+                <button className="wishCartBtn" onClick={addToCart}>
+                  CART
+                </button>
                 <button
-                className="wishCartBtn"
-                onClick={() => navigator("/myPage/wishlist")}>
-                    WISH
+                  className="wishCartBtn"
+                  onClick={() => navigator("/myPage/wishlist")}
+                >
+                  WISH
                 </button>
               </div>
-                  <button onClick={() => navigator(`/payment/${pId}`)} className="orderButton">주문</button>
+              <button
+                onClick={() => navigator(`/order/${pId}/${quantity}`)}
+                className="orderButton"
+              >
+                주문
+              </button>
             </div>
           </div>
         </div>
       </div>
       <ProductTap data={product} />
-      <CartModal cartItem={cartItemData} isOpen={modalIsOpen} onClose={closeModal}/>
+      <CartModal
+        cartItem={cartItemData}
+        isOpen={modalIsOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };

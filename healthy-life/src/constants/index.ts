@@ -1,5 +1,6 @@
 export const MAIN_APT_PATH = "http://localhost:4040/api/v1";
 
+
 // Resource
 export const USER_PATH = "/users";
 export const AUTH_PATH = "/auth";
@@ -12,12 +13,14 @@ export const CART_PATH = "/carts";
 export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
+export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
+export const PRODUCT_IMG = "/productImg";
 
 //Image
 export const IMG_PATH = "http://localhost:4040/image";
 
 // User
-export const GET_USER = "/users/me";
+export const GET_USER = "/me";
 export const UPDATE_USER = "/users/me";
 export const UPDATE_PASSWORD = "/users/me/password";
 export const UPDATE_PASSWORD_BY_EMAIL = "/users/me/password/email";
@@ -48,6 +51,10 @@ export const PRODUCT_SEARCH = "/search";
 // Order
 export const ORDER_SHIPPING = "/shipping";
 export const ORDER_GET_REVIEW = "/review-writable";
+export const ORDER_PUT_ORDER_STATUS = "/order-status";
+export const ORDER_PUT_RETURN_EXCHAGE = "/cancel"
+export const ORDER_POST_CART = "/carts";
+
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
@@ -63,6 +70,7 @@ export const MY_CART = "/me";
 export const CART_PRODUCT_QUANTITY = "/quantity";
 export const CART_DELETE = "/cartItemIds";
 export const CART_DELETE_ALL = "/all";
+export const CART_CARTITEMS_LIST = "/search/cartItems";
 
 // Review
 export const ALL_REVIEWS = "/all";
@@ -83,5 +91,9 @@ export const QNA_GET_MINE = "/me"
 export const QNA_UPDATE = "/update-qna"
 export const QNA_DELETE = "/delete-qna"
 
-//BMI
-export const BMIAPI = "https://fitness-calculator.p.rapidapi.com/bmi"
+//DeliverAddress
+export const DELIVER_ADDRESS_GET = "/all";
+export const DELIVER_ADDRESS_PUT = "/all";
+export const DELIVER_ADDRESS_DEFAULT_PUT = "/all";
+export const DELIVER_ADDRESS_DELETE = "/delete";
+export const DELIVER_ADDRESS_IS_DEFAULT = "/is-default";

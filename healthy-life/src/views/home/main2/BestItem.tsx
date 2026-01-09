@@ -7,8 +7,10 @@ import {
   AUTH_PATH,
   CART_PATH,
   CART_PRODUCT,
+  IMG_PATH,
   MAIN_APT_PATH,
   MY_CART,
+  PRODUCT_IMG,
   PRODUCT_PATH,
 } from "../../../constants";
 import CartModal from "../../../components/CartModal";
@@ -121,7 +123,7 @@ export default function BestItemApp() {
         {visibleImages.map((data, index) => (
           <div key={index} className="bestItemImageMap">
             <img
-              src={data.pImgUrl}
+              src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
               alt={data.pName}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => hanldeMouseLeave}
