@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../style/mypage/Order.css";
 import {
-  OrderDto,
-  OrderGetRequestDto
+  OrderDto
 } from "../../../types/dto";
 import SmallPagination from "../../../components/SmallPagination";
 import ReactModal from "react-modal";
@@ -10,7 +9,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
 import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS, ORDER_PUT_RETURN_EXCHAGE } from "../../../constants";
 import { useCookies } from "react-cookie";
-import Order from "./OrderSearch";
 
 interface OrderSearchResultProps {
   orderDatas: OrderDto[];
@@ -67,6 +65,23 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
         getfetchData();
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const orderCancel = async(imp:string) => {
+    try{
+      console.log("openOrder:", openOrder);
+      console.log("impUid:", openOrder?.impUid);
+      await axios.post(`${MAIN_APT_PATH}${ORDER_PATH}/pay/cancel`, 
+        {impUid : imp},
+        { headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+      })
+      getfetchData();
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -143,6 +158,9 @@ function orderStateKorean(word: string) {
           {currentPosts.map((data, index) => (
             <li className="myPageOrderInfoBox" key={data.orderId}>
               <div className="myOrderOrderDateDetailBtnDiv">
+                <p className="orderListUlLiP myPageOrderDateP">
+                  {data.orderCode}
+                </p>
                 <p className="orderListUlLiP myPageOrderDateP">
                   {data.orderDate}
                 </p>
@@ -272,7 +290,7 @@ function orderStateKorean(word: string) {
               <div className="orderStatusChangeBtnDiv">
                 <button
                   className="orderStatusChangeBtn"
-                  onClick={() => putFetchData(selectOrderDetail, "CANCELLED")}
+                  onClick={() => orderCancel(openOrder.impUid)}
                 >
                   취소
                 </button>

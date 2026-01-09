@@ -111,6 +111,8 @@ export interface OrderDto {
   orderDate: string;
   deliverAddress: DeliveryAddressDto;
   orderDetails: OrderDetailDto[];
+  orderCode: string;
+  impUid: string;
 }
 
 export type OrderStatus =

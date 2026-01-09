@@ -37,8 +37,6 @@ function DirectOrder() {
   const IMP_SRC = "https://cdn.iamport.kr/v1/iamport.js";
   const IMP_CODE = process.env.REACT_APP_IAMPORT_CODE ?? "";
 
-  if (!IMP_CODE) console.error("REACT_APP_IAMPORT_CODE가 비어 있습니다.");
-
   const { pId, quantity } = useParams();
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();

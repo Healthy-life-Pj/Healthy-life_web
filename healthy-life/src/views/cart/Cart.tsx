@@ -300,7 +300,7 @@ const Cart = () => {
         <div className="processBtn">
             <button className="processButton" onClick={() => {
               const selectedIds = Array.from(checkedItems);
-              navigate("/order", { state: { cartItemIds: selectedIds }})}}>결제하기</button>
+              navigate("/cart/order", { state: { cartItemIds: selectedIds }})}}>결제하기</button>
         </div>
       </div>
     </div>
