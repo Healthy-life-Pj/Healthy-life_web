@@ -34,6 +34,7 @@ import AllReviewList from "./views/allreview/AllReviewList";
 import Order from "./views/order/direct-order/DirectOrder";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
+import OAuthRedirectPage from "./views/OAuthRedirectPage";
 
 function App() {
   interface TokenUser {
@@ -98,6 +99,9 @@ function App() {
         <Route path="/recommand" element={<RecommandApp />} />
         <Route path="/calculator" element={<Bmi />} />
         <Route path="/cart" element={<CartAPP />} />
+
+        {/* OAuth 로그인 리다이렉트 */}
+        <Route path="/oauth-redirect" element={<OAuthRedirectPage />} />
       </Routes>
       <Footer />
     </>

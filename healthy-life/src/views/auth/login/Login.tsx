@@ -15,6 +15,7 @@ import axios from "axios";
 import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants";
 import { useCookies } from "react-cookie";
 import { LoginInResponseDto } from "../../../types";
+import OAuth from "./OAuth";
 
 const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
 const passwordRegex =
@@ -151,6 +152,9 @@ function Login() {
             로그인
           </button>
         </form>
+
+        <OAuth />
+
         <div 
         className="findDiv">
           <Link to={"/login/find-id"}>아이디 찾기</Link>

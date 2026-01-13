@@ -1,0 +1,56 @@
+/* OAuth.css */
+
+.oauth-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 220px;
+  margin: 20px auto;
+}
+
+.oauth-buttons-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+.oauth-buttons-container button img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
+/* Kakao 버튼 */
+.oauth-buttons-container button:nth-child(1) {
+  background-color: #fee500;
+  border-color: #fee500;
+  color: #000000;
+}
+
+.oauth-buttons-container button:nth-child(1):hover {
+  background-color: #fdd835;
+}
+
+/* Naver 버튼 */
+.oauth-buttons-container button:nth-child(2) {
+  background-color: #03c75a;
+  border-color: #03c75a;
+  color: #ffffff;
+}
+
+.oauth-buttons-container button:nth-child(2):hover {
+  background-color: #02b351;
+}
