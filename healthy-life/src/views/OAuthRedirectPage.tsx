@@ -13,9 +13,18 @@ const OAuthRedirectPage: React.FC = () => {
     const expirationTime = searchParams.get('expirationTime');
     const error = searchParams.get('error');
 
+    // 팝업 창인지 확인
+    const isPopup = window.opener && window.opener !== window;
+
     if (error) {
-      alert(`로그인 실패: ${error}`);
-      navigate('/login');
+      if (isPopup) {
+        // 부모 창에 에러 메시지 전송
+        window.opener.postMessage({ type: 'OAUTH_ERROR', error }, window.location.origin);
+        window.close();
+      } else {
+        alert(`로그인 실패: ${error}`);
+        navigate('/login');
+      }
       return;
     }
 
@@ -29,11 +38,25 @@ const OAuthRedirectPage: React.FC = () => {
         sameSite: 'lax'
       });
 
-      // 메인 페이지로 이동
-      navigate('/');
+      if (isPopup) {
+        // 부모 창에 성공 메시지 전송
+        window.opener.postMessage({ type: 'OAUTH_SUCCESS', token }, window.location.origin);
+        // 잠시 후 팝업 닫기
+        setTimeout(() => {
+          window.close();
+        }, 500);
+      } else {
+        // 일반 창이면 메인 페이지로 이동
+        navigate('/');
+      }
     } else {
-      alert('로그인 처리 중 오류가 발생했습니다.');
-      navigate('/login');
+      if (isPopup) {
+        window.opener.postMessage({ type: 'OAUTH_ERROR', error: '토큰을 받지 못했습니다' }, window.location.origin);
+        window.close();
+      } else {
+        alert('로그인 처리 중 오류가 발생했습니다.');
+        navigate('/login');
+      }
     }
   }, [searchParams, navigate, setCookie]);
 
