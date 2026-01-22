@@ -61,7 +61,7 @@ function Review() {
         }
       );
 
-      setOrderDatas(response.data.data.orderDetailsDto);
+      setOrderDatas(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +104,7 @@ function Review() {
           },
         }
       );
-
+      orderFetchData();
       reviewFetchData();
     } catch (error) {
       console.error(error);
