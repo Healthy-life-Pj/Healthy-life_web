@@ -1,7 +1,6 @@
-/* 전체 영역 중앙 정렬 및 기본 폰트 */
 .paymentHead {
   width: 100%;
-  max-width: 800px; /* ✅ 폭 제한 */
+  max-width: 800px;
   margin: 60px auto;
   font-family: 'Noto Sans KR', sans-serif;
   display: flex;
@@ -16,7 +15,6 @@
   font-weight: bold;
 }
 
-/* 중앙 정렬 및 폭 제한 */
 .paymentContainer {
   display: flex;
   justify-content: center;
@@ -26,7 +24,6 @@
   flex-wrap: wrap;
 }
 
-/* 카드형 공통 스타일 */
 .pay1Container, .payInformation {
   flex: 1;
   min-width: 340px;
@@ -37,13 +34,11 @@
   box-sizing: border-box;
 }
 
-/* 섹션 공통 마진 */
 .section {
   width: 100%;
   margin-bottom: 30px;
 }
 
-/* 배송지 입력 */
 .customBox {
   display: flex;
   flex-direction: column;
@@ -56,7 +51,6 @@
   font-size: 14px;
 }
 
-/* 상품 이미지 및 정보 */
 .orderProductImgDiv {
   width: 100px;
   height: 100px;
@@ -100,12 +94,10 @@
   font-weight: 600;
 }
 
-/* 배송요청사항 */
 .deliveryRequest select {
   font-size: 14px;
 }
 
-/* 결제방법 선택 버튼 */
 .MethodButtonBox {
   display: flex;
   justify-content: space-between;
@@ -129,7 +121,6 @@
   background-color: #1478FF;
 }
 
-/* 결제 정보 */
 .payInformation {
   display: flex;
   flex-direction: column;
@@ -163,7 +154,6 @@
   margin: 10px 0;
 }
 
-/* 결제 버튼 */
 .payInformation button {
   background-color: #4CAF50;
   color: white;
@@ -179,7 +169,6 @@
   background-color: #388e3c;
 }
 
-/* 반응형 */
 @media (max-width: 768px) {
   .paymentContainer {
     flex-direction: column;

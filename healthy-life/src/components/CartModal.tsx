@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { CartItemDto } from "../types/dto";
 import SmallPagination from "./SmallPagination";
@@ -17,6 +17,7 @@ const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
   const [cookies] = useCookies(["token"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [cartPerPage] = useState<number>(4);
+  const navigate = useNavigate();
 
   const indexOfLastPost = currentPage * cartPerPage;
   const indexOfFirstPost = indexOfLastPost - cartPerPage;
@@ -75,12 +76,7 @@ const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
         />
           </div>
           <div className="modalButtonContainer">
-            <Link to={"/payment"}>
-              <button className="modalLinkeBtn">바로주문</button>
-            </Link>
-            <Link to={"/cart"}>
-              <button className="modalLinkeBtn">장바구니 이동</button>
-            </Link>
+            <button onClick={() => navigate("/cart")} className="modalLinkeBtn">장바구니 이동</button>
             <button className="modalLinkeBtn" onClick={onClose}>쇼핑계속하기</button>
           </div>
         </div>

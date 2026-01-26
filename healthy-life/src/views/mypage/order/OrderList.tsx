@@ -7,7 +7,7 @@ import SmallPagination from "../../../components/SmallPagination";
 import ReactModal from "react-modal";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
-import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS, ORDER_PUT_RETURN_EXCHAGE } from "../../../constants";
+import { IMG_PATH, MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS, ORDER_PUT_RETURN_EXCHAGE } from "../../../constants";
 import { useCookies } from "react-cookie";
 
 interface OrderSearchResultProps {
@@ -181,7 +181,7 @@ function orderStateKorean(word: string) {
                 <div>
                   <div>
                     <img
-                      src={data.orderDetails[0].pImgUrl}
+                      src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
                       alt={data.orderDetails[0].pName}
                     />
                   </div>
