@@ -148,7 +148,7 @@
 }
 
 .myPageOrderInfoDiv > .orderListTotalAmount {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .orderListUlLiPName {
@@ -215,34 +215,46 @@
   width: 100%;
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 50px;
   justify-content: space-between;
   margin: 15px auto;
   box-sizing: border-box;
   padding: 10px;
   background-color: #e0e0e0;
 }
-
+.myPageOrderImgDiv {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+.myPageOrderListContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+}
 .myPageOrderInfoDiv {
   display: flex;
-  flex-direction: column;
   gap: 25px;
   margin-left: 20px;
-  
+  justify-content: space-between;
+  align-items: center;
 }
-
-.myPageOrderDateP {
-  font-size: 20px;
+.myPageOrderDateP, .myPageOrderCodeP {
+  font-size: 12px;
+  width: 300px;
   color: #757575;
   font-weight: 700;
 }
-
 .myPageOrderBtnDiv {
   display: flex;
   gap: 5px 2px;
   margin: 10px 0px;
 }
-
 .myPageOrderBtn {
   width: 200px;
   height: 35px;
@@ -255,11 +267,9 @@
   margin: 0 auto;
   cursor: pointer;
 }
-
 .myPageOrderBtn:hover {
   background-color: #1478FF;
 }
-
 .orderDetailBtn {
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -267,7 +277,6 @@
   color: #fff;
   cursor: pointer;
 }
-
 .orderDetailmodalContent {
   width: 620px;
   max-height: 80vh;
@@ -278,7 +287,6 @@
   position: relative;
   margin: auto;
 }
-
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
@@ -291,7 +299,6 @@
   justify-content: center;
   z-index: 1000;
 }
-
 .orderDetailModalInfoDiv {
   display: flex;
   flex-direction: column;
@@ -300,17 +307,14 @@
   padding-bottom: 12px;
   border-bottom: 1px solid #ddd;
 }
-
 .orderDetailModalInfoP {
   font-size: 0.95rem;
   color: #333;
 }
-
 .orderDetailModalOrderContent {
   max-height: 40vh;
   overflow: scroll;
 }
-
 .orderDetailModalContainer {
   display: flex;
   flex-direction: column;
@@ -320,7 +324,6 @@
   border-radius: 12px;
   background-color: #fdfdfd;
 }
-
 .orderDetailModlaImgPDiv {
   display: flex;
   justify-content: space-between;
@@ -328,34 +331,29 @@
   gap: 12px;
   margin-bottom: 12px;
 }
-
 .orderDetailModalPNameDiv {
   width: 320px;
 }
-
 .orderDetailModalImgDiv {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 80px;
   height: 80px;
   overflow: hidden;
 }
-
 .orderDetailModalImg {
   width: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
-
 .orderDetailModalPName {
   font-weight: bold;
   font-size: 1rem;
 }
-
 .orderModalCancelBtnDiv {
   width: 120px;
 }
-
 .orderStatusChangeCancelBtn {
   width: 90px;
   flex: 1;
@@ -369,13 +367,11 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 .orderStatusChangeBtnDiv {
   display: flex;
   justify-content: space-between;
   gap: 8px;
 }
-
 .orderStatusChangeBtn {
   flex: 1;
   background-color: #90d4ec;
@@ -388,33 +384,27 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 .orderStatusChangeBtn:hover, .orderStatusChangeCancelBtn:hover {
   background-color: #4fc0e8;
 }
-
 .orderDetailModalList {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   align-items: end;
 }
-
 .orderDetailModalListLi {
   display: flex;
   justify-content: space-between;
   width: 170px;
 }
-
 .orderDetailModalOrderStatus {
   margin-bottom: 10px;
 }
-
 .orderDetailModalListLiSpan {
   text-align: right;
   width: 90px;
 }
-
 @media (max-width: 700px) {
   .mypageMainContainer li{
     font-size: 15px;

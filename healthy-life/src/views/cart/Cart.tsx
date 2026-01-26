@@ -186,8 +186,8 @@ const Cart = () => {
   }, [datas]);
 
   const totalPrice = datas
-    .map((item) => item.productPrice * item.productQuantity)
-    .reduce((sum, itemTotla) => sum + itemTotla, 0);
+    .filter((item) => checkedItems.has(item.cartItemId) && item.productPrice * item.productQuantity)
+    .reduce((sum, item) => sum + item.productPrice * item.productQuantity, 0);
 
   return (
     <div className="totalCart">
@@ -204,6 +204,7 @@ const Cart = () => {
           {datas.map((data) => (
             <li key={data.pId} className="cartLi">
               <input
+                checked={checkedItems.has(data.cartItemId)}
                 onChange={(e) => handleCheck(e, data.cartItemId)}
                 key={data.cartItemId}
                 name="cartitemId"

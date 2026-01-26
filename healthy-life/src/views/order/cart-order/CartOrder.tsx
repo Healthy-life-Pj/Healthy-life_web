@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../../style/payment/payment.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DeliveryAddress, User } from "../../../types";
 import axios from "axios";
 import {
@@ -26,7 +25,6 @@ import {
   TextField,
 } from "@mui/material";
 import "../../../style/Order.css";
-import AddressSearch from "../../auth/signUp/AddressSearch";
 import ReactModal from "react-modal";
 import qs from "qs";
 import { CartItemDto } from "../../../types/dto";
@@ -327,209 +325,172 @@ function CartOrder() {
     if (productData.length === 0) reasons.push("상품 정보 미로딩");
     if (!(Number(userData?.userId) > 0)) reasons.push("사용자 정보 확인 중");
     if (!agreed) reasons.push("약관 동의 필요");
-    console.log("[PAY READY CHECK]", {
-      iamportReady,
-      deliverAddressId: addressData?.deliverAddressId,
-      userId: userData?.userId,
-      agreed,
-      reasons,
-    });
   }, [iamportReady, addressData?.deliverAddressId, userData?.userId, agreed]);
 
   return (
-    <div className="paymentHead">
-      <h3>주문 결제</h3>
-      <div className="paymentContainer">
-        <div className="pay1Container">
-          <div className="deliveryAddress section">
-            <h3>배송지</h3>
-            <Box
-              component="form"
-              className="customBox"
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                className="deliveryTextField"
-                label="성함"
-                variant="standard"
-                name="name"
-                value={userData.name ?? ""}
-                onChange={userdataForm}
-                style={{ fontSize: "13px" }}
-              />
-              <TextField
-                className="deliveryTextField"
-                label="전화번호"
-                name="userPhone"
-                variant="standard"
-                onChange={userdataForm}
-                value={userData.userPhone ?? ""}
-              />
-            </Box>
-          </div>
-
-          <ul className="deliveryAddress" key={addressData.deliverAddressId}>
-            <li>{addressData.postNum}</li>
-            <li>{addressData.address}</li>
-            <li>{addressData.addressDetail}</li>
-          </ul>
-          <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
-
-          <DeliverAddressModal
-            isOpen={isAddressOpen}
-            onClose={() => setIsAddressOpen(false)}
-            onOpen={() => setIsAddressOpen(true)}
-            AddressFetchData={deliverAddressFetchData}
-            onSelectAddress={(selectedAddress) => setAddressData(selectedAddress)}
-          />
-
-          <div className="productInformationContainer section">
-            <h3>상품정보</h3>
-            <div className="productInformation">
-              {productData.length === 0 ? (
-                <p>선택된 상품이 없습니다.</p>
-              ) : (
-                productData.map((product) => (
-                  <div key={product.cartItemId}>
-                    <div className="orderProductImgPDiv">
-                      <div className="orderProductImgDiv">
-                        <img
-                          src={product.pImgUrl}
-                          alt="상품정보이미지"
-                          className="orderProductImg"
-                        />
-                      </div>
-                      <p className="dailySet">{product.pName}</p>
-                    </div>
-                    <ul className="orderProductUl">
-                      <li className="dailyMany">
-                        <span className="orderProductInfo">상품금액: </span>
-                        {product.productPrice.toLocaleString()} 원
-                      </li>
-                      <li className="dailyPrice">
-                        <span className="orderProductInfo">주문수량: </span>
-                        {product.productQuantity} 개
-                      </li>
-                      <li className="orderProduct">
-                        <span className="orderProductInfo">총 금액: </span>
-                        {(
-                          product.productPrice * product.productQuantity
-                        ).toLocaleString()}{" "}
-                        원
-                      </li>
-                    </ul>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-
-          <div className="deliveryRequest section">
-            <Box sx={{ width: "100%", minWidth: 100, margin: "1%" }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  배송요청사항
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={option}
-                  label="option"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="직접 수령하겠습니다">
-                    직접 수령하겠습니다
-                  </MenuItem>
-                  <MenuItem value="부재 시 경비실에 맡겨주세요">
-                    부재 시 경비실에 맡겨주세요
-                  </MenuItem>
-                  <MenuItem value="배송 전 연락 바랍니다">
-                    배송 전 연락 바랍니다
-                  </MenuItem>
-                  <MenuItem value="문 앞에 놔두십시오">
-                    문 앞에 놔두십시오
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </div>
-
-          <div className="paymentMethod section">
-            <h3>결제방법 선택</h3>
-            <div className="MethodButtonBox">
-              <button
-                className={`orderMothodBtn ${
-                  payMethod === "card" ? "active" : ""
-                }`}
-                onClick={() => setPayMethod("card")}
-                type="button"
-              >
-                KG결제
-              </button>
-              <button
-                className={`orderMothodBtn ${
-                  payMethod === "kakaopay" ? "active" : ""
-                }`}
-                onClick={() => setPayMethod("kakaopay")}
-                type="button"
-              >
-                카카오결제
-              </button>
-            </div>
-          </div>
-          <div className="payInformation">
-            <h3>결제 정보</h3>
-            <ul>
-              <li>
-                <div className="payInformationLi">
-                  <span className="orderProductInfo">상품금액 : </span>
-                  {productTotal.toLocaleString()} 원
-                </div>
-                <div className="payInformationLi">
-                  <span className="orderProductInfo">배송비 : </span>
-                  3,000 원
-                </div>
-                <div className="payInformationLi">
-                  <span className="orderProductInfo">총 결제 금액 : </span>
-                  {finalAmount.toLocaleString()} 원
-                </div>
-              </li>
-            </ul>
-            <div className="checkBoxFlexBox">
-              <Checkbox
-                {...label}
-                checked={agreed}
-                onChange={(e) => setAgreed(e.target.checked)}
-              />
-              <span>구매약관조건 동의</span>
-            </div>
-
-            <button disabled={!ready} onClick={payAndOrderKG} type="button">
-              결제하기
-            </button>
-          </div>
-          <ReactModal
-            isOpen={isOpen}
-            onRequestClose={closeModal}
-            className="modalContent"
-            overlayClassName="modalOverlay"
+  <div className="paymentHead">
+    <h3>주문 결제</h3>
+    <div className="paymentContainer">
+      <div className="pay1Container">
+        <div className="deliveryAddress section">
+          <h3>배송지</h3>
+          <Box
+            component="form"
+            className="customBox"
+            noValidate
+            autoComplete="off"
           >
-            <div className="paymentModalFlexBox">
-              <h2>결제가 완료되었습니다.</h2>
-              {orderNo && (
-              <p style={{ marginTop: 8 }}>
-                주문번호: <strong>#{orderNo}</strong>
-              </p>
+            <TextField
+              className="deliveryTextField"
+              label="성함"
+              variant="standard"
+              name="name"
+              value={userData.name ?? ""}
+              onChange={userdataForm}
+            />
+            <TextField
+              className="deliveryTextField"
+              label="전화번호"
+              name="userPhone"
+              variant="standard"
+              value={userData.userPhone ?? ""}
+              onChange={userdataForm}
+            />
+          </Box>
+        </div>
+        <ul className="deliveryAddress" key={addressData.deliverAddressId}>
+          <li>{addressData.postNum}</li>
+          <li>{addressData.address}</li>
+          <li>{addressData.addressDetail}</li>
+        </ul>
+        <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
+        <div className="productInformationContainer section">
+          <h3>상품정보</h3>
+          <div className="productInformation">
+            {productData.length === 0 ? (
+              <p>선택된 상품이 없습니다.</p>
+            ) : (
+              productData.map((product) => (
+                <div key={product.cartItemId}>
+                  <div className="orderProductImgPDiv">
+                    <div className="orderProductImgDiv">
+                      <img
+                        src={product.pImgUrl}
+                        alt={product.pName}
+                        className="orderProductImg"
+                      />
+                    </div>
+                    <p className="dailySet">{product.pName}</p>
+                  </div>
+                  <ul className="orderProductUl">
+                    <li>
+                      <span className="orderProductInfo">상품금액: </span>
+                      {product.productPrice.toLocaleString()}원
+                    </li>
+                    <li>
+                      <span className="orderProductInfo">주문수량: </span>
+                      {product.productQuantity}
+                    </li>
+                    <li>
+                      <span className="orderProductInfo">총 금액: </span>
+                      {(product.productPrice * product.productQuantity).toLocaleString()}원
+                    </li>
+                  </ul>
+                </div>
+              ))
             )}
-            <button onClick={handleClosePaymentModal} className="paymentModalCloseButton">
-              닫기
-            </button>
-            </div>
-          </ReactModal>
+          </div>
+        </div>
+        <div className="deliveryRequest section">
+          <Box sx={{ width: "100%", minWidth: 100, margin: "1%" }}>
+            <FormControl fullWidth>
+              <InputLabel id="delivery-req-label">배송요청사항</InputLabel>
+              <Select
+                labelId="delivery-req-label"
+                value={option}
+                label="배송요청사항"
+                onChange={handleChange}
+              >
+                <MenuItem value="직접 수령하겠습니다">직접 수령하겠습니다</MenuItem>
+                <MenuItem value="부재 시 경비실에 맡겨주세요">
+                  부재 시 경비실에 맡겨주세요
+                </MenuItem>
+                <MenuItem value="배송 전 연락 바랍니다">
+                  배송 전 연락 바랍니다
+                </MenuItem>
+                <MenuItem value="문 앞에 놔두십시오">
+                  문 앞에 놔두십시오
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <div className="paymentMethod section">
+          <h3>결제방법 선택</h3>
+          <label style={{ display: "block", marginBottom: 8 }}>
+            <input
+              type="radio"
+              name="paymethod"
+              checked={payMethod === "card"}
+              onChange={() => setPayMethod("card")}
+            />
+            &nbsp;신용/체크카드 (KG이니시스)
+          </label>
         </div>
       </div>
+      <div className="payInformation">
+        <h3>결제 정보</h3>
+        <ul>
+          <li className="payInformationLi">
+            <span className="orderProductInfo">상품금액 : </span>
+            {productTotal.toLocaleString()}원
+          </li>
+          <li className="payInformationLi">
+            <span className="orderProductInfo">배송비 : </span>
+            3,000원
+          </li>
+          <li className="payInformationLi">
+            <span className="orderProductInfo">총 결제 금액 : </span>
+            {finalAmount.toLocaleString()}원
+          </li>
+        </ul>
+
+        <div className="checkBoxFlexBox">
+          <Checkbox
+            {...label}
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+          />
+          <span>구매약관조건 동의</span>
+        </div>
+
+        <button disabled={!ready} onClick={payAndOrderKG}>
+          {paying ? "처리 중..." : "결제하고 주문하기"}
+        </button>
+      </div>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={handleClosePaymentModal}
+        className="modalContent"
+        overlayClassName="modalOverlay"
+      >
+        <div className="paymentModalFlexBox">
+          <h2>결제가 완료되었습니다.</h2>
+          {orderNo && (
+            <p style={{ marginTop: 8 }}>
+              주문번호: <strong>#{orderNo}</strong>
+            </p>
+          )}
+          <button
+            onClick={handleClosePaymentModal}
+            className="paymentModalCloseButton"
+          >
+            닫기
+          </button>
+        </div>
+      </ReactModal>
     </div>
-  );
+  </div>
+);
 }
 export default CartOrder;
