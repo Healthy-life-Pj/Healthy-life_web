@@ -1,199 +1,291 @@
-/* 전체 영역 중앙 정렬 및 기본 폰트 */
+/* 전체 영역 */
 .paymentHead {
   width: 100%;
-  max-width: 800px; /* ✅ 폭 제한 */
+  max-width: 800px;
   margin: 60px auto;
+  padding: 0 20px;
   font-family: 'Noto Sans KR', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.paymentHead h3 {
+.paymentHead > h3 {
   text-align: center;
   margin-bottom: 40px;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
 }
 
-/* 중앙 정렬 및 폭 제한 */
 .paymentContainer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
   width: 100%;
-  flex-wrap: wrap;
 }
 
-/* 카드형 공통 스타일 */
-.pay1Container, .payInformation {
-  flex: 1;
-  min-width: 340px;
+.pay1Container {
   background: #fff;
-  padding: 30px 25px;
+  padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* 섹션 공통 마진 */
+/* 섹션 */
 .section {
-  width: 100%;
   margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-/* 배송지 입력 */
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* 배송지 */
+.deliveryAddress {
+  list-style: none;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.deliveryAddress li {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+.deliveryAddress li:first-child {
+  font-weight: 600;
+  color: #333;
+}
+
+.pay1Container > button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 20px;
+}
+
+.pay1Container > button:hover {
+  background-color: #357abd;
+}
+
 .customBox {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 16px;
+  margin-top: 16px;
 }
 
 .deliveryTextField {
   width: 100%;
-  font-size: 14px;
 }
 
-/* 상품 이미지 및 정보 */
-.orderProductImgDiv {
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* 상품 정보 */
+.productInformationContainer {
+  margin-top: 20px;
 }
 
-.orderProductImg {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+.productInformation > div {
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 .orderProductImgPDiv {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.orderProductImgDiv {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.orderProductImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .dailySet {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
 }
 
 .orderProductUl {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
-  font-size: 14px;
+  margin: 0;
 }
 
 .orderProductUl li {
-  margin-bottom: 8px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
 }
 
 .orderProductInfo {
   font-weight: 600;
+  color: #444;
+  margin-right: 4px;
 }
 
-/* 배송요청사항 */
-.deliveryRequest select {
-  font-size: 14px;
+/* 배송 요청사항 */
+.deliveryRequest {
+  margin-top: 20px;
 }
 
-/* 결제방법 선택 버튼 */
+/* 결제방법 */
+.paymentMethod {
+  margin-top: 20px;
+}
+
 .MethodButtonBox {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 12px;
 }
 
 .orderMothodBtn {
   flex: 1;
-  height: 60px;
-  border: none;
+  height: 50px;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
-  background: #67C6E3;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background 0.3s ease;
+  background: white;
+  color: #666;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .orderMothodBtn:hover {
-  background-color: #1478FF;
+  border-color: #4a90e2;
+  color: #4a90e2;
+}
+
+.orderMothodBtn.active {
+  background: #4a90e2;
+  border-color: #4a90e2;
+  color: white;
 }
 
 /* 결제 정보 */
 .payInformation {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
+  margin-top: 30px;
+  padding: 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
 }
 
 .payInformation h3 {
-  margin-bottom: 10px;
   font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .payInformation ul {
   list-style: none;
   padding: 0;
-  width: 100%;
-  font-size: 14px;
+  margin: 0;
 }
 
 .payInformationLi {
-  margin-bottom: 6px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.payInformationLi:last-child {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  border-top: 1px solid #ddd;
+  padding-top: 14px;
+  margin-top: 8px;
 }
 
 .checkBoxFlexBox {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 10px 0;
+  margin: 16px 0;
 }
 
-/* 결제 버튼 */
+.checkBoxFlexBox span {
+  font-size: 14px;
+  color: #555;
+}
+
 .payInformation button {
-  background-color: #4CAF50;
+  width: 100%;
+  padding: 14px;
+  background-color: #28a745;
   color: white;
-  padding: 10px 25px;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 5px;
+  transition: background-color 0.2s;
+  margin-top: 12px;
 }
 
 .payInformation button:hover {
-  background-color: #388e3c;
+  background-color: #218838;
+}
+
+.payInformation button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 /* 반응형 */
 @media (max-width: 768px) {
-  .paymentContainer {
-    flex-direction: column;
-    align-items: center;
+  .paymentHead {
+    margin: 40px auto;
+    padding: 0 16px;
   }
 
-  .pay1Container, .payInformation {
-    width: 100%;
-    max-width: 500px;
+  .paymentHead > h3 {
+    font-size: 24px;
+  }
+
+  .pay1Container {
+    padding: 20px;
+  }
+
+  .section h3 {
+    font-size: 16px;
   }
 
   .MethodButtonBox {
     flex-direction: column;
-    gap: 10px;
   }
 
   .orderMothodBtn {

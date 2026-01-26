@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import axios from "axios";
-import { DELIVER_ADDRESS_DELETE, DELIVER_ADDRESS_GET, DELIVER_ADDRESS_IS_DEFAULT, DELIVER_ADDRESS_PATH, MAIN_APT_PATH } from "../../constants";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import { DeliveryAddress } from "../../types";
+import { DELIVER_ADDRESS_DELETE, DELIVER_ADDRESS_GET, DELIVER_ADDRESS_IS_DEFAULT, DELIVER_ADDRESS_PATH, MAIN_APT_PATH } from "../../constants";
 import AddressSearch from "./AddressSearch";
+import '../../style/modal/adressModal.css';
 
 interface DeliverAddressProps {
   isOpen: boolean;
@@ -17,10 +17,8 @@ interface DeliverAddressProps {
 
 const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, onOpen, onSelectAddress, AddressFetchData}) => {
   const [cookies] = useCookies(["token"]);
-  const navigate = useNavigate();
   const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<DeliveryAddress[]>([]);
-  const [validAddress, setValidAddress] = useState<string>("");
   const [address, setAddress] = useState<DeliveryAddress>({
     deliverAddressId: 0,
     userId: 0,
@@ -33,32 +31,32 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
   const openAddressModal = () => {
     setIsOpenSearch(true);
     onClose();
-  }
+  };
 
   const closeAddressModal = () => {
     setIsOpenSearch(false);
     onOpen();
-  }
+  };
 
   const deliverAddressFetchData = async () => {
     try {
       const response = await axios.get(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_GET}`, {
-        headers : {
+        headers: {
           Authorization: `Bearer ${cookies.token}`,
           withCredentials: true,
         }
       });
-      const addressList = response.data.data.deliverAddressDto
+      const addressList = response.data.data.deliverAddressDto;
       setAddressData(addressList);
     } catch (error) {
-      console.error(error);
+      console.error("배송지 조회 실패:", error);
     }
-  }
+  };
 
-  const isDefaultAddressFetchData = async (deliverAddressId:number) => {
+  const handleSetDefaultAddress = async (deliverAddressId: number) => {
     try {
       await axios.put(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_IS_DEFAULT}/${deliverAddressId}`, {}, {
-        headers : {
+        headers: {
           Authorization: `Bearer ${cookies.token}`,
           withCredentials: true,
         }
@@ -66,33 +64,37 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
       deliverAddressFetchData();
       AddressFetchData();
     } catch (error) {
-      console.error(error);
+      console.error("기본배송지 설정 실패:", error);
     }
-  }
+  };
 
-  const deleteDeliverAddressFetchData = async (deliverAddressId:number) => {
+  const handleDeleteAddress = async (deliverAddressId: number) => {
+    if (!window.confirm("이 배송지를 삭제하시겠습니까?")) return;
+
     try {
       await axios.delete(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_DELETE}/${deliverAddressId}`, {
-        headers : {
+        headers: {
           Authorization: `Bearer ${cookies.token}`,
           withCredentials: true,
         }
       });
       deliverAddressFetchData();
-    }  catch (error) {
-      console.error(error);
+    } catch (error) {
+      console.error("배송지 삭제 실패:", error);
     }
-  }
+  };
 
   const handleAddressSelect = (selectedAddress: DeliveryAddress) => {
     setAddress(selectedAddress);
     onSelectAddress(selectedAddress);
-    onClose();                     
-  }
+    onClose();
+  };
 
   useEffect(() => {
-    deliverAddressFetchData();
-  }, []);
+    if (isOpen) {
+      deliverAddressFetchData();
+    }
+  }, [isOpen]);
 
   return (
     <div>
@@ -101,22 +103,40 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
         onRequestClose={onClose}
         className="modalContent"
         overlayClassName="modalOverlay"
+        ariaHideApp={false}
       >
         <h2>배송주소</h2>
-        <button onClick={openAddressModal}>주소등록</button>
-        <ul className="paymentModalFlexBox" >
-          {addressData.map((a, idx) => 
-          <li key={`${a.deliverAddressId}-${idx}`}>
-            <div><input type="radio" value={a.deliverAddressId} onChange={() => handleAddressSelect(a)}/></div>
-            <div>{a.postNum}</div>
-            <div>{a.address}</div>
-            <div>{a.addressDetail}</div>
-            <button onClick={() => isDefaultAddressFetchData(a.deliverAddressId) }>{a.default ? <p>기본배송지</p> : <p>기본배송지 설정</p> }</button>
-            <button onClick={() => deleteDeliverAddressFetchData(a.deliverAddressId)}>삭제</button>
-            <button onClick={() => deleteDeliverAddressFetchData(a.deliverAddressId)}>수정</button>
-          </li>
+        <button onClick={openAddressModal}>주소 등록</button>
+
+        <ul className="paymentModalFlexBox">
+          {addressData.length > 0 ? (
+            addressData.map((a) => (
+              <li key={a.deliverAddressId}>
+                <div>
+                  <input
+                    type="radio"
+                    name="deliveryAddress"
+                    value={a.deliverAddressId}
+                    onChange={() => handleAddressSelect(a)}
+                    checked={address.deliverAddressId === a.deliverAddressId}
+                  />
+                </div>
+                <div>{a.postNum}</div>
+                <div>{a.address}</div>
+                <div>{a.addressDetail}</div>
+                <button onClick={() => handleSetDefaultAddress(a.deliverAddressId)}>
+                  {a.default ? "기본배송지" : "기본배송지 설정"}
+                </button>
+                <button onClick={() => handleDeleteAddress(a.deliverAddressId)}>삭제</button>
+              </li>
+            ))
+          ) : (
+            <li style={{ textAlign: "center", padding: "40px", color: "#999" }}>
+              등록된 배송지가 없습니다
+            </li>
           )}
         </ul>
+
         <button onClick={onClose} className="paymentModalCloseButton">
           닫기
         </button>
@@ -127,13 +147,14 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
         onRequestClose={closeAddressModal}
         className="modalContent"
         overlayClassName="modalOverlay"
+        ariaHideApp={false}
       >
-        주소검색
+        <h2>주소 검색</h2>
         <AddressSearch
           fetchData={deliverAddressFetchData}
           addressData={address}
           setAddressData={setAddress}
-          validMessage={validAddress}
+          validMessage=""
           isClose={closeAddressModal}
         />
       </ReactModal>

@@ -30,6 +30,7 @@ import AddressSearch from "../../auth/signUp/AddressSearch";
 import ReactModal from "react-modal";
 import qs from "qs";
 import { CartItemDto } from "../../../types/dto";
+import DeliverAddressModal from "../DeliverAddressModal";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function CartOrder() {
@@ -374,6 +375,14 @@ function CartOrder() {
             <li>{addressData.addressDetail}</li>
           </ul>
           <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
+
+          <DeliverAddressModal
+            isOpen={isAddressOpen}
+            onClose={() => setIsAddressOpen(false)}
+            onOpen={() => setIsAddressOpen(true)}
+            AddressFetchData={deliverAddressFetchData}
+            onSelectAddress={(selectedAddress) => setAddressData(selectedAddress)}
+          />
 
           <div className="productInformationContainer section">
             <h3>상품정보</h3>
