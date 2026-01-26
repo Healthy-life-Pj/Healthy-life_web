@@ -28,6 +28,7 @@ import "../../../style/Order.css";
 import ReactModal from "react-modal";
 import qs from "qs";
 import { CartItemDto } from "../../../types/dto";
+import DeliverAddressModal from "../DeliverAddressModal";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function CartOrder() {
