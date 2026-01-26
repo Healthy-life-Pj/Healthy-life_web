@@ -9,7 +9,7 @@ import {
   OrderDto,
   OrderGetRequestDto,
 } from "../../../types/dto";
-import { MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS } from "../../../constants";
+import { IMG_PATH, MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS } from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ReactModal from "react-modal";
@@ -218,9 +218,9 @@ function Mypage() {
             {currentPosts.map((data, index) => (
               <li className="myPageOrderInfoBox" key={data.orderId}>
                 <div className="myOrderOrderDateDetailBtnDiv">
-                  <p className="orderListUlLiP myPageOrderDateP">
-                    {data.orderDate}
-                  </p>
+                    <p className="orderListUlLiP myPageOrderCodeP">
+                      {data.orderCode}
+                    </p>
                   <button
                     className="orderDetailBtn"
                     onClick={() => toggleOpen(data.orderId)}
@@ -230,15 +230,16 @@ function Mypage() {
                         backgroundColor: "#e0e0e0",
                         color: "black",
                         border: "none",
+                        fontSize: "15px"
                       }}
                     />
                   </button>
                 </div>
                 <div className="myPageOrderInfoDiv">
-                  <div>
-                    <div>
+                  <div className="myPageOrderListContent">
+                    <div className="myPageOrderImgDiv">
                       <img
-                        src={data.orderDetails[0].pImgUrl}
+                        src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
                         alt={data.orderDetails[0].pName}
                       />
                     </div>
@@ -247,7 +248,7 @@ function Mypage() {
                     </p>
                   </div>
                   <p className="orderListUlLiP orderListTotalAmount">
-                    {data.totalAmount?.toLocaleString()}원
+                    {(data.totalAmount+3000).toLocaleString()} 원
                   </p>
                 </div>
               </li>
@@ -277,7 +278,10 @@ function Mypage() {
                     {openOrder.deliverAddress?.addressDetail}
                   </p>
                   <p className="orderDetailModalInfoP">
-                    {openOrder.orderDate}
+                    <span>주문번호 : </span>{openOrder.orderCode}
+                  </p>
+                  <p className="orderDetailModalInfoP">
+                    <span>주문날짜 : </span> {openOrder.orderDate.replaceAll("-",".").slice(0, 9) + "." + openOrder.orderDate.slice(11, 19)}
                   </p>
                 </div>
                 <div className="orderDetailModalOrderContent">
@@ -288,7 +292,7 @@ function Mypage() {
                   <input type="checkbox" onChange={() => handleCheckBoxChange(orderDetail.orderDetailId)}/>
                   <div className="orderDetailModalImgDiv">
                     <img className="orderDetailModalImg"
-                      src={orderDetail.pImgUrl}
+                      src={`${IMG_PATH}${orderDetail.pImgUrl}`}
                       alt={orderDetail.pName}
                     />
                   </div>
