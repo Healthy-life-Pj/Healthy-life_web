@@ -34,6 +34,8 @@ import AllReviewList from "./views/allreview/AllReviewList";
 import Order from "./views/order/direct-order/DirectOrder";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
+import AuthRedirectHandler from "./views/auth/signUp/AuthRedirectHandler";
+import SnsSuccess from "./views/auth/login/SnsSuccess";
 
 function App() {
   interface TokenUser {
@@ -77,6 +79,9 @@ function App() {
         <Route path="/survey/allerge" element={<SurveryListAllerge />} />
         <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
         <Route path="/survey/dietgoal" element={<SurveryListDietGoal />} />
+        <Route path={"/auth"} element={<AuthRedirectHandler />} />
+        <Route path={"/auth"} element={<SnsSuccess />} />
+
 
         {/*상품*/}
         <Route path="/products/:pCategoryName/*" element={<Product />} />

@@ -18,7 +18,6 @@ const Product: React.FC = () => {
   const [categoryDetailList, setCategoryDetailList] = useState<string[]>([]);
   const [btnStatus, setBtnStatus] = useState<string>("default");
   const [useDetailApi, setUseDetailApi] = useState<boolean>(false);
-
   const { data, loading, resetAndFetchData, updatedParams } =
     usePaginationScroll({
       apiUrl01: `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${CATEGORY_PRODUCTS}`,

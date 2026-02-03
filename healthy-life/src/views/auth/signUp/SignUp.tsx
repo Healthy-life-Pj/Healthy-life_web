@@ -8,6 +8,7 @@ import {
   DUPLICATE_USERNAME,
   MAIN_APT_PATH,
   SIGN_UP,
+  SIGN_UP_SNS_API,
 } from "../../../constants";
 import Term from "./Term";
 import "../../../style/auth/signUp/signUp.css";
@@ -251,10 +252,25 @@ function SignUp() {
     }
   };
 
+    const onSnsButtonClickHandler = (sns: "kakao" | "naver") => {
+    window.location.href = `${SIGN_UP_SNS_API}${sns}`;
+  };
+
   useEffect(() => {}, [duplicateUsernameMg, duplicateNickNameMg]);
 
   return (
     <div className="joinContainer">
+            <div
+                  className="kakao"
+                  onClick={() => onSnsButtonClickHandler("kakao")}
+                >
+                  <div> 
+                    <img src="" alt="카카오로고" className="kakao" />
+                  </div>
+                  <div>
+                    <p>Kakao 계정으로 회원가입</p>
+                  </div>
+                </div>
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit}>
         <div className="joinContain">

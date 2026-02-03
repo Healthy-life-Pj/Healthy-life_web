@@ -12,7 +12,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import "../../../style/auth/login/login.css";
 import ReactModal from "react-modal";
 import axios from "axios";
-import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants";
+import { AUTH_PATH, LOGIN, MAIN_APT_PATH, SIGN_IN_SNS_API } from "../../../constants";
 import { useCookies } from "react-cookie";
 import { LoginInResponseDto } from "../../../types";
 
@@ -98,6 +98,10 @@ function Login() {
     setModalIsOpen(true);
   };
 
+    const onSnsButtonClickHandler = (sns: "kakao" | "naver") => {
+    window.location.href = `${SIGN_IN_SNS_API}${sns}`;
+  };
+
   const closeModal = () => {
     setModalIsOpen(false);
     setFormData({
@@ -158,6 +162,17 @@ function Login() {
           <Link to={"/login/FindPassword"}>비밀번호 찾기</Link>
         </div>
       </Box>
+        <div
+          className="kakao"
+          onClick={() => onSnsButtonClickHandler("kakao")}
+        >
+          <div>
+            <img src="" alt="카카오로고" className="kakao" />
+          </div>
+          <div>
+            <p>Kakao 계정으로 로그인</p>
+          </div>
+        </div>
         <div className="modalContainer">
           <ReactModal
             isOpen={modalIsOpen}

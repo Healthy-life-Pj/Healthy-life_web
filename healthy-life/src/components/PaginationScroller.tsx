@@ -23,6 +23,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
     product: ProductDetailResponseDto | null
   ) => {
     navigator(`/product/productDetail/${product?.pId}`);
+    console.log(product?.pImgUrl);
   };
 
   const handleMouseEnter = (index: number) => {
@@ -33,11 +34,12 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
   };
 
   const openModal = async (pId: number) => {
-    setModalIsOpen(true);
     if (!cookies.token) {
       navigator("/login");
       alert("로그인이 필요합니다.");
+      return;
     }
+    setModalIsOpen(true);
     try {
       await axios.post(
         `${MAIN_APT_PATH}${CART_PATH}${CART_PRODUCT}/${pId}`,
@@ -51,7 +53,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
           withCredentials: true,
         }
       );
-
+      
       const response = await axios.get(
         `${MAIN_APT_PATH}${CART_PATH}${MY_CART}`,
         {
@@ -114,7 +116,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             <li>
               <Rating
                 name="half-rating-read"
-                defaultValue={product?.averageRating}
+                value={product?.averageRating}
                 precision={0.5}
                 readOnly
                 style={{ fontSize: "13px" }}

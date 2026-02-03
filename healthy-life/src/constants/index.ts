@@ -17,7 +17,7 @@ export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
 export const PRODUCT_IMG = "/productImg";
 
 //Image
-export const IMG_PATH = "http://localhost:4040/image";
+export const IMG_PATH = "http://localhost:4040/imgs";
 
 // User
 export const GET_USER = "/me";
@@ -39,6 +39,10 @@ export const FIND_ID_BY_TOKEN = "/find-id/verify-find-username";
 export const RECOVERY_EMAIL = "/recovery-email";
 export const DUPLICATE_NICKNAME = "/duplicate/userNickName/";
 export const DUPLICATE_USERNAME = "/duplicate/username/";
+export const SIGN_UP_SNS_API = `http://localhost:4040/api/v1/auth/sns-sign-in/`; 
+export const SIGN_IN_SNS_API = `http://localhost:4040/api/v1/auth/sns-sign-in/`
+
+
 
 // Product
 export const ALL_PRODUCTS = "/all";
