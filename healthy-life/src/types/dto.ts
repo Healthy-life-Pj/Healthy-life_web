@@ -148,3 +148,11 @@ export interface OrderDetailDto {
   totalPrice: number;
   orderStatus: OrderStatus;
 }
+
+export interface WishlistItemDto {
+  pid: number;
+  pname: string;
+  pprice: number;
+  pimgUrl: string;
+  wishListAddedAt: string;
+}

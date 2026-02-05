@@ -15,6 +15,7 @@ import {
   MY_CART,
   PRODUCT_IMG,
   PRODUCT_PATH,
+  WISH_LIST_PATH,
 } from "../../../../constants";
 import { useCookies } from "react-cookie";
 import { CartItemDto, ProductDetailResponseDto } from "../../../../types/dto";
@@ -46,6 +47,34 @@ const ProductDetail = () => {
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const addToWishlist = async () => {
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigator("/login");
+      return;
+    }
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${WISH_LIST_PATH}/products/${pId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      alert("위시리스트에 추가되었습니다.");
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        alert("이미 위시리스트에 추가된 상품입니다.");
+      } else {
+        console.error(error);
+        alert("위시리스트 추가에 실패했습니다.");
+      }
     }
   };
 
@@ -174,7 +203,7 @@ const ProductDetail = () => {
                 </button>
                 <button
                   className="wishCartBtn"
-                  onClick={() => navigator("/myPage/wishlist")}
+                  onClick={addToWishlist}
                 >
                   WISH
                 </button>

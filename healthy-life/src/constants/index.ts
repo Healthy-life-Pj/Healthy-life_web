@@ -8,7 +8,7 @@ export const MAIL_PATH = "/mail";
 export const PRODUCT_PATH = "/products";
 export const SHIPPING_PATH = "/shipping";
 export const ORDER_PATH = "/orders";
-export const WISH_LIST_PATH = "/wish-list";
+export const WISH_LIST_PATH = "/wish-lists";
 export const CART_PATH = "/carts";
 export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
@@ -17,7 +17,7 @@ export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
 export const PRODUCT_IMG = "/productImg";
 
 //Image
-export const IMG_PATH = "http://localhost:4040/image";
+export const IMG_PATH = "http://localhost:4040/imgs";
 
 // User
 export const GET_USER = "/me";
