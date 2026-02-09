@@ -150,7 +150,14 @@ export interface OrderDetailDto {
   orderStatus: OrderStatus;
 }
 
+export interface WishlistItemDto {
+  pid: number;
+  pname: string;
+  pprice: number;
+  pimgUrl: string;
+  wishListAddedAt: string;
+}
 
 export interface PhysiqueRequestDto {
-  tageTypeNames: string
+  tageTypeNames: string;
 }

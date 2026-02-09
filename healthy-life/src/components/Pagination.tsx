@@ -51,6 +51,4 @@ const Pagination: React.FC<paginationProps> = ({currentPage, totalProducts, data
 
 }
 
-
-
 export default Pagination;
