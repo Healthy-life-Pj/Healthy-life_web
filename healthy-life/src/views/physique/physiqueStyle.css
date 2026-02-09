@@ -1,0 +1,31 @@
+.physiqueContainer {
+  margin: 80px auto;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1000px;
+}
+.physiqueBtnDiv {
+  height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.physiqueBtn {
+  border: none;
+  background-color: white;
+  font-size: 17px;
+  border-bottom: 1px solid #aaa;
+  margin: 10px;
+  font-family: 'Pretendard-Regular';
+  height: 25px;
+}
+.physiqueSearchBtn {
+  margin-top: 30px;
+  padding: 5px;
+  width: 200px;
+  height: 40px;
+  border-radius: 3px;
+  border: none;
+}

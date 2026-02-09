@@ -14,6 +14,7 @@ import MypageUp from './mypage-main/MypageUp'
 import ReviewList from './my-review/MyReview'
 import ReviewUpdate from './my-review/ReviewUpdate'
 import MyQnA from './my-qna/MyQnA'
+import PhysiquePage from './physique/PhysiquePage'
 
 
 function MyPageMain() {
@@ -36,6 +37,7 @@ function MyPageMain() {
         <Route path='/userinformation' element={<Userinformation />}/>
         <Route path='/my-review/write/:orderDetailId/:pName' element={<ReviewWrite />}/>
         <Route path='/my-review/update/:reviewId' element={<ReviewUpdate />}/>
+        <Route path="/physique" element={<PhysiquePage />} />
       </Routes>
       </div>
     </div>

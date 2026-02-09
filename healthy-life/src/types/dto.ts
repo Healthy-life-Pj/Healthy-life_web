@@ -129,6 +129,7 @@ export type OrderStatus =
   | 'EXCHANGE_IN_PROGRESS'
   | 'EXCHANGED';
 
+
 export interface DeliveryAddressDto {
   deliverAddressId: number;
   address: string;
@@ -155,4 +156,8 @@ export interface WishlistItemDto {
   pprice: number;
   pimgUrl: string;
   wishListAddedAt: string;
+}
+
+export interface PhysiqueRequestDto {
+  tageTypeNames: string;
 }

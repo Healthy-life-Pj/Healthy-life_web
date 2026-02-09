@@ -25,13 +25,16 @@ function ReviewWrite() {
       const formData = new FormData();
       formData.append("reviewContent", reviewData.reviewContent);
       formData.append("reviewRating", String(reviewData.reviewRating));
-      formData.append("reviewImgUrl", reviewData.reviewImgUrl)
-      console.log("폼데이터 검증:", {
-      content: formData.get("reviewContent"),
-      rating: formData.get("reviewRating"),
-      file: formData.get("reviewImgUrl"),
-    });
-    
+      formData.append("reviewImgUrl", reviewData.reviewImgUrl);
+
+    if (!formData.get("reviewContent")) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+    if (formData.get("reviewRating") === "0") {
+      alert("별점을 입력해주세요.");
+      return;
+    }
     try {
       await axios.post(
         `${MAIN_APT_PATH}${REVIEW_PATH}/${orderDetailId}`,
@@ -122,7 +125,7 @@ function ReviewWrite() {
       <div className="ImgContainer">
         <div className="ImgContainerDiv">
           {reviewImg ? 
-          <img className="imgPreview" src={reviewImg} alt="리뷰사진진" />
+          <img className="imgPreview" src={reviewImg} alt="리뷰사진" />
           : <ImageNotSupportedIcon style={{fontSize: "50px" , color: "#a2a2a2"}}/>}
         </div>
         <div className="fileBox">
