@@ -9,6 +9,7 @@ import {
   MAIN_APT_PATH,
   MY_CART,
   PRODUCT_PATH,
+  WISH_LIST_PATH,
 } from "../../../constants";
 import { CartItemDto, ProductDetailResponseDto } from "../../../types/dto";
 import "../../../style/home/allProduct.css";
@@ -107,6 +108,34 @@ const NewItemSlider = () => {
 
   const closeModal = () => setModalIsOpen(false);
 
+  const addToWishlist = async (pId: number) => {
+    if (!cookies.token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return;
+    }
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${WISH_LIST_PATH}/products/${pId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      alert("위시리스트에 추가되었습니다.");
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        alert("이미 위시리스트에 추가된 상품입니다.");
+      } else {
+        console.error(error);
+        alert("위시리스트 추가에 실패했습니다.");
+      }
+    }
+  };
+
   const visibleProduct = datas.slice(currentIndex, currentIndex + 3);
   if (visibleProduct.length < 3) {
     visibleProduct.push(...datas.slice(0, 3 - visibleProduct.length));
@@ -182,7 +211,15 @@ const NewItemSlider = () => {
                     >
                       CART
                     </button>
-                    <button className="sliderProductHoverBtn">WISH</button>
+                    <button
+                      className="sliderProductHoverBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToWishlist(product.pId);
+                      }}
+                    >
+                      WISH
+                    </button>
                   </div>
                 )}
               </div>
