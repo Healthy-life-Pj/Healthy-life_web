@@ -20,7 +20,7 @@ function usePaginationScroll<T>({
   const [totalPages, setTotalPages] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("default");
   const [params, setParams] = useState(extraParams);
-  const useDetailApi = !!params.pCategoryDetailName;
+  const useDetailApi = params.pCategoryDetailName;
   const isFetching = useRef(false);
 
   const fetchData = async (page: number) => {

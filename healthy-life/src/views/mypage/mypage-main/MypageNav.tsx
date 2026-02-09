@@ -48,6 +48,10 @@ const MypageNav: React.FC = () => {
             <Link to="/mypage/userinformation">
             <span className="mypageMenue">내 정보</span></Link>
           </li>
+          <li>
+            <Link to="/mypage/physique">
+            <span className="mypageMenue">내 체질/기호</span></Link>
+          </li>
         </ul>
       </div>
     </div>

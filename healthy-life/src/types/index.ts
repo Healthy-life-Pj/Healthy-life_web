@@ -48,6 +48,35 @@ export interface ProductCategoryDetail {
   categoryDetailName: string;
 }
 
+// 체질 태그 타입
+export type PhysiqueTags =
+  | '저당'
+  | '저탄수'
+  | '고단백'
+  | '저지방'
+  | '저염'
+  | '비건'
+  | '채식'
+  | '무카페인'
+  | '다이어트'
+  | '벌크업'
+  | '체중유지'
+  | '식단관리'
+  | '견과류 제외'
+  | '해산물 제외'
+  | '유제품 제외'
+  | '글루텐 제외'
+  | '계란 제외'
+  | '간편식'
+  | '식사대용'
+  | '운동후식사'
+  | '저칼로리'
+  | '포만감';
+
+  export type TagType = 
+  |"INCLUDE"
+  |"EXCLUDE";
+
 export type CategoryType = 
   | "닭가슴살_육류"
   | "도시락"
@@ -88,18 +117,6 @@ export type categoryDetails =
   | "해조류"
   | "어패류"
   | "견과류";
-
-  export type physiqueTags = 
-  | "비건"
-  | "육류"
-  | "해산물"
-  | "견과류"
-  | "어패류"
-  | "저당"
-  | "근육"
-  | "체중감소"
-  | "유제품품"
-  | "체중증가";
 
 // Cart Interface
 export interface Cart {
