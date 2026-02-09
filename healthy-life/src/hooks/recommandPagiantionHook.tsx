@@ -86,7 +86,7 @@ function useRecommandPaginationHook<T>({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, currentPage, totalPages]);
 
-  return { data, resetAndFetchData: setSortBy, loading };
+  return { data, resetAndFetchData: setSortBy, loading, fetchData };
 }
 
 export default useRecommandPaginationHook;

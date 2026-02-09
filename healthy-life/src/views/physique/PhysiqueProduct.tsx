@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../style/home/allProduct.css";
-import { 
+import {
   MAIN_APT_PATH,
   PHYSIQUE_PRODUCTS,
   PRODUCT_PATH,
@@ -9,16 +9,19 @@ import PaginationScroller from "../../components/PaginationScroller";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import useRecommandPaginationHook from "../../hooks/recommandPagiantionHook";
+import PhysiqueSurvey from "./PhysiqueSurvey";
 
 const PhysiqueProduct = () => {
   const [btnStatus, setBtnStatus] = useState<string>("default");
-    const [cookies] = useCookies(["token"]);
-    const hasAlerted = useRef(false);
-    const navigate = useNavigate();
-  const { data, loading, resetAndFetchData} = useRecommandPaginationHook({
+  const [cookies] = useCookies(["token"]);
+  const hasAlerted = useRef(false);
+  const navigate = useNavigate();
+  const [physiqueUpdated] = useState(false);
+
+  const { data, loading, resetAndFetchData, fetchData } = useRecommandPaginationHook({
     apiUrl: `${MAIN_APT_PATH}${PRODUCT_PATH}${PHYSIQUE_PRODUCTS}`,
     limit: 10,
-    chooseSort: btnStatus
+    chooseSort: btnStatus,
   });
 
   const buttons = [
@@ -45,11 +48,17 @@ const PhysiqueProduct = () => {
       navigate("/login");
     }
   }, []);
+
+  useEffect(() => {
+    resetAndFetchData(btnStatus);
+  }, [physiqueUpdated]);
+
   return (
     <div className="allProductbListBox">
+      <PhysiqueSurvey onSearch={()=>fetchData(1)} />
       <div className="productListDiv">
-          <h2>체질추천 상품</h2>
-          {data.length > 0 ? 
+        <h2>체질추천 상품</h2>
+        {data.length > 0 ? (
           <div className="itemCotianerDiv">
             <div className="allProductFilterBtn">
               {buttons.map((button, index) => (
@@ -76,11 +85,11 @@ const PhysiqueProduct = () => {
               )}
             </div>
           </div>
-          :
-          <button className="movePhysiqueBtn" onClick={() => navigate("recommand")}>설문조사 하기</button>
-          }
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
+    </div>
   );
 };
 export default PhysiqueProduct;

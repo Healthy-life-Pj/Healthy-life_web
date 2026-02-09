@@ -34,6 +34,8 @@ import AllReviewList from "./views/allreview/AllReviewList";
 import Order from "./views/order/direct-order/DirectOrder";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
+import PhysiqueSurvey from "./views/physique/PhysiqueSurvey";
+import PhysiquePage from "./views/mypage/physique/PhysiquePage";
 
 function App() {
   interface TokenUser {
@@ -73,6 +75,7 @@ function App() {
         />
         <Route path="/signUp/*" element={<SignUp />} />
         <Route path="/all" element={<All />} />
+
         <Route path="/survey" element={<SurveyApp />} />
         <Route path="/survey/allerge" element={<SurveryListAllerge />} />
         <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
@@ -89,13 +92,13 @@ function App() {
         {/* 전체 리뷰 */}
         <Route path="/reviews" element={<AllReviewList />} />
 
+        <Route path="/recommand" element={<RecommandApp />} />
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/nonMember" element={<NonMember />} />
         <Route path="/bestitem" element={<BestItem />} />
-        <Route path="/recommand" element={<RecommandApp />} />
         <Route path="/calculator" element={<Bmi />} />
         <Route path="/cart" element={<CartAPP />} />
       </Routes>

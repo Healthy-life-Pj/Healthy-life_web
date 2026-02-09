@@ -74,12 +74,12 @@ function Review() {
         {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
-            withCredentials: true,
           },
+          withCredentials: true,
         }
       );
       const reversDatas = response.data.data;
-      setReviewModal(reversDatas);
+      setReviewDatas(reversDatas);
 
       const reviewList = reversDatas.reviewListDto;
 
@@ -100,8 +100,8 @@ function Review() {
         {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
-            withCredentials: true,
           },
+          withCredentials: true,
         }
       );
       orderFetchData();
