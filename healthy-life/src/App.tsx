@@ -79,8 +79,7 @@ function App() {
         <Route path="/survey/allerge" element={<SurveryListAllerge />} />
         <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
         <Route path="/survey/dietgoal" element={<SurveryListDietGoal />} />
-        <Route path={"/auth"} element={<AuthRedirectHandler />} />
-        <Route path={"/auth"} element={<SnsSuccess />} />
+        <Route path={"/sns-success"} element={<AuthRedirectHandler />} />
 
 
         {/*상품*/}

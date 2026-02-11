@@ -19,7 +19,7 @@ export default function SnsSuccess() {
         expires,
       });
 
-      navigator("/main");
+      navigator("/");
     } else navigator("/signUp");
   }, [accessToken, expiration, navigator, setCookies]);
 
