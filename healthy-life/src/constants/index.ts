@@ -103,3 +103,4 @@ export const DELIVER_ADDRESS_IS_DEFAULT = "/is-default";
 export const PHYSIQUE_PUT = "/create/physiques";
 export const PHYSIQUE_GET = "/me/physiques";
 export const PHYSIQUE_DELTE = "/delete/physiques";
+export const PHYSIQUE_GET_NAME = "/physiques/name";

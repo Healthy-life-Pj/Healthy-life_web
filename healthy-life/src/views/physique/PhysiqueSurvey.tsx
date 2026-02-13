@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   MAIN_APT_PATH,
   PHYSIQUE_GET,
+  PHYSIQUE_GET_NAME,
   PHYSIQUE_PUT,
   USER_PATH,
 } from "../../constants";
@@ -16,6 +17,23 @@ interface PhysiqueSurveyProps {
 function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
   const [cookies] = useCookies(["token"]);
   const [tags, setTags] = useState<string[]>([]);
+  const [tagNames, setTagNames] = useState<string[]>([]);
+  
+  const getTagName = async() => {
+    try {
+      const response = await axios.get(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_GET_NAME}`, {
+      headers: { Authorization : `Bearer ${cookies.token}`},
+      withCredentials: true
+      })
+      setTagNames(response.data.data.physiqueNames);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+useEffect(()=> {
+  getTagName()
+}, []);
 
   const handleTags = (tag: string) => {
     setTags((prev) => {
@@ -58,6 +76,7 @@ function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
 
       const savedTags = response.data.data.physiqueNames;
       setTags(savedTags);
+      
     } catch (error) {
       console.error(error);
     }
@@ -67,31 +86,14 @@ function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
     color: tags.includes(tag) ? "blue" : "black",
   });
 
-  const PHYSIQUE_TAGS = [
-    { value: "저당", label: "저당" },
-    { value: "저탄수", label: "저탄수" },
-    { value: "고단백", label: "고단백" },
-    { value: "저지방", label: "저지방" },
-    { value: "저염", label: "저염" },
-    { value: "비건", label: "비건" },
-    { value: "채식", label: "채식" },
-    { value: "무카페인", label: "무카페인" },
-    { value: "다이어트", label: "다이어트" },
-    { value: "벌크업", label: "벌크업" },
-    { value: "체중유지", label: "체중유지" },
-    { value: "식단관리", label: "식단관리" },
-    { value: "간편식", label: "간편식" },
-    { value: "식사대용", label: "식사대용" },
-    { value: "운동후식사", label: "운동후식사" },
-    { value: "저칼로리", label: "저칼로리" },
-    { value: "포만감", label: "포만감" },
-    { value: "견과류제외", label: "NO_견과류" },
-    { value: "해산물제외", label: "NO_해산물" },
-    { value: "유제품제외", label: "NO_유제품" },
-    { value: "글루텐제외", label: "NO_글루텐" },
-    { value: "새우제외", label: "NO_새우" },
-    { value: "계란제외", label: "NO_계란" },
-  ];
+const TAG_LABEL_MAP: Record<string, string> = {
+  "견과류제외": "NO_견과류",
+  "해산물제외": "NO_해산물",
+  "유제품제외": "NO_유제품",
+  "글루텐제외": "글루텐프리",
+  "새우제외": "NO_새우",
+  "계란제외": "NO_계란",
+};
 
   useEffect(() => {
     getMyPhysique();
@@ -100,16 +102,16 @@ function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
   return (
     <div className="physiqueContainer">
       <div className="physiqueBtnDiv">
-        {PHYSIQUE_TAGS.map(({ value, label }) => (
+        {tagNames.map(tag => (
           <button
-            key={value}
+            key={tag}
             className="physiqueBtn"
             name="physiqueTagName"
-            style={physiqueBtnStyle(value)}
-            onClick={() => handleTags(value)}
-            value={value}
+            style={physiqueBtnStyle(tag)}
+            onClick={() => handleTags(tag)}
+            value={tag}
           >
-            # {label}
+            # {TAG_LABEL_MAP[tag] || tag}
           </button>
         ))}
       </div>
