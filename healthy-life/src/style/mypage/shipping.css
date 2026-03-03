@@ -1,0 +1,366 @@
+.shippingContainer {
+  width: 800px;
+  padding: 20px;
+}
+
+.shippingContainer h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.shippingEmpty {
+  text-align: center;
+  padding: 60px 0;
+  color: #999;
+  font-size: 15px;
+}
+
+/* 배송 목록 */
+.shippingListBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shippingItem {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+}
+
+.shippingItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.shippingStatus {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-shipped {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.shippingOrderId {
+  font-size: 13px;
+  color: #888;
+}
+
+.shippingItemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.shippingInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shippingLabel {
+  min-width: 80px;
+  font-size: 13px;
+  color: #888;
+}
+
+.shippingValue {
+  font-size: 14px;
+  color: #333;
+}
+
+.shippingTrackingNum {
+  font-size: 14px;
+  color: #2196F3;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.shippingTrackingNum:hover {
+  color: #1565C0;
+}
+
+.shippingItemFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.trackingBtn {
+  padding: 8px 20px;
+  background: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.trackingBtn:hover {
+  background: #1976D2;
+}
+
+/* 추적 모달 */
+.trackingModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.trackingModalContent {
+  background: #fff;
+  border-radius: 12px;
+  width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.trackingModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #2196F3;
+}
+
+.trackingModalHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.trackingModalClose {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.trackingModalClose:hover {
+  color: #333;
+}
+
+.trackingModalLoading {
+  text-align: center;
+  padding: 40px 0;
+  color: #888;
+}
+
+/* 배송 요약 */
+.trackingSummary {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.trackingSummaryRow {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.trackingSummaryLabel {
+  min-width: 100px;
+  font-size: 13px;
+  color: #888;
+  font-weight: 500;
+}
+
+.trackingSummaryRow span:last-child {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 배송 진행 단계 */
+.trackingProgress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  position: relative;
+}
+
+.trackingProgress::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: #e0e0e0;
+  transform: translateY(-10px);
+}
+
+.trackingStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.trackingStepCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  background: #e0e0e0;
+  color: #999;
+}
+
+.trackingStep.active .trackingStepCircle {
+  background: #2196F3;
+  color: #fff;
+}
+
+.trackingStepLabel {
+  font-size: 11px;
+  color: #999;
+}
+
+.trackingStep.active .trackingStepLabel {
+  color: #2196F3;
+  font-weight: 500;
+}
+
+/* 상세 추적 내역 */
+.trackingDetailList {
+  margin-top: 8px;
+}
+
+.trackingDetailList h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.trackingDetailTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.trackingDetailTable thead {
+  background: #f5f5f5;
+}
+
+.trackingDetailTable th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.trackingDetailTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.trackingDetailTable tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.level-complete td {
+  color: #155724;
+  font-weight: 500;
+}
+
+.level-transit td {
+  color: #004085;
+}
+
+.level-pending td {
+  color: #666;
+}
+
+.trackingTelno {
+  font-size: 12px;
+  color: #999;
+}
+
+.noTrackingDetail {
+  text-align: center;
+  padding: 24px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+@media (max-width: 1000px) {
+  .shippingContainer {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .trackingModalContent {
+    width: 95%;
+    margin: 0 10px;
+  }
+
+  .trackingProgress {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .trackingProgress::before {
+    display: none;
+  }
+
+  .trackingDetailTable {
+    font-size: 12px;
+  }
+
+  .trackingDetailTable th,
+  .trackingDetailTable td {
+    padding: 8px 6px;
+  }
+}

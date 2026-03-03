@@ -59,6 +59,8 @@ export const ORDER_POST_CART = "/carts";
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
+export const TRACKING_DETAIL = "/tracking/detail";
+export const CARRIER_LIST = "/carriers";
 
 // Wishlist
 export const WISHLIST_PRODUCT = "/products/{pId}";
