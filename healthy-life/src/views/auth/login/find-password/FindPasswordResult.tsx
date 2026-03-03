@@ -6,18 +6,15 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { MAIN_APT_PATH, UPDATE_PASSWORD_BY_EMAIL } from '../../../../constants';
 
-// JWT에서 username 추출용 타입
 interface DecodedToken {
   username: string;
 }
 
-// 비밀번호 업데이트 요청 데이터 타입
 interface UpdatePasswordData {
   password: string;
   confirmPassword: string;
 }
 
-// 토큰을 디코딩해서 username 반환
 const fetchUserInfoForCertification = (token: string): Promise<{ username: string }> => {
   return new Promise((resolve, reject) => {
     try {
@@ -33,9 +30,6 @@ const fetchUserInfoForCertification = (token: string): Promise<{ username: strin
   });
 };
 
-// 비밀번호 변경 API 호출
-// PUT /api/v1/users/me/password/email?token=...
-// Body: { userPassword, confirmUserPassword } → PasswordUpdateRequestDto 필드명과 일치
 const updateUserPassword = async (data: UpdatePasswordData, token: string): Promise<void> => {
   await axios.put(
     `${MAIN_APT_PATH}${UPDATE_PASSWORD_BY_EMAIL}`,
@@ -144,12 +138,9 @@ function FindPasswordResult() {
               비밀번호 재설정 하기
             </Button>
           </div>
-          <div className="find-pw-dog">
             <div className="speech-bubble">
               <p>{username}님 재설정할 비밀번호를 입력해 주세요!</p>
             </div>
-            <p className="dog-imo">🐶</p>
-          </div>
         </div>
       </div>
     </>

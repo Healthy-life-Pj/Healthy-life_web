@@ -15,7 +15,7 @@ import ReviewList from './my-review/MyReview'
 import ReviewUpdate from './my-review/ReviewUpdate'
 import MyQnA from './my-qna/MyQnA'
 import PhysiquePage from './physique/PhysiquePage'
-import ShippingList from './shipping/ShippingList'
+// import ShippingList from './shipping/ShippingList'
 
 
 function MyPageMain() {
@@ -29,7 +29,7 @@ function MyPageMain() {
       <Routes>
         <Route path='/' element={<Mypage/>}/> 
         <Route path='/orderApp' element={<OrderApp />}/>
-        <Route path='/shipping' element={<ShippingList />}/>
+        {/* <Route path='/shipping' element={<ShippingList />}/> */}
         <Route path='/my-review' element={<ReviewList />}/>
         <Route path='/wishlist' element={<WishApp />}/>
         <Route path='/my-qna' element={<MyQnA />}/>
