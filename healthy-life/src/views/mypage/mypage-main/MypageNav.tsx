@@ -15,6 +15,11 @@ const MypageNav: React.FC = () => {
               <span className="mypageMenue">주문처리 현황</span>
             </Link>
           </li>
+          <li>
+            <Link to="/mypage/shipping">
+              <span className="mypageMenue">배송조회</span>
+            </Link>
+          </li>
           <li className="mypageNavLine"></li>
           <li className="mypageNavTitle">활동관리</li>
           <li>

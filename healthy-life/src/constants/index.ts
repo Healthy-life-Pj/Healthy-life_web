@@ -37,7 +37,7 @@ export const SIGN_UP = "/sign-up";
 export const SNS_LOGIN = "/sns-login";
 export const SNS_SIGN_UP = "/sns-sign-up";
 export const FIND_ID = "/find-id";
-export const FIND_ID_BY_TOKEN = "/find-id/verify-find-username";
+export const FIND_ID_BY_TOKEN = (token: string) => `/auth/find-id/${token}`;
 export const RECOVERY_EMAIL = "/recovery-email";
 export const DUPLICATE_NICKNAME = "/duplicate/userNickName/";
 export const DUPLICATE_USERNAME = "/duplicate/username/";
@@ -59,6 +59,8 @@ export const ORDER_POST_CART = "/carts";
 
 // Shipping
 export const TRACKING_INFO = "/tracking/";
+export const TRACKING_DETAIL = "/tracking/detail";
+export const CARRIER_LIST = "/carriers";
 
 // Wishlist
 export const WISHLIST_PRODUCT = "/products/{pId}";

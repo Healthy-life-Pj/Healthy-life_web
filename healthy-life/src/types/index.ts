@@ -192,10 +192,38 @@ export type ShippingStatus = 'PENDING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
 export interface Shipping {
   shippingId: number;
   orderId: number;
-  shippingTrackingNum: number;
+  shippingTrackingNum: string;
+  shippingCarrierCode: string;
+  shippingCarrierName: string;
   shippingShippedAt: Date;
   shippingDeliveredAt: Date;
   shippingStatus: ShippingStatus;
+}
+
+export interface TrackingDetail {
+  timeString: string;
+  where: string;
+  kind: string;
+  level: number;
+  manName: string;
+  telno: string;
+  telno2: string;
+  remark: string;
+  code: string;
+}
+
+export interface TrackingInfo {
+  invoiceNo: string;
+  itemName: string;
+  receiverName: string;
+  receiverAddr: string;
+  senderName: string;
+  adUrl: string;
+  complete: boolean;
+  level: number;
+  estimate: string;
+  result: string;
+  trackingDetails: TrackingDetail[];
 }
 
 // Payment Interface
