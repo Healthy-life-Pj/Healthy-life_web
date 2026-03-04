@@ -26,6 +26,7 @@ import SignUp from "./views/auth/signUp/SignUp";
 import Login from "./views/auth/login/Login";
 import HeaderSearchBar from "./components/HeaderSerch";
 import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
+import FindPasswordResult from "./views/auth/login/find-password/FindPasswordResult";
 import AllReviewList from "./views/allreview/AllReviewList";
 import Order from "./views/order/direct-order/DirectOrder";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
@@ -89,6 +90,7 @@ function App() {
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPageMain />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
+        <Route path="/find-password/:token" element={<FindPasswordResult />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/nonMember" element={<NonMember />} />
         <Route path="/bestitem" element={<BestItem />} />
