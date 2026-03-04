@@ -1,7 +1,7 @@
 .Sidecontainer{
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 5px;
   transition: opacity 1s ease-in-out;
 }
 
@@ -15,7 +15,7 @@
   position: fixed;
   right: 0;
   background-color: #DFF5FF;
-  z-index: 5;
+  z-index: 15;
   padding-top: 10px;
   box-shadow: 0px 3px 7px #a4a3a3;
 }
@@ -29,7 +29,7 @@
 
 .KitchenOutlinedIcon {
   position: fixed;
-  right: 60px;
+  right: 50px;
   top: 50%;
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -55,8 +55,6 @@
   color: #8e8e8e;
   background-color: rgba(0, 0, 0, 0);
 }
-
-
 
 .sideNav ul {
   display: flex;

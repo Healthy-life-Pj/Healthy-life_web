@@ -7,13 +7,9 @@ import Navigation from "./components/navigation/Navigation";
 import Footer from "./components/Footer";
 import Sidenavigation from "./components/Sidenavigation";
 import Home from "./views/home/Home";
-import SurveyApp from "./views/survey/SurveyApp";
 import FindId from "./views/auth/login/find-id/FindId";
 import FindPassword from "./views/auth/login/FindPassword";
 import All from "./views/product/all/All";
-import SurveryListAllerge from "./views/survey/SurveryListAllerge";
-import SurveryListDiabetes from "./views/survey/SurveryListDiabetes";
-import SurveryListDietGoal from "./views/survey/SurveryListDietGoal";
 import NonMember from "./views/nonMemberOrder/NonMember";
 import Payment from "./views/order/direct-order/DirectOrder";
 import BestItem from "./views/best/bestItem";
@@ -36,6 +32,7 @@ import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
 import PhysiqueSurvey from "./views/physique/PhysiqueSurvey";
 import PhysiquePage from "./views/mypage/physique/PhysiquePage";
+import OAuth from "./views/auth/login/OAuth";
 
 function App() {
   interface TokenUser {
@@ -73,13 +70,9 @@ function App() {
           path="/find-id/verify-find-username"
           element={<FindUserIdResult />}
         />
+        <Route path="/oauth" element={<OAuth />} />
         <Route path="/signUp/*" element={<SignUp />} />
         <Route path="/all" element={<All />} />
-
-        <Route path="/survey" element={<SurveyApp />} />
-        <Route path="/survey/allerge" element={<SurveryListAllerge />} />
-        <Route path="/survey/diabetes" element={<SurveryListDiabetes />} />
-        <Route path="/survey/dietgoal" element={<SurveryListDietGoal />} />
 
         {/*상품*/}
         <Route path="/products/:pCategoryName/*" element={<Product />} />

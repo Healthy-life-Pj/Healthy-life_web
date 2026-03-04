@@ -115,7 +115,8 @@ function CartOrder() {
           withCredentials: true,
         }
       );
-      setProductData(response.data.data.cartItem || []);
+      const items = response.data.data.cartItem; 
+      setProductData(Array.isArray(items) ? items : items ? [items] : []);
     } catch (error) {
       console.error(error);
     }
@@ -187,7 +188,7 @@ function CartOrder() {
 
   const payAndOrderKG = async () => {
     setErrorMsg(null);
-
+    if (paying) return;
     if (!iamportReady) return setErrorMsg("결제 모듈 준비 중입니다.");
     if (!addressData?.deliverAddressId)
       return setErrorMsg("배송지를 선택해 주세요.");
@@ -222,6 +223,15 @@ function CartOrder() {
       };
 
       const payRsp = await requestPay(params);
+      if (!payRsp || !payRsp.success) {
+        alert("결제가 완료되지 않았습니다.");
+        return;
+      }
+
+      if (!payRsp.imp_uid) {
+        alert("imp_uid가 없습니다. 결제 검증 불가");
+        return;
+      }
       const res = await axios.post(
         `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_POST_CART}`,
         {
@@ -232,8 +242,8 @@ function CartOrder() {
           deliverAddressId: addressData.deliverAddressId,
           shippingCost: 3000,
           kgPayment: {
-            impUid: payRsp.imp_uid,
-            merchantUid: payRsp.merchant_uid,
+            impUid: payRsp.imp_uid.trim(),
+            merchantUid: payRsp.merchant_uid.trim(),
           },
         },
         {
@@ -464,7 +474,7 @@ function CartOrder() {
           <span>구매약관조건 동의</span>
         </div>
 
-        <button disabled={!ready} onClick={payAndOrderKG}>
+        <button disabled={!ready || paying} onClick={payAndOrderKG}>
           {paying ? "처리 중..." : "결제하고 주문하기"}
         </button>
       </div>
