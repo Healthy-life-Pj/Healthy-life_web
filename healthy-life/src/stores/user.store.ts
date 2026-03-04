@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface UserState {
   username: string;
+  nickName: string;
   isAuthenticated: boolean;
   login: (username: string) => void;
   logout: () => void;
@@ -9,6 +10,7 @@ interface UserState {
 
 const userAuthStore = create<UserState>((set) => ({
   username: "",
+  nickName: "",
   isAuthenticated: false,
   login: (username) => set({
     username:username,

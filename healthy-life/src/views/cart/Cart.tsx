@@ -287,13 +287,13 @@ const Cart = () => {
             <li className="deliveryFee">
               <p>배송비</p>
               <p className="wonPrice">
-                <span>2,000</span> 원
+                <span>3,000</span> 원
               </p>
             </li>
             <li className="totalPrice">
               <p>총 결제금액</p>
               <p className="wonPrice">
-                <span>{(totalPrice + 2000).toLocaleString()}</span> 원
+                <span>{(totalPrice + 3000).toLocaleString()}</span> 원
               </p>
             </li>
           </ul>

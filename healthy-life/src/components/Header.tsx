@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 
 export default function Header() {
   const [search, setSearch] = useState<string>("");
-  const {username, isAuthenticated, logout} = userAuthStore();
+  const {username, nickName, isAuthenticated, logout} = userAuthStore();
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export default function Header() {
           <div>
             {isAuthenticated ? 
             <div className="button1">
-            <span className="usernameSpan">{username}</span>
+            <span className="usernameSpan">{nickName}</span>
             <span className="buttonFlexBox1Span">|</span>
             <Link to={"/"} onClick={handleLougoutClick}>로그아웃</Link>
             <span className="buttonFlexBox1Span">|</span>

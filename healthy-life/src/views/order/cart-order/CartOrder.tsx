@@ -28,7 +28,6 @@ import "../../../style/Order.css";
 import ReactModal from "react-modal";
 import qs from "qs";
 import { CartItemDto } from "../../../types/dto";
-import DeliverAddressModal from "../DeliverAddressModal";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function CartOrder() {
@@ -37,7 +36,6 @@ function CartOrder() {
   const location = useLocation();
   const [isAddressOpen, setIsAddressOpen] = useState<boolean>(false);
   const { cartItemIds } = location.state || { cartItemIds: [] };
-  const [cartItemData, setCartItemData] = useState<CartItemDto[]>([]);
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();
   const [iamportReady, setIamportReady] = useState(false);
@@ -46,7 +44,7 @@ function CartOrder() {
   const [orderNo, setOrderNo] = useState<string | null>(null);
   const [payMethod, setPayMethod] = useState<"card" | "kakaopay">("card");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [productData, setProductData] = useState<CartItemDto[]>([]);
+  const [productDatas, setProductDatas] = useState<CartItemDto[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>({
     userId: 0,
@@ -79,17 +77,13 @@ function CartOrder() {
       return null;
     }
   };
-  const closeModal = () => {
-    setIsOpen(!isOpen);
-    navigate("/mypage/")
-  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setOption(event.target.value as string);
   };
 
   const userdataForm = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setUserData((prev) => ({
@@ -113,9 +107,10 @@ function CartOrder() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
-      setProductData(response.data.data.cartItem || []);
+      const items = response.data.data.cartItem;
+      setProductDatas(Array.isArray(items) ? items : items ? [items] : []);
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +125,7 @@ function CartOrder() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       const u = response.data?.data;
       if (!u || !u.userId) {
@@ -150,7 +145,7 @@ function CartOrder() {
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
-        }
+        },
       );
       const addressList: DeliveryAddress[] =
         response.data.data.deliverAddressDto || [];
@@ -179,15 +174,15 @@ function CartOrder() {
   const calcProductTotal = (items: CartItemDto[]) =>
     items.reduce(
       (sum, item) => sum + item.productPrice * item.productQuantity,
-      0
+      0,
     );
 
-  const productTotal = calcProductTotal(productData);
+  const productTotal = calcProductTotal(productDatas);
   const finalAmount = productTotal + 3000;
 
   const payAndOrderKG = async () => {
     setErrorMsg(null);
-
+    if (paying) return;
     if (!iamportReady) return setErrorMsg("결제 모듈 준비 중입니다.");
     if (!addressData?.deliverAddressId)
       return setErrorMsg("배송지를 선택해 주세요.");
@@ -197,7 +192,7 @@ function CartOrder() {
 
     const payload = cookies.token ? decodeJwt(cookies.token) : null;
     const finalUid = Number(
-      userData.userId || payload?.userId || payload?.id || 0
+      userData.userId || payload?.userId || payload?.id || 0,
     );
     if (!finalUid) return setErrorMsg("사용자 정보 오류");
 
@@ -206,6 +201,11 @@ function CartOrder() {
     try {
       setPaying(true);
 
+      const orderName =
+        productDatas.length === 1
+          ? productDatas[0].pName
+          : `${productDatas[0].pName} 외 ${productDatas.length - 1}개`;
+
       const params = {
         pg: "html5_inicis",
         pay_method: payMethod,
@@ -213,6 +213,7 @@ function CartOrder() {
         amount: finalAmount,
         buyer_name: userData.name,
         buyer_tel: userData.userPhone,
+        name: orderName,
         custom_data: JSON.stringify({
           userId: finalUid,
           cartItemIds,
@@ -222,6 +223,15 @@ function CartOrder() {
       };
 
       const payRsp = await requestPay(params);
+      if (!payRsp || !payRsp.success) {
+        alert("결제가 완료되지 않았습니다.");
+        return;
+      }
+
+      if (!payRsp.imp_uid) {
+        alert("imp_uid가 없습니다. 결제 검증 불가");
+        return;
+      }
       const res = await axios.post(
         `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_POST_CART}`,
         {
@@ -232,18 +242,18 @@ function CartOrder() {
           deliverAddressId: addressData.deliverAddressId,
           shippingCost: 3000,
           kgPayment: {
-            impUid: payRsp.imp_uid,
-            merchantUid: payRsp.merchant_uid,
+            impUid: payRsp.imp_uid.trim(),
+            merchantUid: payRsp.merchant_uid.trim(),
           },
         },
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`, 
+            Authorization: `Bearer ${cookies.token}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
           validateStatus: () => true,
-        }
+        },
       );
 
       if (res.status !== 200 || res.data?.result !== true) {
@@ -313,7 +323,7 @@ function CartOrder() {
   const ready =
     iamportReady &&
     Number(addressData?.deliverAddressId) > 0 &&
-    productData.length > 0 &&
+    productDatas.length > 0 &&
     Number(userData?.userId) > 0 &&
     agreed;
 
@@ -322,175 +332,180 @@ function CartOrder() {
     if (!iamportReady) reasons.push("결제 모듈 준비 중");
     if (!(Number(addressData?.deliverAddressId) > 0))
       reasons.push("배송지 미선택");
-    if (productData.length === 0) reasons.push("상품 정보 미로딩");
+    if (productDatas.length === 0) reasons.push("상품 정보 미로딩");
     if (!(Number(userData?.userId) > 0)) reasons.push("사용자 정보 확인 중");
     if (!agreed) reasons.push("약관 동의 필요");
   }, [iamportReady, addressData?.deliverAddressId, userData?.userId, agreed]);
 
   return (
-  <div className="paymentHead">
-    <h3>주문 결제</h3>
-    <div className="paymentContainer">
-      <div className="pay1Container">
-        <div className="deliveryAddress section">
-          <h3>배송지</h3>
-          <Box
-            component="form"
-            className="customBox"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              className="deliveryTextField"
-              label="성함"
-              variant="standard"
-              name="name"
-              value={userData.name ?? ""}
-              onChange={userdataForm}
-            />
-            <TextField
-              className="deliveryTextField"
-              label="전화번호"
-              name="userPhone"
-              variant="standard"
-              value={userData.userPhone ?? ""}
-              onChange={userdataForm}
-            />
-          </Box>
-        </div>
-        <ul className="deliveryAddress" key={addressData.deliverAddressId}>
-          <li>{addressData.postNum}</li>
-          <li>{addressData.address}</li>
-          <li>{addressData.addressDetail}</li>
-        </ul>
-        <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
-        <div className="productInformationContainer section">
-          <h3>상품정보</h3>
-          <div className="productInformation">
-            {productData.length === 0 ? (
-              <p>선택된 상품이 없습니다.</p>
-            ) : (
-              productData.map((product) => (
-                <div key={product.cartItemId}>
-                  <div className="orderProductImgPDiv">
-                    <div className="orderProductImgDiv">
-                      <img
-                        src={product.pImgUrl}
-                        alt={product.pName}
-                        className="orderProductImg"
-                      />
+    <div className="paymentHead">
+      <h3>주문 결제</h3>
+      <div className="paymentContainer">
+        <div className="pay1Container">
+          <div className="deliveryAddress section">
+            <h3>배송지</h3>
+            <Box
+              component="form"
+              className="customBox"
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                className="deliveryTextField"
+                label="성함"
+                variant="standard"
+                name="name"
+                value={userData.name ?? ""}
+                onChange={userdataForm}
+              />
+              <TextField
+                className="deliveryTextField"
+                label="전화번호"
+                name="userPhone"
+                variant="standard"
+                value={userData.userPhone ?? ""}
+                onChange={userdataForm}
+              />
+            </Box>
+          </div>
+          <ul className="deliveryAddress" key={addressData.deliverAddressId}>
+            <li>{addressData.postNum}</li>
+            <li>{addressData.address}</li>
+            <li>{addressData.addressDetail}</li>
+          </ul>
+          <button onClick={() => setIsAddressOpen(true)}>주소변경</button>
+          <div className="productInformationContainer section">
+            <h3>상품정보</h3>
+            <div className="productInformation">
+              {productDatas.length === 0 ? (
+                <p>선택된 상품이 없습니다.</p>
+              ) : (
+                productDatas.map((product) => (
+                  <div key={product.cartItemId}>
+                    <div className="orderProductImgPDiv">
+                      <div className="orderProductImgDiv">
+                        <img
+                          src={product.pImgUrl}
+                          alt={product.pName}
+                          className="orderProductImg"
+                        />
+                      </div>
+                      <p className="dailySet">{product.pName}</p>
                     </div>
-                    <p className="dailySet">{product.pName}</p>
+                    <ul className="orderProductUl">
+                      <li>
+                        <span className="orderProductInfo">상품금액: </span>
+                        {product.productPrice.toLocaleString()}원
+                      </li>
+                      <li>
+                        <span className="orderProductInfo">주문수량: </span>
+                        {product.productQuantity}
+                      </li>
+                      <li>
+                        <span className="orderProductInfo">총 금액: </span>
+                        {(
+                          product.productPrice * product.productQuantity
+                        ).toLocaleString()}
+                        원
+                      </li>
+                    </ul>
                   </div>
-                  <ul className="orderProductUl">
-                    <li>
-                      <span className="orderProductInfo">상품금액: </span>
-                      {product.productPrice.toLocaleString()}원
-                    </li>
-                    <li>
-                      <span className="orderProductInfo">주문수량: </span>
-                      {product.productQuantity}
-                    </li>
-                    <li>
-                      <span className="orderProductInfo">총 금액: </span>
-                      {(product.productPrice * product.productQuantity).toLocaleString()}원
-                    </li>
-                  </ul>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
+          </div>
+          <div className="deliveryRequest section">
+            <Box sx={{ width: "100%", minWidth: 100, margin: "1%" }}>
+              <FormControl fullWidth>
+                <InputLabel id="delivery-req-label">배송요청사항</InputLabel>
+                <Select
+                  labelId="delivery-req-label"
+                  value={option}
+                  label="배송요청사항"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="직접 수령하겠습니다">
+                    직접 수령하겠습니다
+                  </MenuItem>
+                  <MenuItem value="부재 시 경비실에 맡겨주세요">
+                    부재 시 경비실에 맡겨주세요
+                  </MenuItem>
+                  <MenuItem value="배송 전 연락 바랍니다">
+                    배송 전 연락 바랍니다
+                  </MenuItem>
+                  <MenuItem value="문 앞에 놔두십시오">
+                    문 앞에 놔두십시오
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+          <div className="paymentMethod section">
+            <h3>결제방법 선택</h3>
+            <label style={{ display: "block", marginBottom: 8 }}>
+              <input
+                type="radio"
+                name="paymethod"
+                checked={payMethod === "card"}
+                onChange={() => setPayMethod("card")}
+              />
+              &nbsp;신용/체크카드 (KG이니시스)
+            </label>
           </div>
         </div>
-        <div className="deliveryRequest section">
-          <Box sx={{ width: "100%", minWidth: 100, margin: "1%" }}>
-            <FormControl fullWidth>
-              <InputLabel id="delivery-req-label">배송요청사항</InputLabel>
-              <Select
-                labelId="delivery-req-label"
-                value={option}
-                label="배송요청사항"
-                onChange={handleChange}
-              >
-                <MenuItem value="직접 수령하겠습니다">직접 수령하겠습니다</MenuItem>
-                <MenuItem value="부재 시 경비실에 맡겨주세요">
-                  부재 시 경비실에 맡겨주세요
-                </MenuItem>
-                <MenuItem value="배송 전 연락 바랍니다">
-                  배송 전 연락 바랍니다
-                </MenuItem>
-                <MenuItem value="문 앞에 놔두십시오">
-                  문 앞에 놔두십시오
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </div>
-        <div className="paymentMethod section">
-          <h3>결제방법 선택</h3>
-          <label style={{ display: "block", marginBottom: 8 }}>
-            <input
-              type="radio"
-              name="paymethod"
-              checked={payMethod === "card"}
-              onChange={() => setPayMethod("card")}
+        <div className="payInformation">
+          <h3>결제 정보</h3>
+          <ul>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">상품금액 : </span>
+              {productTotal.toLocaleString()}원
+            </li>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">배송비 : </span>
+              3,000원
+            </li>
+            <li className="payInformationLi">
+              <span className="orderProductInfo">총 결제 금액 : </span>
+              {finalAmount.toLocaleString()}원
+            </li>
+          </ul>
+
+          <div className="checkBoxFlexBox">
+            <Checkbox
+              {...label}
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
             />
-            &nbsp;신용/체크카드 (KG이니시스)
-          </label>
-        </div>
-      </div>
-      <div className="payInformation">
-        <h3>결제 정보</h3>
-        <ul>
-          <li className="payInformationLi">
-            <span className="orderProductInfo">상품금액 : </span>
-            {productTotal.toLocaleString()}원
-          </li>
-          <li className="payInformationLi">
-            <span className="orderProductInfo">배송비 : </span>
-            3,000원
-          </li>
-          <li className="payInformationLi">
-            <span className="orderProductInfo">총 결제 금액 : </span>
-            {finalAmount.toLocaleString()}원
-          </li>
-        </ul>
+            <span>구매약관조건 동의</span>
+          </div>
 
-        <div className="checkBoxFlexBox">
-          <Checkbox
-            {...label}
-            checked={agreed}
-            onChange={(e) => setAgreed(e.target.checked)}
-          />
-          <span>구매약관조건 동의</span>
-        </div>
-
-        <button disabled={!ready} onClick={payAndOrderKG}>
-          {paying ? "처리 중..." : "결제하고 주문하기"}
-        </button>
-      </div>
-      <ReactModal
-        isOpen={isOpen}
-        onRequestClose={handleClosePaymentModal}
-        className="modalContent"
-        overlayClassName="modalOverlay"
-      >
-        <div className="paymentModalFlexBox">
-          <h2>결제가 완료되었습니다.</h2>
-          {orderNo && (
-            <p style={{ marginTop: 8 }}>
-              주문번호: <strong>#{orderNo}</strong>
-            </p>
-          )}
-          <button
-            onClick={handleClosePaymentModal}
-            className="paymentModalCloseButton"
-          >
-            닫기
+          <button disabled={!ready || paying} onClick={payAndOrderKG}>
+            {paying ? "처리 중..." : "결제하고 주문하기"}
           </button>
         </div>
-      </ReactModal>
+        <ReactModal
+          isOpen={isOpen}
+          onRequestClose={handleClosePaymentModal}
+          className="modalContent"
+          overlayClassName="modalOverlay"
+        >
+          <div className="paymentModalFlexBox">
+            <h2>결제가 완료되었습니다.</h2>
+            {orderNo && (
+              <p style={{ marginTop: 8 }}>
+                주문번호: <strong>#{orderNo}</strong>
+              </p>
+            )}
+            <button
+              onClick={handleClosePaymentModal}
+              className="paymentModalCloseButton"
+            >
+              닫기
+            </button>
+          </div>
+        </ReactModal>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 export default CartOrder;

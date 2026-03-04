@@ -34,7 +34,7 @@ function Login() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
@@ -47,10 +47,18 @@ function Login() {
     }));
   };
 
+  const handleKakaoLogin = () => {
+    window.location.href = "http://localhost:4040/oauth2/authorization/kakao";
+  };
+
+  const handleNaverLogin = () => {
+    window.location.href = "http://localhost:4040/oauth2/authorization/naver";
+  };
+
   const fetchData = async (
     e:
       | React.MouseEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
   ) => {
     if (e instanceof KeyboardEvent && e.key !== "Enter") return;
     e.preventDefault();
@@ -65,7 +73,7 @@ function Login() {
     try {
       const response = await axios.post(
         `${MAIN_APT_PATH}${AUTH_PATH}${LOGIN}`,
-        formData
+        formData,
       );
       logInSuccessResponse(response.data.data);
       setErrorMessage(null);
@@ -151,37 +159,62 @@ function Login() {
             로그인
           </button>
         </form>
-        <div 
-        className="findDiv">
+        <div className="findDiv">
           <Link to={"/login/find-id"}>아이디 찾기</Link>
           <span>|</span>
           <Link to={"/login/FindPassword"}>비밀번호 찾기</Link>
         </div>
       </Box>
-        <div className="modalContainer">
-          <ReactModal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            className="modalContent"
-            overlayClassName="modalOverlay"
-          >
-            {errorMessage ? (
-              <div>
-                {errorMessage}
-                <button onClick={closeModal} className="closeModalButton">
-                  닫기
-                </button>
-              </div>
-            ) : (
-              <div>
-                로그인 되셨습니다
-                <Link to={"/"} onClick={closeModal}>
-                  <button className="closeModalButton">닫기</button>
-                </Link>
-              </div>
-            )}
-          </ReactModal>
-        </div>
+      <div className="snsLoginContainer">
+        <button
+          type="button"
+          className="kakaoLoginButton"
+          onClick={handleKakaoLogin}
+        >
+          <img
+            className="logoImg"
+            src="/kakao_login_medium_wide.png"
+            alt="카카오로고"
+          />
+        </button>
+
+        <button
+          type="button"
+          className="naverLoginButton"
+          onClick={handleNaverLogin}
+        >
+          <img
+            className="logoImg"
+            src="/NAVER_login_Dark_KR_green_wide_H56.png"
+            alt="네이버로고"
+          />
+        </button>
+      </div>
+
+      <div className="modalContainer">
+        <ReactModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          className="modalContent"
+          overlayClassName="modalOverlay"
+        >
+          {errorMessage ? (
+            <div>
+              {errorMessage}
+              <button onClick={closeModal} className="closeModalButton">
+                닫기
+              </button>
+            </div>
+          ) : (
+            <div>
+              로그인 되셨습니다
+              <Link to={"/"} onClick={closeModal}>
+                <button className="closeModalButton">닫기</button>
+              </Link>
+            </div>
+          )}
+        </ReactModal>
+      </div>
     </div>
   );
 }

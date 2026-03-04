@@ -3,23 +3,25 @@ import '../style/componentStyle/Sidenaviation.css'
 import ShoppingBagTwoToneIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone'; 
 import KeyboardArrowUpTwoToneIcon from '@mui/icons-material/KeyboardArrowUpTwoTone';
-import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import KeyboardArrowDownTwoToneIcon from '@mui/icons-material/KeyboardArrowDownTwoTone';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 
 const Sidenavigator:React.FC = () => {
   const [activeSide, setActiveSide] = useState<string | null>(null);
+  const [isOpen, setOpen] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const handleMouseSpreadClick = (side: string) => {
     setActiveSide(side);
+    setOpen(false);
   };
 
   const handleCloseClick = () => {
     setActiveSide(null);
+    setOpen(true)
   };
-
 
   const MoveToTop = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,11 +37,11 @@ const Sidenavigator:React.FC = () => {
       
       {activeSide === 'side' && 
       <ul className='sideNav'>
-        <li><Link to={'/cart'}><ShoppingBagTwoToneIcon/></Link></li>
-        <li><Link to={'/mypage/wishlist'}><FavoriteTwoToneIcon/></Link></li>
+        <li onClick={()=>navigate("cart")}><ShoppingBagTwoToneIcon/></li>
+        <li onClick={() => navigate("/mypage/wishlist")}><FavoriteTwoToneIcon/></li>
         <li onClick={MoveToTop}><KeyboardArrowUpTwoToneIcon/></li>
         <li onClick={MoveToUnder}><KeyboardArrowDownTwoToneIcon/></li>
-        <li><Link to={'/survey'}>체질<br />/기호</Link></li>
+        <li onClick={() => navigate("/recommand")}>체질<br />/기호</li>
       <button
       className='closeIcon'
       onClick={handleCloseClick}
@@ -47,11 +49,14 @@ const Sidenavigator:React.FC = () => {
       </button>
       </ul>
       }
+      {isOpen ? 
       <button 
       className='KitchenOutlinedIcon' 
       onClick={() => handleMouseSpreadClick('side')}
       ><KitchenOutlinedIcon style={{fontSize: '40px'}} />
       </button>
+      : null}
+      
     </div>
   )
 }

@@ -156,3 +156,22 @@
 .findUsernameloginButton {
   width: 300px;
 }
+
+.naverLoginButton, .kakaoLoginButton {
+  width: 220px;
+  border: none;
+}
+
+.logoImg{
+  width: 100%;
+}
+
+.snsLoginContainer {
+  width: 220px;
+  height: 80px;
+  margin: 0px auto;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
