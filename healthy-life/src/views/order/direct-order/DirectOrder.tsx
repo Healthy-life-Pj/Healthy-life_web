@@ -81,7 +81,7 @@ function DirectOrder() {
     address: "",
     addressDetail: "",
     postNum: 0,
-    userId: 0, 
+    userId: 0,
     default: false,
   });
 
@@ -93,7 +93,7 @@ function DirectOrder() {
   };
 
   const userdataForm = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setUserData((prev) => ({ ...prev, [name]: value }));
@@ -106,7 +106,7 @@ function DirectOrder() {
   const productFetchData = async () => {
     try {
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}/${pId}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}/${pId}`,
       );
       setProductData(response.data.data);
     } catch (error) {
@@ -121,7 +121,7 @@ function DirectOrder() {
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
-        }
+        },
       );
       const u = response.data?.data;
       if (!u || !u.userId) {
@@ -141,7 +141,7 @@ function DirectOrder() {
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
-        }
+        },
       );
       const addressList: DeliveryAddress[] =
         response.data.data.deliverAddressDto || [];
@@ -154,161 +154,159 @@ function DirectOrder() {
     }
   };
 
-const requestPay = (params: any) =>
-  new Promise<any>((resolve, reject) => {
-    if (!window.IMP) {
-      reject(new Error("Iamport SDK 미로딩"));
+  const requestPay = (params: any) =>
+    new Promise<any>((resolve, reject) => {
+      if (!window.IMP) {
+        reject(new Error("Iamport SDK 미로딩"));
+        return;
+      }
+
+      window.IMP.request_pay(params, (res: any) => {
+        if (res?.success) resolve(res);
+        else reject(new Error(res?.error_msg || "결제 실패"));
+      });
+    });
+
+  const payAndOrderKG = async () => {
+    console.log("결제 버튼 클릭");
+    setErrorMsg(null);
+
+    if (!iamportReady) {
+      setErrorMsg("결제 모듈 준비 중입니다.");
+      return;
+    }
+    if (!addressData?.deliverAddressId) {
+      setErrorMsg("배송지를 선택해 주세요.");
+      return;
+    }
+    if (!agreed) {
+      setErrorMsg("구매약관에 동의해 주세요.");
       return;
     }
 
-    window.IMP.request_pay(params, (res: any) => {
-      if (res?.success) resolve(res);
-      else reject(new Error(res?.error_msg || "결제 실패"));
-    });
-  });
+    const qty = Math.max(Number(quantity ?? 1), 1);
+    const totalAmount = (productData?.pPrice ?? 0) * qty + 3000;
+    const shippingRequestOption = option?.trim()
+      ? option.trim()
+      : "요청사항 없음";
 
-  const payAndOrderKG = async () => {
-  console.log("결제 버튼 클릭");
-  setErrorMsg(null);
+    const payload = cookies.token ? decodeJwt(cookies.token) : null;
 
-  if (!iamportReady) {
-    setErrorMsg("결제 모듈 준비 중입니다.");
-    return;
-  }
-  if (!addressData?.deliverAddressId) {
-    setErrorMsg("배송지를 선택해 주세요.");
-    return;
-  }
-  if (!agreed) {
-    setErrorMsg("구매약관에 동의해 주세요.");
-    return;
-  }
+    const finalUid =
+      Number(userData?.userId) ||
+      Number(
+        payload?.userId ??
+          payload?.id ??
+          (typeof payload?.sub === "string" && /^\d+$/.test(payload.sub)
+            ? payload.sub
+            : 0),
+      ) ||
+      0;
 
-  const qty = Math.max(Number(quantity ?? 1), 1);
-  const totalAmount = (productData?.pPrice ?? 0) * qty + 3000;
-  const shippingRequestOption = option?.trim()
-    ? option.trim()
-    : "요청사항 없음";
+    if (!finalUid) {
+      setErrorMsg("사용자 정보를 확인할 수 없습니다. 다시 로그인 해주세요.");
+      return;
+    }
 
-  const payload = cookies.token ? decodeJwt(cookies.token) : null;
+    const merchantUid = `HL-U${finalUid}-P${pId}-T${Date.now()}`;
 
-  const finalUid =
-    Number(userData?.userId) ||
-    Number(
-      payload?.userId ??
-        payload?.id ??
-        (typeof payload?.sub === "string" && /^\d+$/.test(payload.sub)
-          ? payload.sub
-          : 0)
-    ) ||
-    0;
+    let payRsp: any = null;
 
-  if (!finalUid) {
-    setErrorMsg("사용자 정보를 확인할 수 없습니다. 다시 로그인 해주세요.");
-    return;
-  }
+    try {
+      setPaying(true);
 
-  const merchantUid = `HL-U${finalUid}-P${pId}-T${Date.now()}`;
+      const params: any = {
+        pg: "html5_inicis",
+        pay_method: payMethod,
+        merchant_uid: merchantUid,
+        name: productData?.pName || "헬스라이프 주문",
+        amount: totalAmount,
+        buyer_name: userData.name || "",
+        buyer_tel: userData.userPhone || "",
+        custom_data: JSON.stringify({
+          userId: finalUid,
+          productId: Number(pId),
+          quantity: qty,
+          deliverAddressId: addressData.deliverAddressId,
+          expectedAmount: totalAmount,
+        }),
+      };
 
-  let payRsp: any = null;
+      payRsp = await requestPay(params);
 
-  try {
-    setPaying(true);
-
-    const params: any = {
-      pg: "html5_inicis",
-      pay_method: payMethod,
-      merchant_uid: merchantUid,
-      name: productData?.pName || "헬스라이프 주문",
-      amount: totalAmount,
-      buyer_name: userData.name || "",
-      buyer_tel: userData.userPhone || "",
-      custom_data: JSON.stringify({
-        userId: finalUid,
-        productId: Number(pId),
-        quantity: qty,
-        deliverAddressId: addressData.deliverAddressId,
-        expectedAmount: totalAmount,
-      }),
-    };
-
-    payRsp = await requestPay(params); 
-
-    const res = await axios.post(
-      `${MAIN_APT_PATH}${ORDER_PATH}/${pId}`,
-      {
-        quantity: qty,
-        orderRecipientName: userData.name,
-        orderRecipientPhone: userData.userPhone,
-        shippingRequest: shippingRequestOption,
-        deliverAddressId: addressData.deliverAddressId,
-        kgPayment: {
-          impUid: payRsp.imp_uid,
-          merchantUid: payRsp.merchant_uid,
-        },
-      },
-      {
-        headers: { Authorization: `Bearer ${cookies.token}` },
-        withCredentials: true,
-        validateStatus: () => true, 
-      }
-    );
-
-    const body = res?.data ?? {};
-    const ok = res.status === 200 && body?.result === true;
-
-    const d = body?.data ?? {};
-    const orderCode =
-      d.orderCode ??
-      d.order?.orderCode ??
-      (Array.isArray(d.orderDetails) &&
-        d.orderDetails[0]?.order?.orderCode) ??
-      merchantUid;
-
-    if (!ok) {
-      console.warn("주문 실패 → 결제 취소 진행");
-
-      await axios.post(
-        `${MAIN_APT_PATH}/payments/iamport/cancel`,
+      const res = await axios.post(
+        `${MAIN_APT_PATH}${ORDER_PATH}/${pId}`,
         {
-          impUid: payRsp.imp_uid,
-          merchantUid: payRsp.merchant_uid,
-          reason: "주문 생성 실패로 인한 결제 취소",
+          quantity: qty,
+          orderRecipientName: userData.name,
+          orderRecipientPhone: userData.userPhone,
+          shippingRequest: shippingRequestOption,
+          shippingCost: 3000,
+          deliverAddressId: addressData.deliverAddressId,
+          kgPayment: {
+            impUid: payRsp.imp_uid,
+            merchantUid: payRsp.merchant_uid,
+          },
         },
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
-        }
+          validateStatus: () => true,
+        },
       );
 
-      setErrorMsg(
-        body?.message ||
-          "주문 처리에 실패하여 결제가 취소되었습니다."
-      );
-      return;
+      const body = res?.data ?? {};
+      const ok = res.status === 200 && body?.result === true;
+
+      const d = body?.data ?? {};
+      const orderCode =
+        d.orderCode ??
+        d.order?.orderCode ??
+        (Array.isArray(d.orderDetails) &&
+          d.orderDetails[0]?.order?.orderCode) ??
+        merchantUid;
+
+      if (!ok) {
+        console.warn("주문 실패 → 결제 취소 진행");
+
+        await axios.post(
+          `${MAIN_APT_PATH}/payments/iamport/cancel`,
+          {
+            impUid: payRsp.imp_uid,
+            merchantUid: payRsp.merchant_uid,
+            reason: "주문 생성 실패로 인한 결제 취소",
+          },
+          {
+            headers: { Authorization: `Bearer ${cookies.token}` },
+            withCredentials: true,
+          },
+        );
+
+        setErrorMsg(
+          body?.message || "주문 처리에 실패하여 결제가 취소되었습니다.",
+        );
+        return;
+      }
+
+      setOrderNo(orderCode);
+      setIsOpen(true);
+    } catch (e: any) {
+      const msg = e?.message ?? "";
+
+      if (msg.includes("잔액") || msg.includes("한도")) {
+        alert("카드 잔액 또는 한도가 부족합니다.");
+      } else if (msg.includes("취소")) {
+        alert("결제가 취소되었습니다.");
+      } else {
+        alert("결제에 실패했습니다.");
+      }
+
+      console.error("[ORDER FLOW FAIL]", e);
+      setErrorMsg(msg || "처리 중 오류가 발생했습니다.");
+    } finally {
+      setPaying(false);
     }
-
-    setOrderNo(orderCode);
-    setIsOpen(true); 
-  } catch (e: any) {
-    const msg = e?.message ?? "";
-
-    if (msg.includes("잔액") || msg.includes("한도")) {
-      alert("카드 잔액 또는 한도가 부족합니다.");
-    } else if (msg.includes("취소")) {
-      alert("결제가 취소되었습니다.");
-    } else {
-      alert("결제에 실패했습니다.");
-    }
-
-    console.error("[ORDER FLOW FAIL]", e);
-    setErrorMsg(msg || "처리 중 오류가 발생했습니다.");
-  } finally {
-    setPaying(false);
-  }
-};
-
-
+  };
 
   const didRun = useRef(false);
 
@@ -364,7 +362,8 @@ const requestPay = (params: any) =>
   useEffect(() => {
     const reasons: string[] = [];
     if (!iamportReady) reasons.push("결제 모듈 준비 중");
-    if (!(Number(addressData?.deliverAddressId) > 0)) reasons.push("배송지 미선택");
+    if (!(Number(addressData?.deliverAddressId) > 0))
+      reasons.push("배송지 미선택");
     if (productData?.pPrice == null) reasons.push("상품 정보 미로딩");
     if (!(Number(userData?.userId) > 0)) reasons.push("사용자 정보 확인 중");
     if (!agreed) reasons.push("약관 동의 필요");
@@ -376,7 +375,13 @@ const requestPay = (params: any) =>
       agreed,
       reasons,
     });
-  }, [iamportReady, addressData?.deliverAddressId, productData?.pPrice, userData?.userId, agreed]);
+  }, [
+    iamportReady,
+    addressData?.deliverAddressId,
+    productData?.pPrice,
+    userData?.userId,
+    agreed,
+  ]);
 
   return (
     <div className="paymentHead">
@@ -385,7 +390,12 @@ const requestPay = (params: any) =>
         <div className="pay1Container">
           <div className="deliveryAddress section">
             <h3>배송지</h3>
-            <Box component="form" className="customBox" noValidate autoComplete="off">
+            <Box
+              component="form"
+              className="customBox"
+              noValidate
+              autoComplete="off"
+            >
               <TextField
                 className="deliveryTextField"
                 label="성함"
@@ -417,8 +427,8 @@ const requestPay = (params: any) =>
             <div className="productInformation">
               <div className="orderProductImgPDiv">
                 <div className="orderProductImgDiv">
-                  <img src={`${IMG_PATH}${PRODUCT_IMG}/${productData?.pImgUrl}`}
-                    
+                  <img
+                    src={`${IMG_PATH}${PRODUCT_IMG}/${productData?.pImgUrl}`}
                     alt={productData?.pName}
                     className="orderProductImg"
                   />
@@ -436,7 +446,8 @@ const requestPay = (params: any) =>
                 </li>
                 <li className="orderProduct">
                   <span className="orderProductInfo">총 금액: </span>
-                  {productData?.pPrice && productData?.pPrice * Number(quantity)}
+                  {productData?.pPrice &&
+                    productData?.pPrice * Number(quantity)}
                 </li>
               </ul>
             </div>
@@ -453,10 +464,18 @@ const requestPay = (params: any) =>
                   label="option"
                   onChange={handleChange}
                 >
-                  <MenuItem value="직접 수령하겠습니다">직접 수령하겠습니다</MenuItem>
-                  <MenuItem value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</MenuItem>
-                  <MenuItem value="배송 전 연락 바랍니다">배송 전 연락 바랍니다</MenuItem>
-                  <MenuItem value="문 앞에 놔두십시오">문 앞에 놔두십시오</MenuItem>
+                  <MenuItem value="직접 수령하겠습니다">
+                    직접 수령하겠습니다
+                  </MenuItem>
+                  <MenuItem value="부재 시 경비실에 맡겨주세요">
+                    부재 시 경비실에 맡겨주세요
+                  </MenuItem>
+                  <MenuItem value="배송 전 연락 바랍니다">
+                    배송 전 연락 바랍니다
+                  </MenuItem>
+                  <MenuItem value="문 앞에 놔두십시오">
+                    문 앞에 놔두십시오
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -486,7 +505,9 @@ const requestPay = (params: any) =>
           <ul>
             <li className="payInformationLi">
               <span className="orderProductInfo">상품금액 : </span>
-              {productData?.pPrice ? productData?.pPrice * Number(quantity) : null}
+              {productData?.pPrice
+                ? productData?.pPrice * Number(quantity)
+                : null}
             </li>
             <li className="payInformationLi">
               <span className="orderProductInfo">배송비 : </span>
@@ -494,7 +515,9 @@ const requestPay = (params: any) =>
             </li>
             <li className="payInformationLi">
               <span className="orderProductInfo">총 결제 금액 : </span>
-              {productData?.pPrice ? productData?.pPrice * Number(quantity) + 3000 : null}
+              {productData?.pPrice
+                ? productData?.pPrice * Number(quantity) + 3000
+                : null}
             </li>
           </ul>
           <div className="checkBoxFlexBox">
@@ -506,7 +529,14 @@ const requestPay = (params: any) =>
           </div>
 
           {(!ready || !agreed) && (
-            <div style={{ color: "#999", marginTop: 6, fontSize: 12, lineHeight: 1.5 }}>
+            <div
+              style={{
+                color: "#999",
+                marginTop: 6,
+                fontSize: 12,
+                lineHeight: 1.5,
+              }}
+            >
               {!iamportReady && "• 결제 모듈 준비 중 "}
               {!(Number(addressData?.deliverAddressId) > 0) && "• 배송지 선택 "}
               {productData?.pPrice == null && "• 상품 정보 확인 "}
@@ -532,7 +562,10 @@ const requestPay = (params: any) =>
                 주문번호: <strong>#{orderNo}</strong>
               </p>
             )}
-            <button onClick={handleClosePaymentModal} className="paymentModalCloseButton">
+            <button
+              onClick={handleClosePaymentModal}
+              className="paymentModalCloseButton"
+            >
               닫기
             </button>
           </div>
