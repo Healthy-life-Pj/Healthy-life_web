@@ -6,8 +6,7 @@ import userAuthStore from "../stores/user.store";
 import { useCookies } from "react-cookie";
 
 export default function Header() {
-  const [search, setSearch] = useState<string>("");
-  const {username, nickName, isAuthenticated, logout} = userAuthStore();
+  const {username, userNickName, isAuthenticated, logout} = userAuthStore();
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ export default function Header() {
           <div>
             {isAuthenticated ? 
             <div className="button1">
-            <span className="usernameSpan">{nickName}</span>
+            <span className="usernameSpan">{userNickName}</span>
             <span className="buttonFlexBox1Span">|</span>
             <Link to={"/"} onClick={handleLougoutClick}>로그아웃</Link>
             <span className="buttonFlexBox1Span">|</span>
