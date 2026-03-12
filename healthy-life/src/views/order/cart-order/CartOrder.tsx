@@ -11,6 +11,7 @@ import {
   MAIN_APT_PATH,
   ORDER_PATH,
   ORDER_POST_CART,
+  ORDER_SHIPPING,
   USER_PATH,
 } from "../../../constants";
 import { useCookies } from "react-cookie";
@@ -258,6 +259,22 @@ function CartOrder() {
 
       if (res.status !== 200 || res.data?.result !== true) {
         throw new Error("ORDER_FAILED");
+      }
+
+      const orderId = res.data?.data?.orderId;
+      if (orderId) {
+        try {
+          await axios.post(
+            `${MAIN_APT_PATH}${ORDER_PATH}/${orderId}${ORDER_SHIPPING}`,
+            {},
+            {
+              headers: { Authorization: `Bearer ${cookies.token}` },
+              withCredentials: true,
+            },
+          );
+        } catch (shippingErr) {
+          console.error("배송 생성 실패:", shippingErr);
+        }
       }
 
       setOrderNo(res.data?.data?.orderCode || merchantUid);

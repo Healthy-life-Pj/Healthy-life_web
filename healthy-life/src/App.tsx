@@ -38,6 +38,7 @@ import OAuth from "./views/auth/login/OAuth";
 function App() {
   interface TokenUser {
     username: string;
+    userNickName: string;
   }
 
   const [cookies] = useCookies(["token"]);
@@ -47,7 +48,7 @@ function App() {
     if (cookies.token) {
       try {
         const decodedToken: TokenUser = jwtDecode<TokenUser>(cookies.token);
-        login(decodedToken.username);
+        login(decodedToken.username, decodedToken.userNickName);
       } catch (e) {
         console.error("Invalid Token", e);
         logout();
