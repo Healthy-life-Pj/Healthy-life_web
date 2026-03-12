@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "../../style/cart.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CartItemDto } from "../../types/dto";
 import axios from "axios";
 import {

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "../../../style/mypage/Order.css";
-import {
-  OrderDto
-} from "../../../types/dto";
+import { OrderDto } from "../../../types/dto";
 import SmallPagination from "../../../components/SmallPagination";
 import ReactModal from "react-modal";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
-import { IMG_PATH, MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS, ORDER_PUT_RETURN_EXCHAGE } from "../../../constants";
+import {
+  IMG_PATH,
+  MAIN_APT_PATH,
+  ORDER_PATH,
+  ORDER_PUT_ORDER_STATUS,
+  ORDER_PUT_RETURN_EXCHAGE,
+} from "../../../constants";
 import { useCookies } from "react-cookie";
 
 interface OrderSearchResultProps {
@@ -16,78 +20,140 @@ interface OrderSearchResultProps {
 }
 
 const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
-    const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(4);
   const [openOrderDetailId, setOpenOrderDetailId] = useState<number | null>(
-    null
+    null,
   );
   const [selectOrderDetail, setSelectOrderDetail] = useState<number[]>([]);
-  const [orders, setOrders] = useState<OrderDto[]|undefined>(undefined);
-  
+  const [orders, setOrders] = useState<OrderDto[] | undefined>(undefined);
+
   const toggleOpen = (id: number) => {
     setOpenOrderDetailId((prev) => (prev === id ? null : id));
   };
-  
+
   const indexOfLastPsot = currentPage * postsPerPage;
   const indexOfFitstPost = indexOfLastPsot - postsPerPage;
-  
+
   const currentPosts = Array.isArray(orders)
-  ? orders.slice(indexOfFitstPost, indexOfLastPsot)
-  : [];
-  const openOrder = orders?.find((order) => order.orderId === openOrderDetailId);
+    ? orders.slice(indexOfFitstPost, indexOfLastPsot)
+    : [];
+  const openOrder = orders?.find(
+    (order) => order.orderId === openOrderDetailId,
+  );
 
   const paginate = (pateNumber: number) => setCurrentPage(pateNumber);
 
+  const returnBlockedStatus = [
+    "CANCELLED",
+    "RETURN_REQUEST",
+    "RETURN_IN_PROGRESS",
+    "RETURNED",
+    "EXCHANGE_REQUEST",
+    "EXCHANGE_IN_PROGRESS",
+    "EXCHANGED",
+  ];
+
   const putFetchData = async (orderDetailId: number[], newStatus: string) => {
-      try {
-        await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_ORDER_STATUS}`, {orderDetailIds : orderDetailId}, {
+    if (selectOrderDetail.length === 0) {
+      alert("상품을 선택해주세요.");
+      return;
+    }
+    const selectedOrders = openOrder?.orderDetails.filter((detail) =>
+      selectOrderDetail.includes(detail.orderDetailId),
+    );
+
+    for (const order of selectedOrders ?? []) {
+      if (returnBlockedStatus.includes(order.orderStatus)) {
+        if (order.orderStatus === "CANCELLED") {
+          alert("취소된 상품은 반품/교환이 불가능합니다.");
+          return;
+        }
+        if (order.orderStatus.startsWith("RETURN")) {
+          alert("이미 반품 처리중인 상품입니다.");
+          return;
+        }
+        if (order.orderStatus.startsWith("EXCHANGE")) {
+          alert("이미 교환 처리중인 상품입니다.");
+          return;
+        }
+      }
+    }
+    try {
+      await axios.put(
+        `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_ORDER_STATUS}`,
+        { orderDetailIds: orderDetailId },
+        {
           params: { orderStatus: newStatus },
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        });
-        getfetchData();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-  const cancelReturnAndExchage = async(orderDetailId:number) => {
-    try{
-      await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_RETURN_EXCHAGE}/${orderDetailId}`, {
-        headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-          withCredentials: true,
-      });
-        getfetchData();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const orderCancel = async(imp:string) => {
-    try{
-      console.log("openOrder:", openOrder);
-      console.log("impUid:", openOrder?.impUid);
-      await axios.post(`${MAIN_APT_PATH}${ORDER_PATH}/pay/cancel`, 
-        {impUid : imp},
-        { headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-          withCredentials: true,
-      })
+        },
+      );
       getfetchData();
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-useEffect(() => {
-  setOrders(orderDatas);
-}, [orderDatas]);
+  const cancelReturnAndExchage = async (orderDetailId: number) => {
+    try {
+      await axios.put(
+        `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_RETURN_EXCHAGE}/${orderDetailId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        },
+      );
+      getfetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const orderCancel = async (imp: string) => {
+    const selectedOrders = openOrder?.orderDetails;
+    for (const order of selectedOrders ?? []) {
+      if (returnBlockedStatus.includes(order.orderStatus)) {
+        if (order.orderStatus === "CANCELLED") {
+          alert("취소된 상품은 취소할 수 없습니다.");
+          return;
+        }
+        if (order.orderStatus.startsWith("RETURN")) {
+          alert("반품 진행중인 주문은 취소할 수 없습니다.");
+          return;
+        }
+        if (order.orderStatus.startsWith("EXCHANGE")) {
+          alert("교환 진행중인 주문은 취소할 수 없습니다.");
+          return;
+        }
+      }
+    }
+    try {
+      await axios.post(
+        `${MAIN_APT_PATH}${ORDER_PATH}/pay/cancel`,
+        { impUid: imp },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
+        },
+      );
+      getfetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    setOrders(orderDatas);
+  }, [orderDatas]);
 
   function getOrderSummaryName(order: OrderDto) {
     const firstProductName = order.orderDetails[0].pName;
@@ -97,7 +163,6 @@ useEffect(() => {
       ? `${firstProductName} 외 ${extraCount}개`
       : `${firstProductName}`;
   }
-
 
   function orderStatusButtonContent(orderStatus: string) {
     if (orderStatus === "RETURN_REQUEST") {
@@ -109,45 +174,45 @@ useEffect(() => {
     }
   }
 
-function orderStateKorean(word: string) {
-  switch (word) {
-    case "PENDING":
-      return "대기중";
-    case "CONFIRMED":
-      return "확인됨";
-    case "PREPARING":
-      return "준비중";
-    case "SHIPPED":
-      return "배송중";
-    case "DELIVERED":
-      return "배송 완료";
-    case "CANCELLED":
-      return "주문 취소";
+  function orderStateKorean(word: string) {
+    switch (word) {
+      case "PENDING":
+        return "대기중";
+      case "CONFIRMED":
+        return "확인됨";
+      case "PREPARING":
+        return "준비중";
+      case "SHIPPED":
+        return "배송중";
+      case "DELIVERED":
+        return "배송 완료";
+      case "CANCELLED":
+        return "주문 취소";
 
-    case "RETURN_REQUEST":
-      return "반품 신청";
-    case "RETURN_IN_PROGRESS":
-      return "반품 진행중";
-    case "RETURNED":
-      return "반품 완료";
+      case "RETURN_REQUEST":
+        return "반품 신청";
+      case "RETURN_IN_PROGRESS":
+        return "반품 진행중";
+      case "RETURNED":
+        return "반품 완료";
 
-    case "EXCHANGE_REQUEST":
-      return "교환 신청";
-    case "EXCHANGE_IN_PROGRESS":
-      return "교환 진행중";
-    case "EXCHANGED":
-      return "교환 완료";
+      case "EXCHANGE_REQUEST":
+        return "교환 신청";
+      case "EXCHANGE_IN_PROGRESS":
+        return "교환 진행중";
+      case "EXCHANGED":
+        return "교환 완료";
 
-    default:
-      return "";
+      default:
+        return "";
+    }
   }
-}
 
-    const handleCheckBoxChange = (orderDetailId:number) => {
-    setSelectOrderDetail(prev => 
+  const handleCheckBoxChange = (orderDetailId: number) => {
+    setSelectOrderDetail((prev) =>
       prev.includes(orderDetailId)
-      ? prev.filter(id => id !== orderDetailId)
-      : [...prev, orderDetailId]
+        ? prev.filter((id) => id !== orderDetailId)
+        : [...prev, orderDetailId],
     );
   };
 
@@ -172,7 +237,7 @@ function orderStateKorean(word: string) {
                     style={{
                       backgroundColor: "#e0e0e0",
                       color: "black",
-                      border: "none"
+                      border: "none",
                     }}
                   />
                 </button>
@@ -250,8 +315,8 @@ function orderStateKorean(word: string) {
                         </p>
                       </div>
                       <div className="orderModalCancelBtnDiv">
-                        {["RETURNED", "EXCHANGED"].includes(
-                          orderDetail.orderStatus
+                        {["RETURN_REQUEST", "EXCHANGE_REQUEST"].includes(
+                          orderDetail.orderStatus,
                         ) ? (
                           <button
                             className="orderStatusChangeCancelBtn"
@@ -296,13 +361,17 @@ function orderStateKorean(word: string) {
                 </button>
                 <button
                   className="orderStatusChangeBtn"
-                  onClick={() => putFetchData(selectOrderDetail, "RETURN_REQUEST")}
+                  onClick={() =>
+                    putFetchData(selectOrderDetail, "RETURN_REQUEST")
+                  }
                 >
                   반품
                 </button>
                 <button
                   className="orderStatusChangeBtn"
-                  onClick={() => putFetchData(selectOrderDetail, "EXCHANGE_REQUEST")}
+                  onClick={() =>
+                    putFetchData(selectOrderDetail, "EXCHANGE_REQUEST")
+                  }
                 >
                   교환
                 </button>
