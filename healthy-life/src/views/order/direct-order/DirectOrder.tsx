@@ -12,6 +12,7 @@ import {
   IMG_PATH,
   MAIN_APT_PATH,
   ORDER_PATH,
+  ORDER_SHIPPING,
   PRODUCT_IMG,
   PRODUCT_PATH,
   USER_PATH,
@@ -244,18 +245,22 @@ function DirectOrder() {
           shippingCost: 3000,
           deliverAddressId: addressData.deliverAddressId,
           kgPayment: {
-            impUid: payRsp.imp_uid,
-            merchantUid: payRsp.merchant_uid,
+            impUid: payRsp.imp_uid.trim(),
+            merchantUid: payRsp.merchant_uid.trim(),
           },
         },
         {
-          headers: { Authorization: `Bearer ${cookies.token}` },
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+            "Content-Type": "application/json",
+          },
           withCredentials: true,
           validateStatus: () => true,
         },
       );
 
       const body = res?.data ?? {};
+      console.log("[ORDER API 응답]", { status: res.status, body });
       const ok = res.status === 200 && body?.result === true;
 
       const d = body?.data ?? {};
@@ -269,23 +274,45 @@ function DirectOrder() {
       if (!ok) {
         console.warn("주문 실패 → 결제 취소 진행");
 
-        await axios.post(
-          `${MAIN_APT_PATH}/payments/iamport/cancel`,
-          {
-            impUid: payRsp.imp_uid,
-            merchantUid: payRsp.merchant_uid,
-            reason: "주문 생성 실패로 인한 결제 취소",
-          },
-          {
-            headers: { Authorization: `Bearer ${cookies.token}` },
-            withCredentials: true,
-          },
-        );
-
-        setErrorMsg(
-          body?.message || "주문 처리에 실패하여 결제가 취소되었습니다.",
-        );
+        try {
+          await axios.post(
+            `${MAIN_APT_PATH}/payments/iamport/cancel`,
+            {
+              impUid: payRsp.imp_uid,
+              merchantUid: payRsp.merchant_uid,
+              reason: "주문 생성 실패로 인한 결제 취소",
+            },
+            {
+              headers: { Authorization: `Bearer ${cookies.token}` },
+              withCredentials: true,
+            },
+          );
+          setErrorMsg(
+            body?.message || "주문 처리에 실패하여 결제가 취소되었습니다.",
+          );
+        } catch (cancelErr) {
+          console.error("[CANCEL FAIL]", cancelErr);
+          setErrorMsg(
+            "주문 실패 후 결제 취소 중 오류가 발생했습니다. 고객센터에 문의해 주세요. (결제 ID: " + payRsp.imp_uid + ")",
+          );
+        }
         return;
+      }
+
+      const orderId = d.orderId ?? d.order?.orderId;
+      if (orderId) {
+        try {
+          await axios.post(
+            `${MAIN_APT_PATH}${ORDER_PATH}/${orderId}${ORDER_SHIPPING}`,
+            {},
+            {
+              headers: { Authorization: `Bearer ${cookies.token}` },
+              withCredentials: true,
+            },
+          );
+        } catch (shippingErr) {
+          console.error("배송 생성 실패:", shippingErr);
+        }
       }
 
       setOrderNo(orderCode);
@@ -544,7 +571,7 @@ function DirectOrder() {
             </div>
           )}
 
-          <button onClick={payAndOrderKG}>
+          <button onClick={payAndOrderKG} disabled={!ready || !agreed || paying}>
             {paying ? "처리 중..." : "결제하고 주문하기"}
           </button>
         </div>
