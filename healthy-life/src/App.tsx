@@ -3,7 +3,6 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Navigation from "./components/navigation/Navigation";
-
 import Footer from "./components/Footer";
 import Sidenavigation from "./components/Sidenavigation";
 import Home from "./views/home/Home";
@@ -28,16 +27,14 @@ import HeaderSearchBar from "./components/HeaderSerch";
 import FindUserIdResult from "./views/auth/login/find-id/FindIdResult";
 import FindPasswordResult from "./views/auth/login/find-password/FindPasswordResult";
 import AllReviewList from "./views/allreview/AllReviewList";
-import Order from "./views/order/direct-order/DirectOrder";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
-import PhysiqueSurvey from "./views/physique/PhysiqueSurvey";
-import PhysiquePage from "./views/mypage/physique/PhysiquePage";
 import OAuth from "./views/auth/login/OAuth";
 
 function App() {
   interface TokenUser {
     username: string;
+    userNickName: string;
   }
 
   const [cookies] = useCookies(["token"]);
@@ -47,7 +44,7 @@ function App() {
     if (cookies.token) {
       try {
         const decodedToken: TokenUser = jwtDecode<TokenUser>(cookies.token);
-        login(decodedToken.username);
+        login(decodedToken.username, decodedToken.userNickName);
       } catch (e) {
         console.error("Invalid Token", e);
         logout();

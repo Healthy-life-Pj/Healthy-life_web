@@ -34,7 +34,7 @@ function CartOrder() {
   const IMP_SRC = "https://cdn.iamport.kr/v1/iamport.js";
   const IMP_CODE = process.env.REACT_APP_IAMPORT_CODE ?? "";
   const location = useLocation();
-  const [isAddressOpen, setIsAddressOpen] = useState<boolean>(false);
+  const [, setIsAddressOpen] = useState<boolean>(false);
   const { cartItemIds } = location.state || { cartItemIds: [] };
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();

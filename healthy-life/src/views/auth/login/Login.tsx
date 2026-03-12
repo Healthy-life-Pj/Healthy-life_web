@@ -100,12 +100,7 @@ function Login() {
       setToken(token, exprTime);
     }
   };
-
-  const loginModalHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    setModalIsOpen(true);
-  };
-
+  
   const closeModal = () => {
     setModalIsOpen(false);
     setFormData({
