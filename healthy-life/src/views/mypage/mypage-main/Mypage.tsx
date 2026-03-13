@@ -248,7 +248,7 @@ function Mypage() {
                     </p>
                   </div>
                   <p className="orderListUlLiP orderListTotalAmount">
-                    {(data.totalAmount+3000).toLocaleString()} 원
+                    {(data.totalAmount).toLocaleString()} 원
                   </p>
                 </div>
               </li>
