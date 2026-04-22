@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
-import { MAIN_APT_PATH, PHYSIQUE_DELTE, PHYSIQUE_GET, PHYSIQUE_PUT, USER_PATH } from '../../../constants';
+import { MAIN_APT_PATH, PHYSIQUE_DELETE, PHYSIQUE_GET, PHYSIQUE_PUT, USER_PATH } from '../../../constants';
 import axios from 'axios';
 
 function PhysiquePage() {
@@ -83,7 +83,7 @@ function PhysiquePage() {
 
   const delelteData = async () => {
     try {
-      await axios.delete(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_DELTE}`, {
+      await axios.delete(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_DELETE}`, {
         headers: {Authorization: `Bearer ${cookies.token}`},
         withCredentials: false,
       });

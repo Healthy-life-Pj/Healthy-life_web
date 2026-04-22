@@ -29,7 +29,6 @@ export const UPDATE_PASSWORD_BY_EMAIL = "/users/me/password/email";
 
 // Physique
 export const USER_PHYSIQUE = "/me/physiques";
-export const USER_MY_PHYSIQUE = "/me/physiques";
 
 // Auth
 export const LOGIN = "/login";
@@ -65,7 +64,7 @@ export const CARRIER_LIST = "/carriers";
 // Wishlist
 export const WISHLIST_PRODUCT = "/products/{pId}";
 export const MY_WISHLIST = "/me";
-export const COUNT_OF_WISHlIST = "/count/products/{pId}";
+export const COUNT_OF_WISHLIST = "/count/products/{pId}";
 
 // Cart
 export const CART_PRODUCT = "/products";
@@ -104,5 +103,5 @@ export const DELIVER_ADDRESS_IS_DEFAULT = "/is-default";
 //Physique
 export const PHYSIQUE_PUT = "/create/physiques";
 export const PHYSIQUE_GET = "/me/physiques";
-export const PHYSIQUE_DELTE = "/delete/physiques";
+export const PHYSIQUE_DELETE = "/delete/physiques";
 export const PHYSIQUE_GET_NAME = "/physiques/name";

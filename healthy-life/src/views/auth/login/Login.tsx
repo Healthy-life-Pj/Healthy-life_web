@@ -122,7 +122,6 @@ function Login() {
             onChange={inputHandler}
             name="username"
           />
-          <p className="loginErrorMg">{errorMessage}</p>
 
           <FormControl sx={{ m: 1, width: "220px" }} variant="outlined">
             <InputLabel htmlFor="outline-adornment-password">

@@ -79,15 +79,8 @@ function Review() {
         }
       );
       const reversDatas = response.data.data;
-      setReviewDatas(reversDatas);
-
       const reviewList = reversDatas.reviewListDto;
-
-      const reversedList = Array.isArray(reviewList) 
-        ? [...reviewList].reverse()
-        : [];
-
-      setReviewDatas(reversedList);
+      setReviewDatas(Array.isArray(reviewList) ? [...reviewList].reverse() : []);
     } catch (error) {
       console.error(error);
     }
