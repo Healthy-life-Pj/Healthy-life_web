@@ -1,12 +1,11 @@
-import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Review from '../review/ProductDetailReview';
-import QNA from '../qna/QNA';
-import { ProductDetailResponseDto } from '../../../../types/dto';
-import ProductIntroduce from './ProductIntroduce';
-
+import * as React from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Review from "../review/ProductDetailReview";
+import QNA from "../qna/QNA";
+import { ProductDetailResponseDto } from "../../../../types/dto";
+import ProductIntroduce from "./ProductIntroduce";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,11 +36,11 @@ function CustomTabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-const BasicTabs = ({data}: ProductProps) => {
+const BasicTabs = ({ data }: ProductProps) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -49,39 +48,56 @@ const BasicTabs = ({data}: ProductProps) => {
   };
 
   return (
-    <Box sx={{ width: '100%', textAlign: 'center'}}>
-      <Box sx={{borderColor: 'divider',}}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered 
-          sx={{ justifyContent: 'center' }}
-          TabIndicatorProps={{ style: { display: 'none' } }}>
-          <Tab label="상품설명" {...a11yProps(0)}  sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '&.Mui-selected': {
-                  color: 'inherit', 
-                },
-              }} />
-          <Tab label="상품리뷰" {...a11yProps(1)}   sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '&.Mui-selected': {
-                  color: 'inherit', 
-                },
-              }}/>
-          <Tab label="QnA" {...a11yProps(2)}  sx={{
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                },
-                '&.Mui-selected': {
-                  color: 'inherit', 
-                },
-              }} />
+    <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box sx={{ borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          centered
+          sx={{ justifyContent: "center" }}
+          TabIndicatorProps={{ style: { display: "none" } }}
+        >
+          <Tab
+            label="상품설명"
+            {...a11yProps(0)}
+            sx={{
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+              "&.Mui-selected": {
+                color: "inherit",
+              },
+            }}
+          />
+          <Tab
+            label="상품리뷰"
+            {...a11yProps(1)}
+            sx={{
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+              "&.Mui-selected": {
+                color: "inherit",
+              },
+            }}
+          />
+          <Tab
+            label="QnA"
+            {...a11yProps(2)}
+            sx={{
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+              "&.Mui-selected": {
+                color: "inherit",
+              },
+            }}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <ProductIntroduce data={data}/>
+        <ProductIntroduce data={data} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Review />
@@ -91,5 +107,5 @@ const BasicTabs = ({data}: ProductProps) => {
       </CustomTabPanel>
     </Box>
   );
-}
+};
 export default BasicTabs;

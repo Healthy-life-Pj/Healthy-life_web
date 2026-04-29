@@ -1,18 +1,9 @@
-@font-face {
-  font-family: 'goorm-sans-bold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-
 .mypagNavContainer {
   display: flex;
   align-items: flex-start;
 }
 
 .myPageNavDiv {
-  /* background-color: #DFF5FF; */
   width: 120px;
   line-height: 25px;
   padding: 15px;
@@ -34,6 +25,7 @@
   color: #666;
   font-size: 11px;
 }
+
 .mypageNavTitle {
   font-size: 14px;
   margin-bottom: 2px;

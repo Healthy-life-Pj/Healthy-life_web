@@ -6,7 +6,15 @@ import "../style/home/allProduct.css";
 import { useCookies } from "react-cookie";
 import CartModal from "./CartModal";
 import axios from "axios";
-import { CART_PATH, CART_PRODUCT, IMG_PATH, MAIN_APT_PATH, MY_CART, PRODUCT_IMG, WISH_LIST_PATH } from "../constants";
+import {
+  CART_PATH,
+  CART_PRODUCT,
+  IMG_PATH,
+  MAIN_APT_PATH,
+  MY_CART,
+  PRODUCT_IMG,
+  WISH_LIST_PATH,
+} from "../constants";
 
 interface PaginationScrollProps {
   products: ProductDetailResponseDto[];
@@ -20,7 +28,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleClickProductDetail = (
-    product: ProductDetailResponseDto | null
+    product: ProductDetailResponseDto | null,
   ) => {
     navigator(`/product/productDetail/${product?.pId}`);
   };
@@ -49,7 +57,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
       const response = await axios.get(
@@ -59,7 +67,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       setCartItemData(response.data.data.cartItem || []);
       setModalIsOpen(true);
@@ -69,7 +77,6 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
   };
 
   const closeModal = () => setModalIsOpen(false);
-  
 
   const cutText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {
@@ -97,7 +104,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       alert("위시리스트에 추가되었습니다.");
     } catch (error: any) {
@@ -109,7 +116,6 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
       }
     }
   };
-
 
   useEffect(() => {
     setActiveProduct(null);
@@ -159,9 +165,9 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
           <div className="productHoverBtnAllDiv">
             {activeProduct === index && (
               <div
-              className="cartWishHoverBtn"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
+                className="cartWishHoverBtn"
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={handleMouseLeave}
               >
                 <button
                   className="productHoverBtn"
@@ -169,7 +175,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
                 >
                   CART
                 </button>
-                <button 
+                <button
                   className="productHoverBtn"
                   onClick={() => addToWishlist(product.pId)}
                 >

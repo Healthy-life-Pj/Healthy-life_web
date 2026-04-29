@@ -243,8 +243,8 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
                 </button>
               </div>
               <div className="myPageOrderInfoDiv">
-                <div>
-                  <div>
+                <div className="mypageOrderImgTitleDiv">
+                  <div className="myPageOrderImg">
                     <img
                       src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
                       alt={data.orderDetails[0].pName}

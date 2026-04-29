@@ -45,7 +45,7 @@ const ModalExample: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const resposne = await axios.post(
+        await axios.post(
         `${MAIN_APT_PATH}${QNA_PATH}${QNA_POST}/${pId}`,
         {
           qnaTitle: qnaData.qnaTitle,
@@ -78,11 +78,12 @@ const ModalExample: React.FC = () => {
       >
         <div className="qnaModalTotal">
           <h2>문의하기</h2>
-          <h4>
+          <h4 className="qnaTitleH4">
             제목:
             <input
               type="text"
               name="qnaTitle"
+              className="qnaTitleInput"
               value={qnaData?.qnaTitle}
               onChange={handleQnaChange}
             />

@@ -1,10 +1,8 @@
-/* OrderApp.tsx */
 .orderContainer  {
   width: 800px;
   margin: 0 auto;
 }
 
-/* Order.tsx */
 .orderSearchContainer {
   display: flex;
   flex-direction: column;
@@ -63,7 +61,6 @@
   width: 100px;
 }
 
-/* OrderList.tsx */
 .orderListContainerBox {
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
@@ -87,6 +84,13 @@
   align-items: center;
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+.mypageOrderImgTitleDiv {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .orderLi img {
@@ -122,4 +126,10 @@
   box-sizing: border-box;
   border:  none;
   height: 120px;
+}
+
+.myPageOrderImg {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #eee;
 }

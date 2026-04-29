@@ -15,7 +15,6 @@ import AddressSearch from "./AddressSearch";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Height } from "@mui/icons-material";
 
 const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
 const passwordRegex =

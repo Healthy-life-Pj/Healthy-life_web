@@ -1,60 +1,56 @@
-.head{
-  margin-right: 225px;
+.head {
+  max-width: 900px;
+  margin: 10px auto;
 }
 
-
-
-.benefitContainer{
+.benefitContainer {
+  width: 500px; 
   border: 1px solid #67C6E3;
-  width: 500px;
-  height: 424px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
 }
 
-
-.benefitGuide{
-  border: 1px solid gray;
-  width: 480px;
-  height: 92%;
-  margin-right: 400px;
-}
-
-
-
-
-
-
-.gradeContainer{
+.gradeContainer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  height: 70px;
-  border-bottom: 1px solid #67C6E3;
-  
+  padding: 14px 16px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-
-/* DFF5FF */
-
-.grade{
+.Icon {
   display: flex;
-  flex-direction: column;
-  width: 45%;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
 }
 
-
-.Icon{
-  width: 6%;
+.membershipName {
+  width: 50px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 15px;
-  
+  align-items: center;
 }
 
+.gradeContainer:last-child {
+  border-bottom: none;
+}
 
-.Icon2{
-  width: 6%;
+.left {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 15px;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.left svg {
+  color: #67C6E3;
+}
+
+.grade {
+  font-size: 14px;
+  color: #333;
+}
+.cutLine {
+  color: #999;
 }
