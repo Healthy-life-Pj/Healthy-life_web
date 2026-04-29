@@ -3,13 +3,14 @@ import { useCookies } from 'react-cookie';
 import { MAIN_APT_PATH, PHYSIQUE_DELETE, PHYSIQUE_GET, PHYSIQUE_GET_NAME, PHYSIQUE_PUT, USER_PATH } from '../../../constants';
 import axios from 'axios';
 
-function MyPhysiquePage() {
+function PhysiquePage() {
   const [cookies] = useCookies(["token"]);
-  const [mytags, setMyTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
+  
 
   const handleTags = (tag: string) => {
-  setMyTags((prev) => {
+  setTags((prev) => {
     const isSelected = prev.includes(tag);
 
     if (!isSelected && prev.length >= 20) {
@@ -21,18 +22,16 @@ function MyPhysiquePage() {
   });
 };
 
-  const updatePhysique = async () => {
+  const createPhysique = async () => {
     try {
       await axios.put(
         `${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_PUT}`,
-        { tagTypeNames: mytags },
+        { tagTypeNames: tags },
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
         },
       );
-      alert("태그 수정 완료")
-      getMyPhysique();
     } catch (error) {
       console.error(error);
     }
@@ -48,13 +47,13 @@ function MyPhysiquePage() {
       },
     );
     const savedTags = response.data.data.physiqueNames;
-    setMyTags(savedTags);
+    setTags(savedTags);
   } catch (error) {
     console.error(error);
   }
   };
 
-  const getPhysique = async () => {
+    const getPhysique = async () => {
     try {
       const response = await axios.get(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_GET_NAME}`, 
         {
@@ -70,10 +69,12 @@ function MyPhysiquePage() {
   }
 
   const physiqueBtnStyle = (tag: string) => ({
-  color: mytags.includes(tag) ? "blue" : "black",
+  color: tags.includes(tag) ? "blue" : "black",
   });
 
-  const deleteData = async () => {
+  
+
+  const delelteData = async () => {
     try {
       await axios.delete(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_DELETE}`, {
         headers: {Authorization: `Bearer ${cookies.token}`},
@@ -85,16 +86,15 @@ function MyPhysiquePage() {
     }
   }
 
-useEffect(() => {
-  if (cookies.token) {
-    getMyPhysique();
-    getPhysique();
-  }
-}, [cookies.token]);
+  useEffect(() => {
+    if (cookies.token) {
+      getMyPhysique();
+      getPhysique();
+    }
+  }, [cookies.token]);
 
   return (
-    <div className='physiqueContainer'>
-      <h3>네 체질/기호</h3>
+    <div>
       <div className="physiqueBtnDiv">
         {allTags.map((tag) => (
           <button
@@ -109,11 +109,11 @@ useEffect(() => {
           </button>
         ))}
       </div>
-      <div className='searchBtnPostion'>
-        <button className="physiqueSearchBtn physiqueSearchBtn2" onClick={updatePhysique}>
+      <div>
+        <button className="physiqueSearchBtn" onClick={createPhysique}>
           선택
         </button>
-        <button className='physiqueResetBtn' onClick={deleteData}>
+        <button onClick={delelteData}>
           초기화
         </button>
       </div>
@@ -121,4 +121,4 @@ useEffect(() => {
   )
 }
 
-export default MyPhysiquePage
+export default PhysiquePage

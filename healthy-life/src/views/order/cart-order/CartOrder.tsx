@@ -29,13 +29,15 @@ import "../../../style/Order.css";
 import ReactModal from "react-modal";
 import qs from "qs";
 import { CartItemDto } from "../../../types/dto";
+import DeliverAddressModal from "../DeliverAddressModal";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function CartOrder() {
   const IMP_SRC = "https://cdn.iamport.kr/v1/iamport.js";
   const IMP_CODE = process.env.REACT_APP_IAMPORT_CODE ?? "";
   const location = useLocation();
-  const [, setIsAddressOpen] = useState<boolean>(false);
+  const [isAddressOpen, setIsAddressOpen] = useState<boolean>(false);
   const { cartItemIds } = location.state || { cartItemIds: [] };
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();
@@ -71,6 +73,7 @@ function CartOrder() {
     userId: 0,
     default: false,
   });
+
   const decodeJwt = (token: string) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));
@@ -153,7 +156,9 @@ function CartOrder() {
       const defaultAddress = addressList.find((a) => a.default === true);
       if (defaultAddress) {
         setAddressData(defaultAddress);
-      } else setIsAddressOpen(true);
+      } else {
+        setIsAddressOpen(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -165,7 +170,6 @@ function CartOrder() {
         reject(new Error("Iamport SDK 미로딩"));
         return;
       }
-
       window.IMP.request_pay(params, (res: any) => {
         if (res?.success) resolve(res);
         else reject(new Error(res?.error_msg || "결제 실패"));
@@ -233,6 +237,7 @@ function CartOrder() {
         alert("imp_uid가 없습니다. 결제 검증 불가");
         return;
       }
+
       const res = await axios.post(
         `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_POST_CART}`,
         {
@@ -486,7 +491,6 @@ function CartOrder() {
               {finalAmount.toLocaleString()}원
             </li>
           </ul>
-
           <div className="checkBoxFlexBox">
             <Checkbox
               {...label}
@@ -495,11 +499,11 @@ function CartOrder() {
             />
             <span>구매약관조건 동의</span>
           </div>
-
           <button disabled={!ready || paying} onClick={payAndOrderKG}>
             {paying ? "처리 중..." : "결제하고 주문하기"}
           </button>
         </div>
+
         <ReactModal
           isOpen={isOpen}
           onRequestClose={handleClosePaymentModal}
@@ -521,8 +525,17 @@ function CartOrder() {
             </button>
           </div>
         </ReactModal>
+
+        <DeliverAddressModal
+          isOpen={isAddressOpen}
+          onClose={() => setIsAddressOpen(false)}
+          onOpen={() => setIsAddressOpen(true)}
+          AddressFetchData={deliverAddressFetchData}
+          onSelectAddress={(selectedAddress) => setAddressData(selectedAddress)}
+        />
       </div>
     </div>
   );
 }
+
 export default CartOrder;

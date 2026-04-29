@@ -372,13 +372,11 @@ function DirectOrder() {
     document.head.appendChild(s);
   }, []);
 
-  // 불필요했던 deliver.userId 로그 제거
   useEffect(() => {
     console.log("userId(from GET_USER):", userData.userId);
     console.log("deliverAddressId:", addressData.deliverAddressId);
   }, [userData, addressData]);
 
-  // ✅ 결제 버튼 활성 조건에 userId 포함
   const ready =
     iamportReady &&
     Number(addressData?.deliverAddressId) > 0 &&
