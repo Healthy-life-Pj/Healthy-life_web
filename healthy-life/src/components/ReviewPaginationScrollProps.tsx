@@ -9,7 +9,6 @@ import "../style/ModalExample.css";
 import { IMG_PATH } from "../constants";
 import { Camera } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import Pagination from "./Pagination";
 
 interface PaginationScrollProps {
   reviews: ReviewListDto[];
@@ -69,7 +68,7 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
             <div className="reveiwInfoDiv">
               <AccountCircleIcon style={{ fontSize: "20px" }} />
               <div className="reviewP">
-                {review.username} | {review.reviewCreatAt}
+                {review.userNickName} | {review.reviewCreatAt}
               </div>
             </div>
           </div>
@@ -116,7 +115,7 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
                     <AccountCircleIcon style={{ fontSize: "20px" }} />
                     <p className="countInfoSpan">
                       {" "}
-                      <span>{review.username}</span>
+                      <span>{review.userNickName}</span>
                       <span>|</span>
                       <span>{review.reviewCreatAt}</span>{" "}
                     </p>

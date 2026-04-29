@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../../../style/payment/payment.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeliveryAddress, Product, User } from "../../../types";
 

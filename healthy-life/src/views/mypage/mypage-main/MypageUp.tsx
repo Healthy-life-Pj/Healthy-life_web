@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../../../style/mypage/MypageMain.css";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import { Order, User } from "../../../types";
+import { User } from "../../../types";
 import axios from "axios";
 import {
   GET_USER,
@@ -75,9 +74,8 @@ function MypageUp() {
   }, []);
 
   return (
-    <div className="mypageUpContainer">
       <div className="mypageMainContainer">
-        <ul>
+        <ul className="mypageUpUl">
           <li>
             <AccountCircleIcon />
             <br />
@@ -105,7 +103,6 @@ function MypageUp() {
           </li>
         </ul>
       </div>
-    </div>
   );
 }
 

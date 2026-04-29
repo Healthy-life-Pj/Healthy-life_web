@@ -9,11 +9,9 @@ import {
   IMG_PATH,
   MAIN_APT_PATH,
   PRODUCT_IMG,
-  QNA_DELETE,
   QNA_GET_MINE,
   QNA_PATH,
 } from "../../../constants";
-import MyQnAModal from "./MyQnAModal";
 
 function MyQnA() {
   const navigate = useNavigate();
@@ -40,7 +38,6 @@ function MyQnA() {
   };
 
   const getFetchData = async () => {
-
     setLoading(true);
     try {
       const response = await axios.get(
@@ -50,7 +47,7 @@ function MyQnA() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       setQnaData(response.data.data);
     } catch (error) {
@@ -63,7 +60,7 @@ function MyQnA() {
   useEffect(() => {
     if (didRun.current) return;
     didRun.current = true;
-    
+
     if (!cookies.token) {
       alert("로그인이 필요합니다.");
       navigate("/login");
@@ -80,7 +77,8 @@ function MyQnA() {
       <div>
         <ul className="qnaTotalUl">
           {loading ? (
-            <>
+              currentPosts.length ?
+              <>
               {currentPosts.map((qna, index) => (
                 <React.Fragment key={qna.qnaId}>
                   <li className="qnaTotalLi">
@@ -113,7 +111,7 @@ function MyQnA() {
                       <p>{!qna.qnaAnswer ? "답변미완료" : "답변완료"}</p>
                     </div>
                   </li>
-                  { index < currentPosts.length -1 && (
+                  {index < currentPosts.length - 1 && (
                     <div className="qnaListLine"></div>
                   )}
                   {openQnaId === qna.qnaId && (
@@ -121,8 +119,9 @@ function MyQnA() {
                   )}
                 </React.Fragment>
               ))}
-            </>
-          ) : (
+              </>
+              : <p className="noneQna">QnA가 없습니다.</p>
+            ) : (
             <p>로딩중....</p>
           )}
         </ul>

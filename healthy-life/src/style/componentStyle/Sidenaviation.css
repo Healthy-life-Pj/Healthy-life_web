@@ -62,10 +62,3 @@
   list-style: none;
   text-align: center;
 }
-
-@media (max-width: 500px) {
-  .sideNav li{
-    font-size: 10px;
-    width: 100px;
-  }
-}

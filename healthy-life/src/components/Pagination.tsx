@@ -1,7 +1,5 @@
 import React from 'react';
 import '../style/Pagination.css'
-
-
 interface paginationProps {
   currentPage: number;
   totalProducts: number;
@@ -13,7 +11,6 @@ interface paginationProps {
 const Pagination: React.FC<paginationProps> = ({currentPage, totalProducts, dataPerPage, paginate}) =>{
     const pageNumbers = [];
     const totalPages  = Math.ceil(totalProducts / dataPerPage);
-    const maxPageGroup = Math.ceil(currentPage / 3);
     const currentPageGroup = Math.ceil(currentPage / 3);
     const startPage = (currentPageGroup - 1) * 3 + 1;
     const endPage = Math.min(currentPageGroup * 3, totalPages);
@@ -31,21 +28,16 @@ const Pagination: React.FC<paginationProps> = ({currentPage, totalProducts, data
         Previous
       </button>
       </div>)}
-
       {pageNumbers.map(number => (
         <div key={number} className={`pageItem1 ${number === currentPage ? 'active' : ''}`}>
           <button onClick={() => paginate(number)} className="productPageLink1 pageLink1">{number}</button>
         </div>
       ))}
-
       {endPage < totalPages && (
         <div className="pageItem1">
           <button onClick={() => paginate(startPage + 3)} className="PageLinkdirection1 pageLink1">Next</button>
-
         </div>
       )}
-
-
     </div>
   )
 

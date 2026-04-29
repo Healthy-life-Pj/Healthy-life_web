@@ -47,10 +47,6 @@ function Login() {
     }));
   };
 
-  const handleKakaoLogin = () => {
-    window.location.href = "http://localhost:4040/oauth2/authorization/kakao";
-  };
-
   const handleNaverLogin = () => {
     window.location.href = "http://localhost:4040/oauth2/authorization/naver";
   };
@@ -161,18 +157,6 @@ function Login() {
         </div>
       </Box>
       <div className="snsLoginContainer">
-        <button
-          type="button"
-          className="kakaoLoginButton"
-          onClick={handleKakaoLogin}
-        >
-          <img
-            className="logoImg"
-            src="/kakao_login_medium_wide.png"
-            alt="카카오로고"
-          />
-        </button>
-
         <button
           type="button"
           className="naverLoginButton"

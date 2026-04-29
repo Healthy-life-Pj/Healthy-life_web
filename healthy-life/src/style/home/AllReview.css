@@ -21,7 +21,6 @@
   gap: 7px;
 }
 
-/* List */
 .reviewImageContainer{
   display: flex;
   border-top: 3px solid #DFF5FF;
@@ -56,7 +55,6 @@
 
 .productInform {
   padding: 5px 10px;
-
 }
 
 .reveiwInfoDiv {

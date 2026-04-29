@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../../style/detailProductSlider/productSlider.css";
 import "../../../../style/product/productDetail.css";
 import ProductTap from "./ProductTap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
@@ -195,7 +195,7 @@ const ProductDetail = () => {
                 <span> 원</span>
               </span>
             </div>
-            <div className="deliveryKind">일반배송 | 2000원</div>
+            <div className="deliveryKind">일반배송 | 3000원</div>
             <div className="productDetailbutton">
               <div className="putinCartButton">
                 <button className="wishCartBtn" onClick={addToCart}>

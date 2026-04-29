@@ -5,12 +5,9 @@
   margin-right: 60px;
 }
 
-
 .currentProductContainer > h2{
   margin-left: 20px;
 }
-
-
 
 .imagesFlexBox{
   display: flex;
@@ -23,19 +20,16 @@
   width: 150px;
 }
 
-
 .imageBox img{
   width: 150px;
   height: 175px;
   border-radius: 5px;
 }
 
-
 .imageBox p{
   color: darkgray;
   font-size: 13px;
 }
-
 
 .imageBox h3{
   font-size: 25px;

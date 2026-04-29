@@ -21,11 +21,3 @@
   width: 100%;
 }
 
-@media (max-width: 1000px) {
-  .emptyBox{
-    width: 400px;
-  }
-  .mainBannerVideoDiv  {
-    height: 50%;
-  }
-}

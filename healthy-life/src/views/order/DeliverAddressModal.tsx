@@ -3,19 +3,31 @@ import ReactModal from "react-modal";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { DeliveryAddress } from "../../types";
-import { DELIVER_ADDRESS_DELETE, DELIVER_ADDRESS_GET, DELIVER_ADDRESS_IS_DEFAULT, DELIVER_ADDRESS_PATH, MAIN_APT_PATH } from "../../constants";
+import {
+  DELIVER_ADDRESS_DELETE,
+  DELIVER_ADDRESS_GET,
+  DELIVER_ADDRESS_IS_DEFAULT,
+  DELIVER_ADDRESS_PATH,
+  MAIN_APT_PATH,
+} from "../../constants";
 import AddressSearch from "./AddressSearch";
-import '../../style/modal/adressModal.css';
+import "../../style/modal/addressModal.css";
 
 interface DeliverAddressProps {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
   AddressFetchData: () => void;
-  onSelectAddress: (address: DeliveryAddress) => void; 
+  onSelectAddress: (address: DeliveryAddress) => void;
 }
 
-const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, onOpen, onSelectAddress, AddressFetchData}) => {
+const DeliverAddressModal: React.FC<DeliverAddressProps> = ({
+  isOpen,
+  onClose,
+  onOpen,
+  onSelectAddress,
+  AddressFetchData,
+}) => {
   const [cookies] = useCookies(["token"]);
   const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<DeliveryAddress[]>([]);
@@ -40,12 +52,15 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
 
   const deliverAddressFetchData = async () => {
     try {
-      const response = await axios.get(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_GET}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-          withCredentials: true,
-        }
-      });
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_GET}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+            withCredentials: true,
+          },
+        },
+      );
       const addressList = response.data.data.deliverAddressDto;
       setAddressData(addressList);
     } catch (error) {
@@ -55,12 +70,16 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
 
   const handleSetDefaultAddress = async (deliverAddressId: number) => {
     try {
-      await axios.put(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_IS_DEFAULT}/${deliverAddressId}`, {}, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-          withCredentials: true,
-        }
-      });
+      await axios.put(
+        `${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_IS_DEFAULT}/${deliverAddressId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+            withCredentials: true,
+          },
+        },
+      );
       deliverAddressFetchData();
       AddressFetchData();
     } catch (error) {
@@ -72,12 +91,15 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
     if (!window.confirm("이 배송지를 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(`${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_DELETE}/${deliverAddressId}`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-          withCredentials: true,
-        }
-      });
+      await axios.delete(
+        `${MAIN_APT_PATH}${DELIVER_ADDRESS_PATH}${DELIVER_ADDRESS_DELETE}/${deliverAddressId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+            withCredentials: true,
+          },
+        },
+      );
       deliverAddressFetchData();
     } catch (error) {
       console.error("배송지 삭제 실패:", error);
@@ -124,10 +146,14 @@ const DeliverAddressModal: React.FC<DeliverAddressProps> = ({isOpen, onClose, on
                 <div>{a.postNum}</div>
                 <div>{a.address}</div>
                 <div>{a.addressDetail}</div>
-                <button onClick={() => handleSetDefaultAddress(a.deliverAddressId)}>
+                <button
+                  onClick={() => handleSetDefaultAddress(a.deliverAddressId)}
+                >
                   {a.default ? "기본배송지" : "기본배송지 설정"}
                 </button>
-                <button onClick={() => handleDeleteAddress(a.deliverAddressId)}>삭제</button>
+                <button onClick={() => handleDeleteAddress(a.deliverAddressId)}>
+                  삭제
+                </button>
               </li>
             ))
           ) : (

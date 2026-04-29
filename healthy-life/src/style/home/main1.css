@@ -1,10 +1,3 @@
-@font-face {
-  font-family: 'goorm-sans-bold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
 .slider {
   margin: 0 auto;
   margin-top: 10px;
@@ -155,72 +148,6 @@
 .h3Container {
   width: 1000px;
   margin: 0 auto;
-}
-
-@media (max-width: 1000px) {
-  .slider {
-    align-items: center;
-    width: 90%;
-    height: 90%;
-    margin: 0px;
-  }
-
-  .productContentLi {
-    display: flex;
-    flex-direction: column;
-    font-size: 11px;
-  }
-
-  .productSliderImg {
-    height: 90px;
-  }
-
-  .sliderImagesContainer {
-    justify-content: center;
-    overflow-x: hidden;
-  }
-
-  .sliderDiv {
-    display: flex;
-    align-items: center;
-  }
-
-  .prev, .next {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-  }
-
-  .btnconatainer {
-    width: 100%;
-    justify-content: center;
-    gap: 10px;
-    top: -20px;
-  }
-
-  .h3Container {
-    width: 100%;
-    padding: 0 20px;
-  }
-
-  .sliderProductHoverBtnAllDiv {
-    top: -150px;
-    right: -15px;
-  }
-
-  .sliderCartWishHoverBtn {
-    height: 45px;
-    top: 10%;
-    right: 8%;
-  }
-
-  .sliderProductHoverBtn {
-    width: 35px;
-    height: 20px;
-    font-size: 11px;
-    padding: 2px;
-  }
-
 }
 
 .cartWishHoverBtn {

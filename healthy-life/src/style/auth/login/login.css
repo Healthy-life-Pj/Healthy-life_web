@@ -122,6 +122,7 @@
 
 .loginButton:hover{
   background-color: #1478FF;
+  cursor: pointer;
 }
 
 .findUsernameContainer {
@@ -164,6 +165,9 @@
 
 .logoImg{
   width: 100%;
+}
+.logoImg:hover{
+  cursor: pointer;
 }
 
 .snsLoginContainer {

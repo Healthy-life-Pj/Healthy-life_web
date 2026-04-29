@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../style/componentStyle/HeaderStyle.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/images/KakaoTalk_20240822_203008371.png";
@@ -6,7 +6,7 @@ import userAuthStore from "../stores/user.store";
 import { useCookies } from "react-cookie";
 
 export default function Header() {
-  const {username, userNickName, isAuthenticated, logout} = userAuthStore();
+  const {userNickName, isAuthenticated, logout} = userAuthStore();
   const [cookies, setCookies, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 

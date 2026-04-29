@@ -263,30 +263,3 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
-
-@media (max-width: 768px) {
-  .paymentHead {
-    margin: 40px auto;
-    padding: 0 16px;
-  }
-
-  .paymentHead > h3 {
-    font-size: 24px;
-  }
-
-  .pay1Container {
-    padding: 20px;
-  }
-
-  .section h3 {
-    font-size: 16px;
-  }
-
-  .MethodButtonBox {
-    flex-direction: column;
-  }
-
-  .orderMothodBtn {
-    width: 100%;
-  }
-}

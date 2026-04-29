@@ -7,7 +7,7 @@ const MypageNav: React.FC = () => {
   return (
     <div className="mypagNavContainer">
       <div className="myPageNavDiv">
-          <span className="mypageTitle">마이 페이지</span>
+        <span className="mypageTitle">마이 페이지</span>
         <ul className="myPageNavBox">
           <li className="mypageNavTitle">주문관리</li>
           <li>
@@ -34,7 +34,7 @@ const MypageNav: React.FC = () => {
           </li>
           <li>
             <Link to="/mypage/my-qna">
-              <span className="mypageMenue">나의 qna</span> 
+              <span className="mypageMenue">나의 qna</span>
             </Link>
           </li>
           <li className="mypageNavLine"></li>
@@ -45,17 +45,21 @@ const MypageNav: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link to="/mypage/membership"><span className="mypageMenue">등급별 혜택</span></Link>
+            <Link to="/mypage/membership">
+              <span className="mypageMenue">등급별 혜택</span>
+            </Link>
           </li>
           <li className="mypageNavLine"></li>
           <li className="mypageNavTitle">회원정보관리</li>
           <li>
             <Link to="/mypage/userinformation">
-            <span className="mypageMenue">내 정보</span></Link>
+              <span className="mypageMenue">내 정보</span>
+            </Link>
           </li>
           <li>
             <Link to="/mypage/physique">
-            <span className="mypageMenue">내 체질/기호</span></Link>
+              <span className="mypageMenue">내 체질/기호</span>
+            </Link>
           </li>
         </ul>
       </div>
