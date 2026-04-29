@@ -162,18 +162,6 @@ function Login() {
       <div className="snsLoginContainer">
         <button
           type="button"
-          className="kakaoLoginButton"
-          onClick={handleKakaoLogin}
-        >
-          <img
-            className="logoImg"
-            src="/kakao_login_medium_wide.png"
-            alt="카카오로고"
-          />
-        </button>
-
-        <button
-          type="button"
           className="naverLoginButton"
           onClick={handleNaverLogin}
         >
