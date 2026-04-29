@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../../../style/mypage/MypageMain.css";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { OrderDto, OrderGetRequestDto } from "../../../types/dto";
 import {
-  OrderDto,
-  OrderGetRequestDto,
-} from "../../../types/dto";
-import { IMG_PATH, MAIN_APT_PATH, ORDER_PATH, ORDER_PUT_ORDER_STATUS } from "../../../constants";
+  IMG_PATH,
+  MAIN_APT_PATH,
+  ORDER_PATH,
+  ORDER_PUT_ORDER_STATUS,
+} from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ReactModal from "react-modal";
@@ -19,8 +20,9 @@ function Mypage() {
   const navigator = useNavigate();
   const [orderDatas, setOrderDatas] = useState<OrderDto[]>([]);
   const [selectOrderDetail, setSelectOrderDetail] = useState<number[]>([]);
-  const [orderChangeBtn, setOrderChangeBtn] = useState<String>("");
-  const [openOrderDetailId, setOpenOrderDetailId] = useState<number | null>(null);
+  const [openOrderDetailId, setOpenOrderDetailId] = useState<number | null>(
+    null,
+  );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(5);
 
@@ -67,26 +69,32 @@ function Mypage() {
       console.error(error);
     }
   };
-  
-  const openOrder = orderDatas.find((order) => order.orderId === openOrderDetailId);
 
-  const handleCheckBoxChange = (orderDetailId:number) => {
-    setSelectOrderDetail(prev => 
+  const openOrder = orderDatas.find(
+    (order) => order.orderId === openOrderDetailId,
+  );
+
+  const handleCheckBoxChange = (orderDetailId: number) => {
+    setSelectOrderDetail((prev) =>
       prev.includes(orderDetailId)
-      ? prev.filter(id => id !== orderDetailId)
-      : [...prev, orderDetailId]
+        ? prev.filter((id) => id !== orderDetailId)
+        : [...prev, orderDetailId],
     );
   };
 
   const putFetchData = async (orderDetailId: number[], newStatus: string) => {
     try {
-      await axios.put(`${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_ORDER_STATUS}`, {orderDetailIds : orderDetailId}, {
-        params: { orderStatus: newStatus },
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
+      await axios.put(
+        `${MAIN_APT_PATH}${ORDER_PATH}${ORDER_PUT_ORDER_STATUS}`,
+        { orderDetailIds: orderDetailId },
+        {
+          params: { orderStatus: newStatus },
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          withCredentials: true,
         },
-        withCredentials: true,
-      });
+      );
 
       getfetchData(orderDate);
     } catch (error) {
@@ -97,7 +105,7 @@ function Mypage() {
   function orderStatusCount(status: string) {
     if (!orderDatas) return 0;
     const result = orderDatas.filter((data) =>
-      data.orderDetails.some((detail) => detail.orderStatus === status)
+      data.orderDetails.some((detail) => detail.orderStatus === status),
     );
     return result.length;
   }
@@ -121,12 +129,12 @@ function Mypage() {
   }
 
   function orderStatusButtonContent(orderStatus: string) {
-    if(orderStatus === "RETURN") {
-      return "반품취소"
+    if (orderStatus === "RETURN") {
+      return "반품취소";
     } else if (orderStatus === "EXCHANGE") {
-      return "교환취소"
+      return "교환취소";
     } else {
-    return "";
+      return "";
     }
   }
 
@@ -213,14 +221,16 @@ function Mypage() {
           </div>
         </div>
         <div className="orderListCotainer">
-          <p className="mypageCommentP">당일 기준 30일이내의 주문건만 조회 됩니다.</p>
+          <p className="mypageCommentP">
+            당일 기준 30일이내의 주문건만 조회 됩니다.
+          </p>
           <ul className="orderListUl">
             {currentPosts.map((data, index) => (
               <li className="myPageOrderInfoBox" key={data.orderId}>
                 <div className="myOrderOrderDateDetailBtnDiv">
-                    <p className="orderListUlLiP myPageOrderCodeP">
-                      {data.orderCode}
-                    </p>
+                  <p className="orderListUlLiP myPageOrderCodeP">
+                    {data.orderCode}
+                  </p>
                   <button
                     className="orderDetailBtn"
                     onClick={() => toggleOpen(data.orderId)}
@@ -230,7 +240,7 @@ function Mypage() {
                         backgroundColor: "#e0e0e0",
                         color: "black",
                         border: "none",
-                        fontSize: "15px"
+                        fontSize: "15px",
                       }}
                     />
                   </button>
@@ -248,7 +258,7 @@ function Mypage() {
                     </p>
                   </div>
                   <p className="orderListUlLiP orderListTotalAmount">
-                    {(data.totalAmount+3000).toLocaleString()} 원
+                    {data.totalAmount.toLocaleString()} 원
                   </p>
                 </div>
               </li>
@@ -278,66 +288,103 @@ function Mypage() {
                     {openOrder.deliverAddress?.addressDetail}
                   </p>
                   <p className="orderDetailModalInfoP">
-                    <span>주문번호 : </span>{openOrder.orderCode}
+                    <span>주문번호 : </span>
+                    {openOrder.orderCode}
                   </p>
                   <p className="orderDetailModalInfoP">
-                    <span>주문날짜 : </span> {openOrder.orderDate.replaceAll("-",".").slice(0, 9) + "." + openOrder.orderDate.slice(11, 19)}
+                    <span>주문날짜 : </span>{" "}
+                    {openOrder.orderDate.replaceAll("-", ".").slice(0, 9) +
+                      "." +
+                      openOrder.orderDate.slice(11, 19)}
                   </p>
                 </div>
                 <div className="orderDetailModalOrderContent">
-                {openOrder.orderDetails.map(orderDetail => (
-                <div className="orderDetailModalContainer" key={orderDetail.orderDetailId}>
-                  <p className="orderDetailModalOrderStatus">{orderStateKorean(orderDetail.orderStatus)}</p>
-                  <div className="orderDetailModlaImgPDiv">
-                  <input type="checkbox" onChange={() => handleCheckBoxChange(orderDetail.orderDetailId)}/>
-                  <div className="orderDetailModalImgDiv">
-                    <img className="orderDetailModalImg"
-                      src={`${IMG_PATH}${orderDetail.pImgUrl}`}
-                      alt={orderDetail.pName}
-                    />
-                  </div>
-                  <div className="orderDetailModalPNameDiv">
-                    <p className="orderDetailModalPName">{orderDetail.pName}</p>
-                  </div>
-                  <div className="orderModalCancelBtnDiv">
-                  {["RETURN", "EXCHANGE"].includes(orderDetail.orderStatus) 
-                  ?
-                  <button
-                    className="orderStatusChangeCancelBtn"
-                    onClick={() => putFetchData([orderDetail.orderDetailId], "DELIVERED") 
-                    }
-                  >{orderStatusButtonContent(orderDetail.orderStatus)}</button>
-                  : null
-                  }
-                  </div>
-                  </div>
-                  <ul className="orderDetailModalList">
-                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">수량 :</span> {orderDetail.quantity}개</li>
-                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">제품가 :</span> {orderDetail.price.toLocaleString()}원</li>
-                    <li className="orderDetailModalListLi"><span className="orderDetailModalListLiSpan">총 상품금액 :</span> {orderDetail.totalPrice.toLocaleString()}원</li>
-                  </ul>
-                </div>
-                ))}
+                  {openOrder.orderDetails.map((orderDetail) => (
+                    <div
+                      className="orderDetailModalContainer"
+                      key={orderDetail.orderDetailId}
+                    >
+                      <p className="orderDetailModalOrderStatus">
+                        {orderStateKorean(orderDetail.orderStatus)}
+                      </p>
+                      <div className="orderDetailModlaImgPDiv">
+                        <input
+                          type="checkbox"
+                          onChange={() =>
+                            handleCheckBoxChange(orderDetail.orderDetailId)
+                          }
+                        />
+                        <div className="orderDetailModalImgDiv">
+                          <img
+                            className="orderDetailModalImg"
+                            src={`${IMG_PATH}${orderDetail.pImgUrl}`}
+                            alt={orderDetail.pName}
+                          />
+                        </div>
+                        <div className="orderDetailModalPNameDiv">
+                          <p className="orderDetailModalPName">
+                            {orderDetail.pName}
+                          </p>
+                        </div>
+                        <div className="orderModalCancelBtnDiv">
+                          {["RETURN", "EXCHANGE"].includes(
+                            orderDetail.orderStatus,
+                          ) ? (
+                            <button
+                              className="orderStatusChangeCancelBtn"
+                              onClick={() =>
+                                putFetchData(
+                                  [orderDetail.orderDetailId],
+                                  "DELIVERED",
+                                )
+                              }
+                            >
+                              {orderStatusButtonContent(
+                                orderDetail.orderStatus,
+                              )}
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                      <ul className="orderDetailModalList">
+                        <li className="orderDetailModalListLi">
+                          <span className="orderDetailModalListLiSpan">
+                            수량 :
+                          </span>{" "}
+                          {orderDetail.quantity}개
+                        </li>
+                        <li className="orderDetailModalListLi">
+                          <span className="orderDetailModalListLiSpan">
+                            제품가 :
+                          </span>{" "}
+                          {orderDetail.price.toLocaleString()}원
+                        </li>
+                        <li className="orderDetailModalListLi">
+                          <span className="orderDetailModalListLiSpan">
+                            총 상품금액 :
+                          </span>{" "}
+                          {orderDetail.totalPrice.toLocaleString()}원
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
                 </div>
                 <div className="orderStatusChangeBtnDiv">
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() => putFetchData(selectOrderDetail, "CANCELLED") 
-                    }
+                    onClick={() => putFetchData(selectOrderDetail, "CANCELLED")}
                   >
                     취소
                   </button>
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() =>  putFetchData(selectOrderDetail,  "RETURN")
-                    }
+                    onClick={() => putFetchData(selectOrderDetail, "RETURN")}
                   >
                     반품
                   </button>
                   <button
                     className="orderStatusChangeBtn"
-                    onClick={() => putFetchData(selectOrderDetail, "EXCHANGE")
-                    }
+                    onClick={() => putFetchData(selectOrderDetail, "EXCHANGE")}
                   >
                     교환
                   </button>

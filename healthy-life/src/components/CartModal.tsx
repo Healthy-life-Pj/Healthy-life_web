@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { CartItemDto } from "../types/dto";
 import SmallPagination from "./SmallPagination";
 import "../style/modal/cartModal.css"
@@ -13,8 +12,6 @@ interface CartModalProps {
 }
 
 const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
-  const { pId } = useParams();
-  const [cookies] = useCookies(["token"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [cartPerPage] = useState<number>(4);
   const navigate = useNavigate();

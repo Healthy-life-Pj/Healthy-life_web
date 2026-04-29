@@ -13,14 +13,15 @@ import {
 import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactModal from "react-modal";
-import '../../../../style/ModalExample.css'
+import "../../../../style/ModalExample.css";
 import SmallPagination from "../../../../components/SmallPagination";
 
 function Review() {
   const { pId } = useParams();
   const [reviewData, setReviewData] = useState<ReviewResponseDto[]>([]);
-  const [reviewModal, setReviewModal] =
-    useState<ReviewResponseDto | null>(null);
+  const [reviewModal, setReviewModal] = useState<ReviewResponseDto | null>(
+    null,
+  );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productPerPage] = useState<number>(5);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -48,7 +49,7 @@ function Review() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${REVIEW_PATH}${REVIEW_PRODUCT}/${pId}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${REVIEW_PATH}${REVIEW_PRODUCT}/${pId}`,
       );
 
       setReviewData(response.data.data.reviewListDto);
@@ -95,17 +96,17 @@ function Review() {
               </div>
               <div className="reviewLiLine"></div>
               <div className="reivewContentPreDiv">
-              <pre
-                onClick={() => openModal(review.reviewId)}
-                className="reviewContentSpan"
-              >
-                {cutText(review.reviewContent, 40)}
-              </pre>
+                <pre
+                  onClick={() => openModal(review.reviewId)}
+                  className="reviewContentPrev"
+                >
+                  {cutText(review.reviewContent, 40)}
+                </pre>
               </div>
               <div className="reviewLiLine"></div>
-              <div 
-              className="reviewImgUrlDiv"
-              onClick={() => openModal(review.reviewId)}
+              <div
+                className="reviewImgUrlDiv"
+                onClick={() => openModal(review.reviewId)}
               >
                 <img
                   className="reivewImg"
@@ -137,7 +138,10 @@ function Review() {
             <div className="reviewModalContainer">
               <div className="reviewTitle">
                 <h4>후기</h4>
-                <span onClick={closeModal} className="closeProductDetailReviewModalBtn">
+                <span
+                  onClick={closeModal}
+                  className="closeProductDetailReviewModalBtn"
+                >
                   <CloseIcon style={{ fontSize: "20px" }} />
                 </span>
               </div>

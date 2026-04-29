@@ -35,7 +35,7 @@ const Cart = () => {
             Authorization: `Bearer ${cookies.token}`,
             withCredentials: true,
           },
-        }
+        },
       );
       setDatas(response.data.data.cartItem || []);
     } catch (error) {
@@ -49,13 +49,13 @@ const Cart = () => {
       cartItems.map(async (item) => {
         try {
           const res = await axios.get(
-            `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}/${item.pId}`
+            `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}/${item.pId}`,
           );
           newStockMap[item.pId] = res.data.data.pStockStatus;
         } catch (error) {
           console.error(`${item.pName} 재고 조회 오류`, error);
         }
-      })
+      }),
     );
     setStockMap(newStockMap);
   };
@@ -76,7 +76,7 @@ const Cart = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       alert("수량이 수정되었습니다.");
       fetchCartData();
@@ -87,7 +87,7 @@ const Cart = () => {
 
   const handleCheck = (
     e: React.ChangeEvent<HTMLInputElement>,
-    cartItemId: number
+    cartItemId: number,
   ) => {
     setCheckedItems((prev) => {
       const newSet = new Set(prev);
@@ -118,7 +118,7 @@ const Cart = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       alert("장바구니 전체가 삭제되었습니다!");
       setCheckedItems(new Set());
@@ -162,7 +162,7 @@ const Cart = () => {
       alert("로그인 후 사용해주세요.");
       return;
     }
-  })
+  });
 
   useEffect(() => {
     const init = async () => {
@@ -186,7 +186,11 @@ const Cart = () => {
   }, [datas]);
 
   const totalPrice = datas
-    .filter((item) => checkedItems.has(item.cartItemId) && item.productPrice * item.productQuantity)
+    .filter(
+      (item) =>
+        checkedItems.has(item.cartItemId) &&
+        item.productPrice * item.productQuantity,
+    )
     .reduce((sum, item) => sum + item.productPrice * item.productQuantity, 0);
 
   return (
@@ -194,11 +198,11 @@ const Cart = () => {
       <h2>장바구니</h2>
       <div className="cartContainer">
         <div className="cartButton">
-          <button onClick={handleSelectAll}>{checkedItems.size === datas.length ? "모두해제" : "모두선택"}</button>
-          <button onClick={handlecartDeleteSelected}>선택삭제</button>
-          <button onClick={handleCartDeleteAll}>
-            전체삭제
+          <button onClick={handleSelectAll}>
+            {checkedItems.size === datas.length ? "모두해제" : "모두선택"}
           </button>
+          <button onClick={handlecartDeleteSelected}>선택삭제</button>
+          <button onClick={handleCartDeleteAll}>전체삭제</button>
         </div>
         <ul className="cartList">
           {datas.map((data) => (
@@ -234,7 +238,7 @@ const Cart = () => {
                       onChange={(e) =>
                         handleQuantityChange(
                           data.cartItemId,
-                          parseInt(e.target.value)
+                          parseInt(e.target.value),
                         )
                       }
                       min={1}
@@ -299,9 +303,15 @@ const Cart = () => {
           </ul>
         </div>
         <div className="processBtn">
-            <button className="processButton" onClick={() => {
+          <button
+            className="processButton"
+            onClick={() => {
               const selectedIds = Array.from(checkedItems);
-              navigate("/cart/order", { state: { cartItemIds: selectedIds }})}}>결제하기</button>
+              navigate("/cart/order", { state: { cartItemIds: selectedIds } });
+            }}
+          >
+            결제하기
+          </button>
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ export interface ReviewListDto {
   pId: number;
   pName: string;
   pImgUrl: string;
-  username: string;
+  userNickName: string;
   reviewRating: number;
   reviewContent: string;
   reviewImgUrl: string;
@@ -62,7 +62,7 @@ export interface QnaReqestDto {
 
 export interface QnaResponseDto {
   qnaId: number;
-  username: string;
+  userNickName: string;
   qnaTitle: string;
   qnaContent: string;
   qnaAnswer: string;

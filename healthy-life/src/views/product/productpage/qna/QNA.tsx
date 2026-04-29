@@ -51,15 +51,18 @@ const QNA = () => {
       </div>
       <div>
         <ul className="qnaTotalUl">
-          {currentPosts.map((qna) => (
+          {currentPosts.map((qna, index) => (
             <React.Fragment key={qna.qnaId}>
               <li className="qnaTotalLi" onClick={() => handleBtn(qna.qnaId)}>
                 <p>{!qna.qnaAnswer ? "답변미완료" : "답변완료"}</p>
                 <p>{qna.qnaTitle}</p>
-                <p>{qna.username}</p>
+                <p>{qna.userNickName}</p>
               </li>
               {openQnaId === qna.qnaId && 
                 <QnaContent data={qna}/>}
+                { index < currentPosts.length -1 && (
+                    <div className="qnaLineDiv"></div>
+                  )}
             </React.Fragment>
           ))}
         </ul>

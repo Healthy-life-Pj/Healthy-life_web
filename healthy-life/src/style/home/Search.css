@@ -1,12 +1,3 @@
-@font-face {
-  font-family: 'goorm-sans-bold';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-
-
 .SearchAppInputDiv {
   display: flex;
   width: 400px;
@@ -62,21 +53,4 @@
 .borderLine {
   margin: 5px auto;
   border-bottom: 2px solid #67C6E3;
-}
-
-@media (max-width: 600px) {
-  .SearchAppInputDiv{
-    width: 60%;
-    height: 30px;
-    font-size: 10px;
-  }
-  .searchListBtn {
-    width: 80%;
-  }
-  .searchLi {
-    width: 80%;
-  }
-  .searchButton{
-    font-size: 7px;
-  }
 }

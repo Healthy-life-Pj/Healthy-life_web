@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DeliveryAddress, User } from "../../../types";
 import axios from "axios";
 import {
@@ -12,6 +12,9 @@ import {
 import Term from "./Term";
 import "../../../style/auth/signUp/signUp.css";
 import AddressSearch from "./AddressSearch";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
 const passwordRegex =
@@ -24,10 +27,6 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 function SignUp() {
   const navigate = useNavigate();
-
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const joinPath = params.get("joinPath");
   const [duplicateNickName, setDuplicateNickName] = useState<boolean>(false);
   const [duplicateUsername, setDuplicateUsername] = useState<boolean>(false);
   const [duplicateUsernameMg, setDuplicateUsernameMg] = useState<string>("");
@@ -55,9 +54,10 @@ function SignUp() {
     userEmail: "",
     userPhone: "",
     userMemberGrade: "병아리",
-    joinPath: /*joinPath ? joinPath :*/ "home",
+    joinPath: "home",
     snsId: null,
   });
+  const [birth, setBirth] = useState<Dayjs | null>(null);
   const [addressData, setAddressData] = useState<DeliveryAddress>({
     deliverAddressId: 0,
     address: "",
@@ -129,11 +129,10 @@ function SignUp() {
     }
 
     if (
-      !birthDateRegex.test(String(signUpData.userBirth)) ||
       !signUpData.userBirth
     ) {
       valid = false;
-      setValidBirth("❌ 생년월일 8자리를 입력해주세요.");
+      setValidBirth("❌ 생년월일을 입력해주세요.");
     } else {
       setValidBirth("");
     }
@@ -166,11 +165,11 @@ function SignUp() {
     setLoading(true);
 
     try {
-      console.log("📡 서버 요청 중...");
-      const response = await axios.post(
+      await axios.post(
         `${MAIN_APT_PATH}${AUTH_PATH}${SIGN_UP}`,
         {
           ...signUpData,
+          userBirth: birth?.format("YYYY-MM-DD"),
           userGender: signUpData.userGender === "M" ? "M" : "F",
           address: addressData.address,
           addressDetail: addressData.addressDetail,
@@ -180,7 +179,7 @@ function SignUp() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       alert("회원가입 완료");
       navigate("/login");
@@ -211,12 +210,12 @@ function SignUp() {
   };
 
   const handelDulicateUsername = async (
-    e: React.MouseEvent<HTMLButtonElement>
+    e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${DUPLICATE_USERNAME}${signUpData.username}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${DUPLICATE_USERNAME}${signUpData.username}`,
       );
       if (response.data.data) {
         setDuplicateUsernameMg("❌ 아이디가 중복되었습니다.");
@@ -231,12 +230,12 @@ function SignUp() {
     }
   };
   const handleDuplicateNickName = async (
-    e: React.MouseEvent<HTMLButtonElement>
+    e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${DUPLICATE_NICKNAME}${signUpData.userNickName}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${DUPLICATE_NICKNAME}${signUpData.userNickName}`,
       );
       if (response.data.data === true) {
         setDuplicateNickNameMg("❌ 닉네임 중복되었습니다.");
@@ -376,14 +375,24 @@ function SignUp() {
             </li>
             <li className="li07">
               <label htmlFor="userBirth">생년월일</label>
-              <input
-                type="text"
-                className="birthDiv inputclass"
-                name="userBirth"
-                placeholder="생년월일: YYYYMMDD"
-                maxLength={8}
-                onChange={userdataForm}
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  slotProps={{
+                    textField: {
+                      sx: {
+                        "& .MuiInputBase-root": {
+                          height: 32,
+                          fontSize: 13,
+                          width: 264,
+                          borderColor: "#c4c4c4"
+                        },
+                      },
+                    },
+                  }}
+                  value={birth}
+                  onChange={(newValue) => setBirth(newValue)}
+                />
+              </LocalizationProvider>
             </li>
             <li className="signUpMessage">
               <p>{validBirth}</p>

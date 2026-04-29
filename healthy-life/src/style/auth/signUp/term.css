@@ -51,7 +51,4 @@ border-bottom: 1px solid #bbbbbb;
 
 .moreBtn:active {
   border: none;
-  /* animation-name: rotate;
-  transform: rotate(180deg);
-  transition: roatae 2s ease-in; */
 }

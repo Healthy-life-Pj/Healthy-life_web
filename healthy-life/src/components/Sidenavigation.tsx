@@ -4,7 +4,7 @@ import ShoppingBagTwoToneIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone'; 
 import KeyboardArrowUpTwoToneIcon from '@mui/icons-material/KeyboardArrowUpTwoTone';
 import KeyboardArrowDownTwoToneIcon from '@mui/icons-material/KeyboardArrowDownTwoTone';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -29,12 +29,9 @@ const Sidenavigator:React.FC = () => {
   const MoveToUnder = () => {
       window.scrollTo({ top: +2000, behavior: 'smooth' });
     };
-
-  
   
   return (
     <div className='SideContainer'>
-      
       {activeSide === 'side' && 
       <ul className='sideNav'>
         <li onClick={()=>navigate("cart")}><ShoppingBagTwoToneIcon/></li>
@@ -56,7 +53,6 @@ const Sidenavigator:React.FC = () => {
       ><KitchenOutlinedIcon style={{fontSize: '40px'}} />
       </button>
       : null}
-      
     </div>
   )
 }

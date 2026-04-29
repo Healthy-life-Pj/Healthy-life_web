@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User } from "../../../../types/index";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {  } from "../../../../apis";
-import { FIND_ID_BY_TOKEN, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants";
+import { FIND_ID_BY_TOKEN_REUSLT, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants";
 
 function FindUserIdResult() {
   const location = useLocation();
@@ -30,7 +29,7 @@ function FindUserIdResult() {
   const fetchData = async (token: string | null) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID_BY_TOKEN}`, {params: {token}});
+      const response = await axios.get(`${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID_BY_TOKEN_REUSLT}`, {params: {token}});
       const userIdData = response.data.data;
       if (userIdData) {
         setResult(userIdData);
@@ -53,12 +52,11 @@ function FindUserIdResult() {
           <p>로딩중....</p>
         ) : isData ? (
           <>
-            <ul className="findUsernameResultUl">
-              <li className="findUsernameResultLi"><strong>{result?.name}</strong> 님의 아이디는</li>
-              <li className="findUsernameResultLi">
-                <p><strong>{result?.username}</strong> 입니다.</p>
-              </li>
-            </ul>
+            <div className="findUsernameResultUl">
+              <div className="findUsernameResultLi">
+                <p>"{result?.name}" 님의 아이디는 <strong>{result?.username}</strong> 입니다.</p>
+              </div>
+            </div>
       <div className="finUsernameResultLine"></div>
             <button
               className='loginButton findUsernameloginButton'

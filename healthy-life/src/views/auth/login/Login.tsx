@@ -47,10 +47,6 @@ function Login() {
     }));
   };
 
-  const handleKakaoLogin = () => {
-    window.location.href = "http://localhost:4040/oauth2/authorization/kakao";
-  };
-
   const handleNaverLogin = () => {
     window.location.href = "http://localhost:4040/oauth2/authorization/naver";
   };

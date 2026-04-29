@@ -5,8 +5,6 @@
   font-style: normal;
 }
 
-
-
 .joinContainer {
   font-family: 'Pretendard-Regular';
   width: 700px;
@@ -50,7 +48,10 @@
   padding: 10px;
   box-sizing: border-box;
   margin: 0px;
-  border: 1px solid #eee;
+  border: 1px solid #c4c4c4;
+}
+.inputclass:hover {
+  border-color: black;
 }
 .joinBtn {
   flex: 1;

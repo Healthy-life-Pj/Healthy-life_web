@@ -9,7 +9,6 @@ import Home from "./views/home/Home";
 import FindId from "./views/auth/login/find-id/FindId";
 import FindPassword from "./views/auth/login/FindPassword";
 import All from "./views/product/all/All";
-import NonMember from "./views/nonMemberOrder/NonMember";
 import Payment from "./views/order/direct-order/DirectOrder";
 import BestItem from "./views/best/bestItem";
 import RecommandApp from "./views/physique/PhysiqueProduct";
@@ -89,7 +88,6 @@ function App() {
         <Route path="/login/FindPassword" element={<FindPassword />} />
         <Route path="/find-password/:token" element={<FindPasswordResult />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/nonMember" element={<NonMember />} />
         <Route path="/bestitem" element={<BestItem />} />
         <Route path="/calculator" element={<Bmi />} />
         <Route path="/cart" element={<CartAPP />} />

@@ -328,7 +328,7 @@ function Review() {
                     <AccountCircleIcon style={{ fontSize: "20px" }} />
                     <p className="countInfoSpan">
                       {" "}
-                      <span>{reviewModal.username}</span>
+                      <span>{reviewModal.userNickName}</span>
                       <span>|</span>
                       <span>{reviewModal.reviewCreatAt}</span>{" "}
                     </p>
