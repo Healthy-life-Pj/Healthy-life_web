@@ -14,7 +14,7 @@ import MypageUp from './mypage-main/MypageUp'
 import ReviewList from './my-review/MyReview'
 import ReviewUpdate from './my-review/ReviewUpdate'
 import MyQnA from './my-qna/MyQnA'
-import PhysiquePage from './physique/PhysiquePage'
+import PhysiquePage from './my-physique/MyPhysiquePage'
 import ShippingList from './shipping/ShippingList'
 
 

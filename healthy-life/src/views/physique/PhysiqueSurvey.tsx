@@ -16,6 +16,7 @@ interface PhysiqueSurveyProps {
 
 function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
   const [cookies] = useCookies(["token"]);
+  const [allTags, setAllTags] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tagNames, setTagNames] = useState<string[]>([]);
   
@@ -31,9 +32,27 @@ function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
     }
   }
 
-useEffect(()=> {
-  getTagName()
-}, []);
+  const getPhysique = async () => {
+    try {
+      const response = await axios.get(`${MAIN_APT_PATH}${USER_PATH}${PHYSIQUE_GET_NAME}`, 
+        {
+          headers: { Authorization: `Bearer ${cookies.token}`},
+          withCredentials: true,
+        }
+      )
+      const tags = response.data.data.physiqueNames;
+      setAllTags(tags);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(()=> {
+    if (cookies.token) {
+      getTagName();
+      getPhysique();
+    }
+  }, [cookies.token]);
 
   const handleTags = (tag: string) => {
     setTags((prev) => {
@@ -58,6 +77,7 @@ useEffect(()=> {
           withCredentials: true,
         },
       );
+      alert("수정 태그 조회")
       onSearch();
     } catch (error) {
       console.error(error);
@@ -86,14 +106,6 @@ useEffect(()=> {
     color: tags.includes(tag) ? "blue" : "black",
   });
 
-const TAG_LABEL_MAP: Record<string, string> = {
-  "견과류제외": "NO_견과류",
-  "해산물제외": "NO_해산물",
-  "유제품제외": "NO_유제품",
-  "글루텐제외": "글루텐프리",
-  "새우제외": "NO_새우",
-  "계란제외": "NO_계란",
-};
 
   useEffect(() => {
     getMyPhysique();
@@ -102,7 +114,7 @@ const TAG_LABEL_MAP: Record<string, string> = {
   return (
     <div className="physiqueContainer">
       <div className="physiqueBtnDiv">
-        {tagNames.map(tag => (
+        {allTags.map(tag => (
           <button
             key={tag}
             className="physiqueBtn"
@@ -111,7 +123,7 @@ const TAG_LABEL_MAP: Record<string, string> = {
             onClick={() => handleTags(tag)}
             value={tag}
           >
-            # {TAG_LABEL_MAP[tag] || tag}
+            # {tag}
           </button>
         ))}
       </div>
