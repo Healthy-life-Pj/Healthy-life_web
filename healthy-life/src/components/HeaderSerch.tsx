@@ -95,7 +95,7 @@ function HeaderSearchBar() {
             ))}
           </ul>
         </div>
-        <Link className="button2Link" to={"/mypage/"}>
+        <Link className="button2Link" to={"/my-page"}>
           <AccountCircle style={{ fontSize: "26px" }} />
         </Link>
         <Link className="button2Link" to={"/cart"}>

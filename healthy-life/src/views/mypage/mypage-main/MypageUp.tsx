@@ -14,15 +14,17 @@ import {
 } from "../../../constants";
 import { useCookies } from "react-cookie";
 import { OrderDto, OrderGetRequestDto } from "../../../types/dto";
+import { useNavigate } from "react-router-dom";
 
 function MypageUp() {
+  const nabigator = useNavigate();
   const [userData, setUserData] = useState<User | null>(null);
   const [orderDatas, setOrderDatas] = useState<OrderDto[]>([]);
   const [cookies] = useCookies(["token"]);
   const today = new Date();
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(today.getDate() - 30);
-  
+
   function formatDateToLocalYYYYMMDD(date: Date): string {
     const offset = date.getTimezoneOffset() * 60000;
     const localDate = new Date(date.getTime() - offset);
@@ -50,17 +52,23 @@ function MypageUp() {
   };
 
   const orderFetchData = async () => {
-    const validStatus = ["PENDING", "CONFIRMED", "PREPARING", "SHIPPED", 'DELIVERED'];
+    const validStatus = [
+      "PENDING",
+      "CONFIRMED",
+      "PREPARING",
+      "SHIPPED",
+      "DELIVERED",
+    ];
     try {
       const response = await axios.get(`${MAIN_APT_PATH}${ORDER_PATH}`, {
-        params: orderDate, 
+        params: orderDate,
         headers: { Authorization: `Bearer ${cookies.token}` },
         withCredentials: true,
       });
       const orderList: OrderDto[] = response.data.data.orders;
       setOrderDatas(
-        orderList.filter((o) => 
-          o.orderDetails.some((od) => validStatus.includes(od.orderStatus))
+        orderList.filter((o) =>
+          o.orderDetails.some((od) => validStatus.includes(od.orderStatus)),
         ),
       );
     } catch (error) {
@@ -74,35 +82,35 @@ function MypageUp() {
   }, []);
 
   return (
-      <div className="mypageMainContainer">
-        <ul className="mypageUpUl">
-          <li>
-            <AccountCircleIcon />
-            <br />
-            {userData?.userNickName}
-          </li>
-          <li className="myshoppingLine"></li>
-          <li>
-            <MilitaryTechIcon />
-            <br />
-            {userData?.userMemberGrade}
-          </li>
-          <li className="myshoppingLine"></li>
-          <li>
-            <CardMembershipIcon />
-            <br />
-            멤버십
-          </li>
-          <li className="myshoppingLine"></li>
-          <li>
-            <LocalShippingIcon />
-            <br />
-            <span>{orderDatas.length}개</span>
-            <br />
-            주문
-          </li>
-        </ul>
-      </div>
+    <div className="mypageMainContainer">
+      <ul className="mypageUpUl">
+        <li>
+          <AccountCircleIcon />
+          <br />
+          {userData?.userNickName}
+        </li>
+        <li className="myshoppingLine"></li>
+        <li>
+          <MilitaryTechIcon />
+          <br />
+          {userData?.userMemberGrade}
+        </li>
+        <li className="myshoppingLine"></li>
+        <li className="mypageUpIcon" onClick={() => nabigator("/my-page/membership")}>
+          <CardMembershipIcon />
+          <br />
+          멤버십
+        </li>
+        <li className="myshoppingLine"></li>
+        <li className="mypageUpIcon" onClick={() => nabigator("/my-page")}>
+          <LocalShippingIcon />
+          <br />
+          <span>{orderDatas.length}개</span>
+          <br />
+          주문
+        </li>
+      </ul>
+    </div>
   );
 }
 

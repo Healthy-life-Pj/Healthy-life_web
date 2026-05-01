@@ -39,9 +39,9 @@ export default function Header() {
             <span className="buttonFlexBox1Span">|</span>
             <Link to={"/"} onClick={handleLougoutClick}>로그아웃</Link>
             <span className="buttonFlexBox1Span">|</span>
-            <Link to={"/mypage/orderApp"}>주문조회</Link>
+            <Link to={"/my-page"}>주문현황</Link>
             <span className="buttonFlexBox1Span">|</span>
-            <Link to={"/myPage"}>마이페이지</Link>
+            <Link to={"/my-page"}>마이페이지</Link>
             </div>
             :
             <div className="button3">

@@ -94,7 +94,7 @@ useEffect(() => {
 
   return (
     <div className='physiqueContainer'>
-      <h3>네 체질/기호</h3>
+      <h3>체질/기호 태그 관리</h3>
       <div className="physiqueBtnDiv">
         {allTags.map((tag) => (
           <button

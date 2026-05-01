@@ -127,9 +127,11 @@ function PhysiqueSurvey({ onSearch }: PhysiqueSurveyProps) {
           </button>
         ))}
       </div>
-      <button className="physiqueSearchBtn" onClick={createPhysique}>
-        조회
-      </button>
+      <div>
+        <button className="physiqueSearchBtn" onClick={createPhysique}>
+          조회
+        </button>
+      </div>
     </div>
   );
 }

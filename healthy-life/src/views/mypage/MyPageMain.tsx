@@ -4,9 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import MypageNav from './mypage-main/MypageNav'
 import OrderApp from './order/OrderApp'
 import WishApp from './wish/WishApp'
-import Reserves from './cupon,reserves,benefit/Reserves'
-import Cupon from './cupon,reserves,benefit/Cupon'
-import Benefit from './cupon,reserves,benefit/Benefit'
 import Userinformation from './userInformation/Userinformation'
 import ReviewWrite from './my-review/ReviewWrite'
 import Mypage from './mypage-main/Mypage'
@@ -16,6 +13,7 @@ import ReviewUpdate from './my-review/ReviewUpdate'
 import MyQnA from './my-qna/MyQnA'
 import PhysiquePage from './my-physique/MyPhysiquePage'
 import ShippingList from './shipping/ShippingList'
+import Membership from './membership/Membership'
 
 
 function MyPageMain() {
@@ -33,13 +31,11 @@ function MyPageMain() {
         <Route path='/my-review' element={<ReviewList />}/>
         <Route path='/wishlist' element={<WishApp />}/>
         <Route path='/my-qna' element={<MyQnA />}/>
-        <Route path='/mileage' element={<Reserves />}/>
-        <Route path='/coupon' element={<Cupon />}/>
-        <Route path='/membership' element={<Benefit />}/>
         <Route path='/userinformation' element={<Userinformation />}/>
         <Route path='/my-review/write/:orderDetailId/:pName' element={<ReviewWrite />}/>
         <Route path='/my-review/update/:reviewId' element={<ReviewUpdate />}/>
         <Route path="/physique" element={<PhysiquePage />} />
+        <Route path="/membership" element={<Membership />} />
       </Routes>
       </div>
     </div>

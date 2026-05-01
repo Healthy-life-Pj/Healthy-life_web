@@ -3,7 +3,7 @@
   margin: 10px auto;
 }
 
-.benefitContainer {
+.membershipContainer {
   width: 500px; 
   border: 1px solid #67C6E3;
   border-radius: 10px;
@@ -24,6 +24,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100px;
+}
+
+.membershipName {
+  width: 50px;
+}
+
+.membershipName > p {
+  margin: 0px auto;
 }
 
 .membershipName {

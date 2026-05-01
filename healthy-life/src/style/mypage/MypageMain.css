@@ -56,6 +56,10 @@
 
 }
 
+.mypageUpIcon {
+  cursor: pointer;
+}
+
 .mypageSuvContainer ul {
   display: flex;
   flex-direction: row;
