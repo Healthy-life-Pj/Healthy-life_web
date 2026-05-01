@@ -165,17 +165,42 @@ function Userinformation() {
     }
   };
 
+  const PHONE_REGEX = /^01[016789]-?\d{3,4}-?\d{4}$/;
+
+  const toChangedOrNull = (
+    current: string,
+    original: string | undefined
+  ): string | null => {
+    const trimmed = current.trim();
+    if (trimmed === "" || trimmed === (original ?? "").trim()) return null;
+    return trimmed;
+  };
+
   const handleSubmit = async () => {
+    const phoneChanged =
+      userInfo.userPhone.trim() !== (originalInfo?.userPhone ?? "").trim() &&
+      userInfo.userPhone.trim() !== "";
+    if (phoneChanged && !PHONE_REGEX.test(userInfo.userPhone.trim())) {
+      alert("휴대폰 번호 형식이 올바르지 않습니다. (예: 01012345678)");
+      return;
+    }
+
     try {
       await axios.put(
         `${MAIN_APT_PATH}${USER_PATH}${GET_USER}`,
         {
-          name: userInfo.name,
-          userNickName: userInfo.userNickName,
-          userEmail: userInfo.userEmail,
-          userPhone: userInfo.userPhone,
-          userBirth: userInfo.userBirth,
-          userGender: userInfo.userGender,
+          name:         toChangedOrNull(userInfo.name,         originalInfo?.name),
+          userNickName: toChangedOrNull(userInfo.userNickName, originalInfo?.userNickName),
+          userEmail:    toChangedOrNull(userInfo.userEmail,    originalInfo?.userEmail),
+          userPhone:    toChangedOrNull(userInfo.userPhone,    originalInfo?.userPhone),
+          userBirth:
+            userInfo.userBirth !== (originalInfo?.userBirth ?? "")
+              ? userInfo.userBirth || null
+              : null,
+          userGender:
+            userInfo.userGender !== originalInfo?.userGender
+              ? userInfo.userGender
+              : null,
         },
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
@@ -183,7 +208,7 @@ function Userinformation() {
         }
       );
       alert("회원정보가 수정되었습니다.");
-      fetchUserInfo();
+      await fetchUserInfo();
     } catch (error: any) {
       console.error(error);
       const msg =
