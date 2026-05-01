@@ -1,0 +1,78 @@
+.surveyContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.surveyContainer h3 {
+  margin: 20px 0;
+}
+
+.surveyContainer h5 {
+  margin-bottom: 20px;
+}
+
+.surveyList {
+  font-family: 'Pretendard-Regular';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  list-style-type: none;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+
+.surveyList li {
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  background-color: #DFF5FF;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.surveyList li:hover {
+  border: 1px solid #67C6E3;
+  box-shadow: 1px 1px 6px #bababa;
+}
+
+.surveyBtn button{
+  cursor: pointer;
+  background-color: #67C6E3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.surveyBtn button:hover {
+  background-color: #1478FF;
+}
+
+.surveyNextBtn {
+  float: right;
+  width: 50px;
+  height: 30px;
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.surveySkipBtn {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}

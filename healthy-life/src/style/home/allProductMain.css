@@ -1,0 +1,123 @@
+.allProductbBox2 {
+  width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  font-family: 'goorm-sans-bold';
+}
+
+.allProductbBox > h2 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.allProductButtonList {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  flex-direction: row;
+  margin: 0 auto;
+  list-style: none;
+  margin-bottom: 40px;
+}
+
+.allProductButtonList button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+.allProductButtonList button:hover {
+  cursor: pointer;
+  border-bottom: 3px solid #DFF5FF;
+}
+
+.allProductButtonList button:active {
+  color: #67C6E3;
+}
+
+.allProductSelectBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  font-size: 11px;
+  margin-bottom: 5px;
+  width: 220px;
+}
+
+.allProductSelectBtn li > button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.itemCotianer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: right;
+}
+
+.allProductImageContainer {
+  border-top: 3px solid #DFF5FF;
+  border-bottom: 3px solid #DFF5FF;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.allProductContain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 23%;
+  height: 250px;
+  margin: 20px auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.allProductImage {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.allProductImageList > h4 {
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}  
+
+.allProductHoverBtn{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  top: -170px;
+  right: -70px;
+}
+
+.allProductHoverBtn > button {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.allProductHoverBtn > button:hover {
+  background-color: #67C6E3;
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+  width: 200px;
+}
+

@@ -1,0 +1,44 @@
+.currentProductContainer{
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  margin-right: 60px;
+}
+
+.currentProductContainer > h2{
+  margin-left: 20px;
+}
+
+.imagesFlexBox{
+  display: flex;
+  justify-content: space-around;
+  width: 800px;
+
+}
+
+.imageBox{
+  width: 150px;
+}
+
+.imageBox img{
+  width: 150px;
+  height: 175px;
+  border-radius: 5px;
+}
+
+.imageBox p{
+  color: darkgray;
+  font-size: 13px;
+}
+
+.imageBox h3{
+  font-size: 25px;
+}
+
+.imageBox button{
+  background-color: white;
+  border: none;
+}
+
+
+

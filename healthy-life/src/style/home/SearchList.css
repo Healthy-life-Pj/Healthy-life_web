@@ -1,0 +1,49 @@
+.searchContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 350px;
+  height: 160px;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+.searchContainer > ul {
+  list-style: none;
+  width: 190px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.searchContainer ul > li {
+  list-style: none;
+  width: 150px;
+  font-size: 14px;
+  margin-top: 5px;
+  flex-direction: row;
+  align-items: center;
+  ;
+}
+
+.line {
+  height: 165px;
+  border: 1.5px solid #67C6E3;
+  border-radius: 10px;
+}
+
+.currentSearch {
+  font-family: 'Pretendard-Regular';
+  text-align: center;
+  width: 200px;
+}
+
+.popularSearch {
+  font-family: 'Pretendard-Regular';
+  text-align: center;
+  width: 200px;
+}
+
+

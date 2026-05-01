@@ -1,0 +1,64 @@
+.head {
+  max-width: 900px;
+  margin: 10px auto;
+}
+
+.membershipContainer {
+  width: 500px; 
+  border: 1px solid #67C6E3;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.gradeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.Icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.membershipName {
+  width: 50px;
+}
+
+.membershipName > p {
+  margin: 0px auto;
+}
+
+.membershipName {
+  width: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.gradeContainer:last-child {
+  border-bottom: none;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.left svg {
+  color: #67C6E3;
+}
+
+.grade {
+  font-size: 14px;
+  color: #333;
+}
+.cutLine {
+  color: #999;
+}

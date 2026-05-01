@@ -1,0 +1,407 @@
+
+.myPageConatiner {
+  font-family: 'goorm-sans-bold';
+  margin: 0 auto;
+}
+
+.mypageAllContainer{
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.orderListCotainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+.mypageMainContainer{
+  margin-bottom: 5px;
+  margin: 0 auto;
+}
+
+.mypageMainContainer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mypageMainContainer > .mypageUpUl {
+  background-color: #f5f5f56f;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  border: 2px solid #67C6E3;
+  border-radius: 5px;
+  width:100%;
+  max-width: 1000px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.mypageMainContainer li {
+  font-size: 10px;
+  text-align: center;
+
+}
+
+.mypageUpIcon {
+  cursor: pointer;
+}
+
+.mypageSuvContainer ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  border-top: 1px solid gray;
+}
+
+.mypageSuvContainer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mypageSuvContainer h4 {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.mypageSuvContainer li {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  max-width: 750px;
+}
+.orderListCotainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 800px;
+  margin: 50px auto;
+}
+
+.mypageCommentP {
+  font-size: 11px;
+  color: #585858;
+}
+
+.orderListUl {
+  list-style: none;
+  width: 100%;
+  font-family: 'Pretendard-Regular';
+  padding: 0px 15px;
+  box-sizing: border-box;
+}
+
+.orderProductImgDiv {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orderProductImg {
+  width: 100%;
+}
+
+.orderListUlLiP {
+  width: 150px;
+  font-family: 'Pretendard-Regular';
+  font-size: 13px; 
+}
+
+.myPageOrderInfoDiv > .orderListPname {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.myPageOrderInfoDiv > .orderListTotalAmount {
+  font-size: 14px;
+}
+
+.orderListUlLiPName {
+  font-size: 13px;
+}
+
+.orderListLine {
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+.orderListCotainer h4 {
+  margin-bottom: 10px;
+}
+
+.mypagePrice {
+  color: #67C6E3;
+}
+
+.olderListUlA {
+  display: flex;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.olderListUlA > li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: rgb(72, 72, 72);
+}
+
+.myshoppingLine {
+  border:1.5px solid #dedddd76;
+  height: 45px;
+}
+
+.orderArrow {
+  font-size: 30px;
+  color: gray;
+}
+
+.myPageOrderInfoBox {
+  width: 100%;
+  height: 170px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.myPageOrderStatusP {
+  font-weight: 700;
+  font-size: 17px;
+  color: #757575;
+  font-family: 'Pretendard-Regular';
+}
+
+.myOrderOrderDateDetailBtnDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 55px;
+  justify-content: space-between;
+  margin: 15px auto;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #e0e0e0;
+}
+.myPageOrderImgDiv {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+.mypageOrderImg {
+  width: 110%;
+}
+.myPageOrderListContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+}
+.myPageOrderInfoDiv {
+  display: flex;
+  gap: 25px;
+  margin-left: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.myOrderLabel {
+  height: 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.myPageOrderDateP, .myPageOrderCodeP {
+  font-size: 12px;
+  width: 200px;
+  color: #757575;
+  font-weight: 700;
+}
+.myPageOrderDateP {
+  display: flex;
+  justify-content: flex-start;
+}
+.myPageOrderBtnDiv {
+  display: flex;
+  gap: 5px 2px;
+  margin: 10px 0px;
+}
+.myPageOrderBtn {
+  width: 200px;
+  height: 35px;
+  background-color: #67C6E3;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+  margin-right: 10px;
+  color: white;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.myPageOrderBtn:hover {
+  background-color: #1478FF;
+}
+.orderDetailBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  height: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+.orderDetailmodalContent {
+  width: 620px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  margin: auto;
+}
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.orderDetailModalInfoDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+.orderDetailModalInfoP {
+  font-size: 0.95rem;
+  color: #333;
+}
+.orderDetailModalOrderContent {
+  max-height: 40vh;
+  overflow: scroll;
+}
+.orderDetailModalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+}
+.orderDetailModlaImgPDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.orderDetailModalPNameDiv {
+  width: 320px;
+}
+.orderDetailModalImgDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+.orderDetailModalImg {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.orderDetailModalPName {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.orderModalCancelBtnDiv {
+  width: 120px;
+}
+.orderStatusChangeCancelBtn {
+  width: 90px;
+  flex: 1;
+  background-color: #90d4ec;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.orderStatusChangeBtnDiv {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.orderStatusChangeBtn {
+  flex: 1;
+  background-color: #90d4ec;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.orderStatusChangeBtn:hover, .orderStatusChangeCancelBtn:hover {
+  background-color: #4fc0e8;
+}
+.orderDetailModalList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.orderDetailModalListLi {
+  display: flex;
+  justify-content: space-between;
+  width: 170px;
+}
+.orderDetailModalOrderStatus {
+  margin-bottom: 10px;
+}
+.orderDetailModalListLiSpan {
+  text-align: right;
+  width: 90px;
+}
+

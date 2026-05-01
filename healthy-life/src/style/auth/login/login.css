@@ -1,0 +1,181 @@
+.loginContainer h1{
+  text-align: center;
+}
+
+.loginErrorMg {
+  text-align: center;
+  font-size: 12px;
+  color: red;
+}
+
+.loginContainer {
+  margin-top: 5%;
+}
+
+.loginBox {
+  width: 220px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.findDiv {
+  display: flex;
+  width: 150px;
+  margin: 0px auto;
+  margin-top: 5px;
+  text-align: center; 
+  font-size: 11px;
+  justify-content: space-between;
+}
+
+.findIdContainer h1{
+  text-align: center;
+}
+
+.findIdContainer {
+  margin-top: 5%;
+}
+
+.findIdForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.findPasswordContainer h1{
+  text-align: center;
+}
+
+
+.findPasswordContainer {
+  margin-top: 5%;
+}
+
+.findPasswordForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContainer{
+  text-align: center;
+  margin-top: 50px;
+}
+
+.modalContent{
+  position: relative;
+  background: white;
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.modalOverlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.closeModalButton{
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #67C6E3;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+.closeModalButton:hover{
+  background-color: #1478FF;
+}
+
+.loginButton{
+  background-color: #67C6E3;
+  border-radius: 5px;
+  color: white;
+  width: 220px;
+  height: 40px;
+  border: none;
+  margin-top: 20px;
+}
+
+.loginButton:hover{
+  background-color: #1478FF;
+  cursor: pointer;
+}
+
+.findUsernameContainer {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.findUsernameTitle {
+  font-size: 18px;
+  font-family: 'goorm-sans-bold';
+}
+
+.finUsernameResultLine {
+  width: 100%;
+  border: 1px solid #67C6E3;
+  margin: 10px 0px;
+}
+
+.findUserIdResultBox {
+  margin-top: 30px;
+}
+
+.findUsernameResultUl {
+  list-style: none;
+}
+
+.findUsernameResultLi {
+  margin-top: 5px;
+  
+}
+
+.findUsernameloginButton {
+  width: 300px;
+}
+
+.naverLoginButton, .kakaoLoginButton {
+  width: 220px;
+  border: none;
+}
+
+.logoImg{
+  width: 100%;
+}
+.logoImg:hover{
+  cursor: pointer;
+}
+
+.snsLoginContainer {
+  width: 220px;
+  height: 80px;
+  margin: 0px auto;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

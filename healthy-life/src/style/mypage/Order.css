@@ -1,0 +1,135 @@
+.orderContainer  {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.orderSearchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.mypageMainContainer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.monthBtn {
+  display: flex;
+  gap: 40px;
+}
+
+.monthBtn > button {
+  width: 100px;
+  background-color: #67C6E3;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.monthBtn button:hover {
+  background-color: #1478FF;
+}
+
+.orderDate {
+  display: flex;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.orderDate input {
+  border:1.5px solid #67C6E3;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.searchBtn {
+  background-color: #67C6E3;
+  border: none;
+  margin-right: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 100px;
+}
+
+.orderListContainerBox {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.orderUl {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  overflow: hidden;
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+}
+
+.orderLi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.mypageOrderImgTitleDiv {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderLi img {
+  width: 20%;
+}
+
+.orderListBtn {
+  display: flex;
+  gap: 5px 2px;
+  margin: 10px 0px;
+}
+
+.orderBtn {
+  width: 200px;
+  height: 35px;
+  background-color: #67C6E3;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+  margin-right: 10px;
+  color: white;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.orderBtn:hover {
+  background-color: #1478FF;
+}
+
+.OrderLi {
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
+  border:  none;
+  height: 120px;
+}
+
+.myPageOrderImg {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #eee;
+}

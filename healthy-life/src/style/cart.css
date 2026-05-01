@@ -1,0 +1,239 @@
+*{
+margin: 0;
+padding: 0;
+}
+
+.totalCart {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.cartContainer {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cartContainer .cartButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 5px;
+}
+
+.cartButton > button {
+  width: 90px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: #67C6E3;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.cartButton > button:hover {
+  background-color: #1478FF;
+}
+
+.cartList {
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  list-style: none;
+  margin: 0 auto;
+  border-top: 1.2px solid #67C6E3;
+  border-bottom: 1.2px solid #67C6E3;
+  overflow: hidden;
+}
+
+.cartLi {
+  display:  flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #DFF5FF;
+  font-family: 'Pretendard-Regular';
+  box-sizing: border-box;
+  width: 860px;
+  height: 100px;
+  margin: 0px auto;
+}
+
+.cartCheckbox{
+  margin-right: 10px;
+}
+
+.cartProductName {
+  width: 120px;
+  font-size: 10px;
+}
+
+.cartAmountBox {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.cartAmountName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 140px;
+  font-size: 10px;
+}
+
+.productAmount {
+  padding: 7px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-radius: 11px;
+  border: none;
+  width: 50px;
+  outline: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: inner-spin-button;
+    opacity: 1;
+  cursor: pointer;
+}
+
+.productAmountUpDateBtn {
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 10px;
+  background-color: #67C6E3;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.productAmountUpDateBtn:hover {
+  background-color: #1478FF;
+}
+
+.priceDivGroupBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 10px;
+}
+
+.priceDivGroupSpan1 {
+  width: 54px;
+  text-align: right;
+}
+
+.priceDivGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.cartImgDiv {
+  width: 90px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.cartImage {
+  width: 100%;
+}
+
+.cartColseIcon {
+  font-size: 20px;
+}
+
+.totalContainer {
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 50px;
+  border: 5px solid #DFF5FF;
+  width: 900px;
+  height: 130px;
+  padding: 5px 25px;
+  font-family: 'Pretendard-Regular';
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.totalContainerUl {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice, .deliveryFee {
+  flex: 1;
+  width: 30%;
+  height: 110px;
+  font-size: 15px;
+  padding: 20px;
+  line-height: 45px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.deliveryFee {
+  border-left: 3px solid #DFF5FF;
+  border-right: 3px solid #DFF5FF;
+}
+
+.wonPrice > span {
+  font-family: 'goorm-sans-bold';
+  font-size: 30px;
+}
+
+.processBtn {
+  width: 340px;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.processButton {
+  font-family: 'Pretendard-Regular';
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #67C6E3;
+  color: white;
+}
+
+.processButton:hover {
+  background-color: #1478FF;
+}
+
+.soldOut {
+  color: red;
+  font-weight: bold;
+  padding: 8px;
+}

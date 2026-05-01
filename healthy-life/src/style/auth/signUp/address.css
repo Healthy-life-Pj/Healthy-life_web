@@ -1,0 +1,73 @@
+.addressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 386px;
+  margin: 15px 0px;
+}
+
+.addressTitle {
+  font-size: 14px;
+}
+
+.addressRow {
+  display: flex;
+  gap: 10px;
+}
+
+.labelInputDiv {
+  display: flex;
+  align-items: center;
+}
+
+.AddressPostNumBox {
+  width: 100px;
+  height: 32px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 1px solid #d1d1d1;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.titleAndSapnDiv{
+  display: flex;
+}
+
+.inputHalf {
+  flex: 1;
+}
+
+.validMessageSpan {
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.buttonSearch {
+  background-color: #67C6E3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 32px;
+  width: 100px;
+}
+
+.buttonSearch:hover {
+  background-color: #0056b3;
+}
+
+.addressInputBox{
+  border: 1px solid #eee;
+  height: 32px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.mainAdress {
+  width: 265 !important;
+}

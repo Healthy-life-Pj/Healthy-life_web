@@ -1,0 +1,128 @@
+.productReviewContainer {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleSelctDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; 
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.titleSelctDiv h5 {
+  margin-bottom: 10px;
+}
+
+.labelInput {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.reviewSelect {
+  width: 50px;
+  font-size: 10px;
+}
+
+.labelInput div {
+  display: flex;
+  align-items: flex-start;
+}
+
+.labelInput label, input {
+  font-size: 10px;
+}
+
+.labelInput label {
+  margin-right: 5px;
+}
+
+.labelInput input {
+  width:100px;
+}
+
+/* reviewList */
+.totalUl {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  border-top: 1px solid #333; 
+  border-bottom: 1px solid #333; 
+  margin: 0 auto;
+}
+
+.userNameSpan {
+  margin-bottom: 10px;
+}
+
+.reviewAtSpan {
+color: #8a8a8a;
+}
+
+.idDate pre {
+  padding: 5px;
+}
+
+.reviewDetaiLi {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  height: 60px;
+}
+
+.reviewContentPrev {
+  width: 90%;
+  text-align: left;
+  font-size: 10px;
+  font-family: 'goorm-sans-bold';
+}
+
+.reivewContentPreDiv{
+  width: 45%;
+  height: 80px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviewImgUrlDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 17%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.reviewLiLine {
+  height: 70px;
+  border: 1px solid #eee;
+}
+
+.reivewImg {
+  width: 110%;
+}
+
+.reviewImgDiv {
+  width: 160px;
+  height: 122px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviewImgDiv > .reviewImgUrl {
+  width: 100%;
+}

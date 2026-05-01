@@ -1,0 +1,56 @@
+.SearchAppInputDiv {
+  display: flex;
+  width: 400px;
+  height: 50px;
+  margin: 0 auto;
+  border: 3px solid #67C6E3;
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.SearchAppInputDiv:active {
+  border: 3px solid #1478FF;
+}
+
+.SearchAppInput {
+  font-family: 'goorm-sans-bold';
+  font-size: 15px;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  margin-left: 35px;
+  width: 80%;
+}
+
+.searchButton {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  margin-right: 10px;
+  
+}
+
+.searchList {
+  list-style: none;
+  margin: 0 auto;
+  width: 380px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.searchListBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-family: 'Pretendard-Regular';
+  padding: 5px;
+}
+
+.searchLi {
+    width: 400;
+    margin: 0px auto;
+}
+
+.borderLine {
+  margin: 5px auto;
+  border-bottom: 2px solid #67C6E3;
+}

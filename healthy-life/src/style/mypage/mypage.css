@@ -1,0 +1,22 @@
+.mypageTotalContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.mypageNavRoutesBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 1000px;
+}
+
+.mypageHeader {
+  width: 100%;
+  margin: 0px auto;
+}
+

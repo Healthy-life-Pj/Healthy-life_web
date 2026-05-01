@@ -1,0 +1,164 @@
+.modal-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .open-modal-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .reviewModalBackgroundBox {
+    position: relative;
+    background: white;
+    padding: 20px;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .close-modal-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .reviewModalContainer {
+    width: 100%;
+  }
+  
+  .reviewTitle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .reviewModalMainBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modalImageDiv {
+    width: 250px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e3e3e3;
+    margin-bottom: 10px;
+  }
+
+  .modalImage {
+    width: 250px;
+  }
+
+  .modalImage {
+    width: 250px;
+  }
+  
+  .reviewModalInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 250px;
+  }
+  
+  .countInfo {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-family: 'Pretendard-Regular';
+  }
+
+  .countInfoSpan {
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .AccountCircleIcon {
+    font-size: 5px;
+  }
+  
+  .reviewRating{
+    font-size: 10px;
+  }
+  
+  .closeReviewModalBtn {
+    border: none;
+    color: black;
+  }
+
+  .reviewInfoDiv {
+    width: 250px;
+  }
+
+  .reviewPreLine {
+    margin-top: 10px;
+    width: 250px;
+    border: 1px solid #e7e7e7;
+  }
+
+  .reviewContentDiv{
+    width: 220px;
+    font-size: 12px;
+    font-family: 'Pretendard-Regular';
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+.reveiwModal {
+  display: flex;
+  align-items: center;
+  margin:  0 auto;
+}
+
+.modalImageDiv {
+  width: 160px;
+  height: 122px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalImageDiv > .modalImage {
+  width: 100%;
+}
+
+.reviewPNameRatingDiv {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto;
+}

@@ -1,0 +1,113 @@
+.allProductContainer {
+  width: 1000px;
+  box-sizing: border-box;
+  display: flex;
+  margin: 0px auto;
+  margin-top: 60px;
+}
+
+.allProductContainer > h2 {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.reviewP {
+  font-size: 11px;
+}
+
+.productInform {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.allReviewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.reviewImageContainer{
+  display: flex;
+  border-top: 3px solid #DFF5FF;
+  border-bottom: 3px solid #DFF5FF;
+  margin-top: 30px;
+}
+
+.reviewPnameLink {
+  cursor: pointer;
+}
+
+.allProductImageList {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 900px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.allProductImageList > .reviewBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 207px;
+  height: 210px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.productInform {
+  padding: 5px 10px;
+}
+
+.reveiwInfoDiv {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.allProductImageList > h4 {
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.reviewImgDiv {
+  width: 160px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #efefeff0;
+  margin-top: 20px;
+}
+
+.reviewImgUrl{
+  width: 160px;
+}
+
+.reviewStar {
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  margin: 0 auto;
+}
+
+.reviewImgSpanDiv > pre {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.reviewListPNameRatingDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
