@@ -504,6 +504,7 @@ function CartOrder() {
           </button>
         </div>
 
+        {/* 결제 완료 모달 */}
         <ReactModal
           isOpen={isOpen}
           onRequestClose={handleClosePaymentModal}
