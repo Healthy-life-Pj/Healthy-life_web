@@ -16,17 +16,26 @@
   margin-bottom: 20px;
 }
 
-.wishList li {
+.wishList > li {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding: 6px;
   border-bottom: 1px solid #b1b1b1;
 }
 
-.wishImg, .wishBtn {
-  margin-bottom: 10px;
+.wishImg {
+  width: 110%;
+}
+
+.wishImgDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
 }
 
 .wishList p {
@@ -87,5 +96,9 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
-  margin-bottom: 10px;
+}
+
+.wishListBtn {
+  display: flex;
+  align-items: center;
 }

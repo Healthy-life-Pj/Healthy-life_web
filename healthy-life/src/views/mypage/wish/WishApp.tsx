@@ -210,12 +210,14 @@ function WishApp() {
                   checked={checkedItems.has(item.pid)}
                   onChange={() => handleCheck(item.pid)}
                 />
-                <img
-                  src={`${IMG_PATH}${PRODUCT_IMG}/${item.pimgUrl}`}
-                  alt={item.pname}
-                  width={100}
-                  className='wishImg'
-                />
+                <div className='wishImgDiv'>
+                  <img
+                    src={`${IMG_PATH}${PRODUCT_IMG}/${item.pimgUrl}`}
+                    alt={item.pname}
+                    width={100}
+                    className='wishImg'
+                  />
+                </div>
                 <div><p>금액: {item.pprice.toLocaleString()}원</p></div>
                 <div className='wishListBtn'>
                   <button
