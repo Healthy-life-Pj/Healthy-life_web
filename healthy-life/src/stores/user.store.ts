@@ -4,8 +4,9 @@ interface UserState {
   username: string;
   userNickName: string;
   isAuthenticated: boolean;
-  login: (username: string, userNickName:string) => void;
+  login: (username: string, userNickName: string) => void;
   logout: () => void;
+  updateNickName: (userNickName: string) => void;
 }
 
 const userAuthStore = create<UserState>((set) => ({
@@ -13,7 +14,7 @@ const userAuthStore = create<UserState>((set) => ({
   userNickName: "",
   isAuthenticated: false,
   login: (username, userNickName) => set({
-    username:username,
+    username,
     userNickName,
     isAuthenticated: true,
   }),
@@ -22,5 +23,6 @@ const userAuthStore = create<UserState>((set) => ({
     userNickName: "",
     isAuthenticated: false,
   }),
+  updateNickName: (userNickName) => set({ userNickName }),
 }));
 export default userAuthStore;

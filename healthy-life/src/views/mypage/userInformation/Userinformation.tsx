@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import userAuthStore from "../../../stores/user.store";
 import {
   AUTH_PATH,
   DELIVER_ADDRESS_DELETE,
@@ -32,6 +33,7 @@ interface UserInfo {
 function Userinformation() {
   const navigate = useNavigate();
   const [cookies, , removeCookie] = useCookies(["token"]);
+  const { updateNickName } = userAuthStore();
 
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
@@ -167,41 +169,43 @@ function Userinformation() {
 
   const PHONE_REGEX = /^01[016789]-?\d{3,4}-?\d{4}$/;
 
-  const toChangedOrNull = (
-    current: string,
-    original: string | undefined
-  ): string | null => {
-    const trimmed = current.trim();
-    if (trimmed === "" || trimmed === (original ?? "").trim()) return null;
-    return trimmed;
+  const changed = (current: string, original: string | undefined) => {
+    const c = current.trim();
+    const o = (original ?? "").trim();
+    return c !== o && c !== "" ? c : null;
   };
 
   const handleSubmit = async () => {
-    const phoneChanged =
-      userInfo.userPhone.trim() !== (originalInfo?.userPhone ?? "").trim() &&
-      userInfo.userPhone.trim() !== "";
-    if (phoneChanged && !PHONE_REGEX.test(userInfo.userPhone.trim())) {
+    const newPhone = userInfo.userPhone.replace(/-/g, "").trim();
+    const origPhone = (originalInfo?.userPhone ?? "").replace(/-/g, "").trim();
+    if (newPhone !== origPhone && newPhone !== "" && !PHONE_REGEX.test(userInfo.userPhone.trim())) {
       alert("휴대폰 번호 형식이 올바르지 않습니다. (예: 01012345678)");
+      return;
+    }
+
+    const body: Record<string, any> = {
+      name:         changed(userInfo.name,         originalInfo?.name),
+      userNickName: changed(userInfo.userNickName, originalInfo?.userNickName),
+      userEmail:    changed(userInfo.userEmail,    originalInfo?.userEmail),
+      userPhone:    newPhone !== origPhone && newPhone !== "" ? newPhone : null,
+      userBirth:    userInfo.userBirth !== (originalInfo?.userBirth ?? "")
+                      ? userInfo.userBirth || null
+                      : null,
+      userGender:   userInfo.userGender !== originalInfo?.userGender
+                      ? userInfo.userGender
+                      : null,
+    };
+
+    const hasChange = Object.values(body).some((v) => v !== null);
+    if (!hasChange) {
+      alert("변경된 정보가 없습니다.");
       return;
     }
 
     try {
       await axios.put(
         `${MAIN_APT_PATH}${USER_PATH}${GET_USER}`,
-        {
-          name:         toChangedOrNull(userInfo.name,         originalInfo?.name),
-          userNickName: toChangedOrNull(userInfo.userNickName, originalInfo?.userNickName),
-          userEmail:    toChangedOrNull(userInfo.userEmail,    originalInfo?.userEmail),
-          userPhone:    toChangedOrNull(userInfo.userPhone,    originalInfo?.userPhone),
-          userBirth:
-            userInfo.userBirth !== (originalInfo?.userBirth ?? "")
-              ? userInfo.userBirth || null
-              : null,
-          userGender:
-            userInfo.userGender !== originalInfo?.userGender
-              ? userInfo.userGender
-              : null,
-        },
+        body,
         {
           headers: { Authorization: `Bearer ${cookies.token}` },
           withCredentials: true,
@@ -209,6 +213,7 @@ function Userinformation() {
       );
       alert("회원정보가 수정되었습니다.");
       await fetchUserInfo();
+      if (body.userNickName) updateNickName(body.userNickName);
     } catch (error: any) {
       console.error(error);
       const msg =
