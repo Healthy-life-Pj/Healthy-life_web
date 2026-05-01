@@ -8,7 +8,7 @@ export interface User {
   name: string;
   userEmail: string;
   userPhone: string;
-  userBirth: Date;
+  userBirth: Date | null;
   userGender: UserGender;
   userMemberGrade: UserMemberGrade
   snsId: string | null;
