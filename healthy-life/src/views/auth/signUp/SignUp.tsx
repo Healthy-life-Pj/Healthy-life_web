@@ -50,7 +50,7 @@ function SignUp() {
     name: "",
     userNickName: "",
     userGender: "F",
-    userBirth: new Date(),
+    userBirth: null,
     userEmail: "",
     userPhone: "",
     userMemberGrade: "병아리",
@@ -128,9 +128,7 @@ function SignUp() {
       setValidEmail("");
     }
 
-    if (
-      !signUpData.userBirth
-    ) {
+    if (!birth) {
       valid = false;
       setValidBirth("❌ 생년월일을 입력해주세요.");
     } else {
@@ -149,7 +147,19 @@ function SignUp() {
     }
 
     if (!valid) {
-      console.log("유효성 검사 실패, fetchData 실행 안 함");
+      console.log("유효성 검사 실패, fetchData 실행 안 함", {
+        username: idRegex.test(signUpData.username),
+        name: nameRegex.test(signUpData.name),
+        password: passwordRegex.test(signUpData.password),
+        confirmPassword: signUpData.confirmPassword === signUpData.password,
+        phone: phoneRegex.test(signUpData.userPhone),
+        nickName: nickNameRegex.test(signUpData.userNickName),
+        email: emailRegex.test(signUpData.userEmail),
+        birth: !!birth,
+        address: !!addressData.address,
+        addressDetail: !!addressData.addressDetail,
+        postNum: !!addressData.postNum,
+      });
       return;
     }
 
