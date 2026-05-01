@@ -11,54 +11,42 @@ const MypageNav: React.FC = () => {
         <ul className="myPageNavBox">
           <li className="mypageNavTitle">주문관리</li>
           <li>
-            <Link to="/mypage/orderApp">
-              <span className="mypageMenue">주문처리 현황</span>
+            <Link to="/my-page/orderApp">
+              <span className="mypageMenue">주문내역 조회</span>
             </Link>
           </li>
           <li>
-            <Link to="/mypage/shipping">
+            <Link to="/my-page/shipping">
               <span className="mypageMenue">배송조회</span>
             </Link>
           </li>
-          <li className="mypageNavLine"></li>
+          <li className="my-pageNavLine"></li>
           <li className="mypageNavTitle">활동관리</li>
           <li>
-            <Link to="/mypage/my-review">
+            <Link to="/my-page/my-review">
               <span className="mypageMenue">후기</span>
             </Link>
           </li>
           <li>
-            <Link to="/mypage/wishlist">
+            <Link to="/my-page/wishlist">
               <span className="mypageMenue">위시리스트</span>
             </Link>
           </li>
           <li>
-            <Link to="/mypage/my-qna">
+            <Link to="/my-page/my-qna">
               <span className="mypageMenue">나의 qna</span>
-            </Link>
-          </li>
-          <li className="mypageNavLine"></li>
-          <li className="mypageNavTitle">혜택관리</li>
-          <li>
-            <Link to="/mypage/mileage">
-              <span className="mypageMenue">적립금 내역</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/mypage/membership">
-              <span className="mypageMenue">등급별 혜택</span>
             </Link>
           </li>
           <li className="mypageNavLine"></li>
           <li className="mypageNavTitle">회원정보관리</li>
           <li>
-            <Link to="/mypage/userinformation">
+            <Link to="/my-page/userinformation">
               <span className="mypageMenue">내 정보</span>
             </Link>
           </li>
           <li>
-            <Link to="/mypage/physique">
-              <span className="mypageMenue">내 체질/기호</span>
+            <Link to="/my-page/physique">
+              <span className="mypageMenue">체질/기호 태그</span>
             </Link>
           </li>
         </ul>

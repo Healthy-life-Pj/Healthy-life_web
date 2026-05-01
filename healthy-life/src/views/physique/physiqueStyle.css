@@ -1,25 +1,26 @@
 .physiqueContainer {
-  margin: 80px auto;
+  margin: 50px auto;
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1000px;
+  width: 700px;
 }
 .physiqueBtnDiv {
   height: 150px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  margin-top: 20px;
 }
 .physiqueBtn {
   border: none;
   background-color: white;
   font-size: 17px;
   border-bottom: 1px solid #aaa;
-  margin: 10px;
+  margin: 10px 10px;
   font-family: 'Pretendard-Regular';
   height: 25px;
+  cursor: pointer;
 }
 .physiqueSearchBtn {
   margin-top: 30px;
@@ -28,4 +29,32 @@
   height: 40px;
   border-radius: 3px;
   border: none;
+  cursor: pointer;
+}
+.physiqueSearchBtn2 {
+  margin-top: 0px;
+  margin-right: 40px;
+  background-color: #d1d1d1;
+}
+.searchBtnPostion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+.physiqueResetBtn {
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: #d1d1d1;
+}
+
+.physiqueSearchBtn2:hover, .physiqueResetBtn:hover {
+  background-color: #aaa;
+}
+
+.physiqueContainer {
+ 
 }

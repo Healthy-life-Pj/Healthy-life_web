@@ -11,7 +11,6 @@ import FindPassword from "./views/auth/login/FindPassword";
 import All from "./views/product/all/All";
 import Payment from "./views/order/direct-order/DirectOrder";
 import BestItem from "./views/best/bestItem";
-import RecommandApp from "./views/physique/PhysiqueProduct";
 import Bmi from "./views/bmi/Bmi";
 import CartAPP from "./views/cart/Cart";
 import MyPageMain from "./views/mypage/MyPageMain";
@@ -29,6 +28,7 @@ import AllReviewList from "./views/allreview/AllReviewList";
 import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
 import OAuth from "./views/auth/login/OAuth";
+import PhysiqueProduct from "./views/physique/PhysiqueProduct";
 
 function App() {
   interface TokenUser {
@@ -82,9 +82,10 @@ function App() {
         {/* 전체 리뷰 */}
         <Route path="/reviews" element={<AllReviewList />} />
 
-        <Route path="/recommand" element={<RecommandApp />} />
+        <Route path="/recommand" element={<PhysiqueProduct />} />
+
         {/* 마이페이지 */}
-        <Route path="/mypage/*" element={<MyPageMain />} />
+        <Route path="/my-page/*" element={<MyPageMain />} />
         <Route path="/login/FindPassword" element={<FindPassword />} />
         <Route path="/find-password/:token" element={<FindPasswordResult />} />
         <Route path="/payment" element={<Payment />} />

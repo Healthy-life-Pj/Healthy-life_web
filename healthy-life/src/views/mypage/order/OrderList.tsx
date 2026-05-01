@@ -223,12 +223,14 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
           {currentPosts.map((data, index) => (
             <li className="myPageOrderInfoBox" key={data.orderId}>
               <div className="myOrderOrderDateDetailBtnDiv">
+                <div className="myOrderLabel">
                 <p className="orderListUlLiP myPageOrderDateP">
                   {data.orderCode}
                 </p>
                 <p className="orderListUlLiP myPageOrderDateP">
-                  {data.orderDate}
+                  {new Date(data.orderDate).toLocaleString()}
                 </p>
+                </div>
                 <button
                   className="orderDetailBtn"
                   onClick={() => toggleOpen(data.orderId)}
@@ -244,10 +246,11 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
               </div>
               <div className="myPageOrderInfoDiv">
                 <div className="mypageOrderImgTitleDiv">
-                  <div className="myPageOrderImg">
+                  <div className="myPageOrderImgDiv">
                     <img
                       src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
                       alt={data.orderDetails[0].pName}
+                      className="mypageOrderImg"
                     />
                   </div>
                   <p className="orderListUlLiP orderListPname">
@@ -284,7 +287,8 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
                   {openOrder.deliverAddress?.address}
                   {openOrder.deliverAddress?.addressDetail}
                 </p>
-                <p className="orderDetailModalInfoP">{openOrder.orderDate}</p>
+                <p className="orderDetailModalInfoP">
+                  {new Date(openOrder.orderDate).toLocaleString()}</p>
               </div>
               <div className="orderDetailModalOrderContent">
                 {openOrder.orderDetails.map((orderDetail) => (

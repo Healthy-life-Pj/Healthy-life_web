@@ -179,8 +179,9 @@ function Review() {
                       />
                     </div>
                     <div className="reviewProducNameDiv">
-                      <p>{cutText(order.pName, 11)}</p>
-                      <p className="reviewDateP">{order.orderDate}</p>
+                      <p>{cutText(order.pName, 20)}</p>
+                      <p className="reviewDateP">
+                        {new Date(order.orderDate).toLocaleDateString()}</p>
                     </div>
                     <button
                       className="reviewWrightBtn"
@@ -232,7 +233,7 @@ function Review() {
                     </div>
                     <div className="reviewProducNameDiv forMargin">
                       <p>{cutText(review.pName, 11)}</p>
-                      <p className="reviewDateP">{review.reviewCreatAt}</p>
+                      <p className="reviewDateP">{new Date(review.reviewCreatAt).toLocaleDateString()}</p>
                     </div>
                     <div className="reviewBtnDiv">
                       <button

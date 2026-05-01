@@ -21,10 +21,18 @@
   gap: 7px;
 }
 
+.allReviewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
 .reviewImageContainer{
   display: flex;
   border-top: 3px solid #DFF5FF;
   border-bottom: 3px solid #DFF5FF;
+  margin-top: 30px;
 }
 
 .reviewPnameLink {

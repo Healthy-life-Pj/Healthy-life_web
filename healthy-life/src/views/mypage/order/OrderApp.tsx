@@ -5,7 +5,7 @@ import '../../../style/mypage/Order.css'
 function OrderApp() {
   return (
     <div className='orderContainer'>
-      <h2>나의 주문처리 현황</h2>
+      <h2>주문내역 조회</h2>
       <BasicTabs />
     </div>
   )
