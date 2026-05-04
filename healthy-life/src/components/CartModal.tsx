@@ -3,7 +3,8 @@ import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import { CartItemDto } from "../types/dto";
 import SmallPagination from "./SmallPagination";
-import "../style/modal/cartModal.css"
+import "../style/modal/cartModal.css";
+import { IMG_PATH, PRODUCT_IMG } from "../constants";
 
 interface CartModalProps {
   cartItem: CartItemDto[] | [];
@@ -18,7 +19,7 @@ const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
 
   const indexOfLastPost = currentPage * cartPerPage;
   const indexOfFirstPost = indexOfLastPost - cartPerPage;
-  
+
   const currentPosts = Array.isArray(cartItem)
     ? cartItem.slice(indexOfFirstPost, indexOfLastPost)
     : [];
@@ -47,34 +48,42 @@ const CartModal: React.FC<CartModalProps> = ({ cartItem, isOpen, onClose }) => {
         <div className="cartModal">
           <h2 className="cartTitle">장바구니</h2>
           <div className="cartModalContainerDiv">
-                <ul className="cartModalList">
+            <ul className="cartModalList">
               {currentPosts.map((data, index) => (
-                  <li  
-                  className="cartItemLi"
-                  key={`${data.pId}-${index}`}>
-                    <div className="cartItemImgDiv">
-                      <img 
+                <li className="cartItemLi" key={`${data.pId}-${index}`}>
+                  <div className="cartItemImgDiv">
+                    <img
                       className="cartItemImg"
-                      src={data.pImgUrl} alt={data.pName} />
-                    </div>
-                    <p className="cartItemContent">{cutText(data.pName, 6)}</p>
-                    <p className="cartItemContent">{data.productPrice.toLocaleString()}원</p>
-                    <p className="cartItemContent">주문수량 : {data.productQuantity}</p>
-                  </li>
+                      src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
+                      alt={data.pName}
+                    />
+                  </div>
+                  <p className="cartItemContent">{cutText(data.pName, 6)}</p>
+                  <p className="cartItemContent">
+                    {data.productPrice.toLocaleString()}원
+                  </p>
+                  <p className="cartItemContent">
+                    주문수량 : {data.productQuantity}
+                  </p>
+                </li>
               ))}
-                </ul>
+            </ul>
           </div>
           <div className="smallPaginationCartModal">
-        <SmallPagination
-          productPerPage={cartPerPage}
-          totalProducts={cartItem.length}
-          paginate={paginate}
-          currentPage={currentPage}
-        />
+            <SmallPagination
+              productPerPage={cartPerPage}
+              totalProducts={cartItem.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
           </div>
           <div className="modalButtonContainer">
-            <button onClick={() => navigate("/cart")} className="modalLinkeBtn">장바구니 이동</button>
-            <button className="modalLinkeBtn" onClick={onClose}>쇼핑계속하기</button>
+            <button onClick={() => navigate("/cart")} className="modalLinkeBtn">
+              장바구니 이동
+            </button>
+            <button className="modalLinkeBtn" onClick={onClose}>
+              쇼핑계속하기
+            </button>
           </div>
         </div>
       </ReactModal>

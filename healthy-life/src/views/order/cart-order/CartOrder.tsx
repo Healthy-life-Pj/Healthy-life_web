@@ -299,7 +299,7 @@ function CartOrder() {
 
   const handleClosePaymentModal = () => {
     setIsOpen(false);
-    navigate("/mypage/orderApp");
+    navigate("/my-page");
   };
 
   useEffect(() => {

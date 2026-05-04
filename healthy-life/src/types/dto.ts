@@ -30,7 +30,6 @@ export interface ReviewListDto {
   reviewId: number;
   pId: number;
   pName: string;
-  pImgUrl: string;
   userNickName: string;
   reviewRating: number;
   reviewContent: string;

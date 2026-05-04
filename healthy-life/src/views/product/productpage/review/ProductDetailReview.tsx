@@ -77,45 +77,49 @@ function Review() {
       </div>
       <div>
         <ul className="totalUl">
-          {currentProducts.map((review) => (
-            <li key={review.reviewId} className="reviewDetaiLi">
-              <div className="reviewli">
-                <div className="reviewStar">
-                  <span className="userNameSpan">{review.username}</span>
-                  <div>
-                    <Rating
-                      style={{ fontSize: "12px" }}
-                      name="half-rating-read"
-                      defaultValue={review.reviewRating}
-                      precision={0.5}
-                      readOnly
-                    />
+          {currentProducts.length > 0 ? (
+            currentProducts.map((review) => (
+              <li key={review.reviewId} className="reviewDetaiLi">
+                <div className="reviewli">
+                  <div className="reviewStar">
+                    <span className="userNameSpan">{review.username}</span>
+                    <div>
+                      <Rating
+                        style={{ fontSize: "12px" }}
+                        name="half-rating-read"
+                        defaultValue={review.reviewRating}
+                        precision={0.5}
+                        readOnly
+                      />
+                    </div>
+                    <span className="reviewAtSpan">{review.reviewCreatAt}</span>
                   </div>
-                  <span className="reviewAtSpan">{review.reviewCreatAt}</span>
                 </div>
-              </div>
-              <div className="reviewLiLine"></div>
-              <div className="reivewContentPreDiv">
-                <pre
+                <div className="reviewLiLine"></div>
+                <div className="reivewContentPreDiv">
+                  <pre
+                    onClick={() => openModal(review.reviewId)}
+                    className="reviewContentPrev"
+                  >
+                    {cutText(review.reviewContent, 40)}
+                  </pre>
+                </div>
+                <div className="reviewLiLine"></div>
+                <div
+                  className="reviewImgUrlDiv"
                   onClick={() => openModal(review.reviewId)}
-                  className="reviewContentPrev"
                 >
-                  {cutText(review.reviewContent, 40)}
-                </pre>
-              </div>
-              <div className="reviewLiLine"></div>
-              <div
-                className="reviewImgUrlDiv"
-                onClick={() => openModal(review.reviewId)}
-              >
-                <img
-                  className="reivewImg"
-                  src={`${IMG_PATH}/${review.reviewImgUrl}`}
-                  alt={String(review.reviewId)}
-                />
-              </div>
-            </li>
-          ))}
+                  <img
+                    className="reivewImg"
+                    src={`${IMG_PATH}/${review.reviewImgUrl}`}
+                    alt={String(review.reviewId)}
+                  />
+                </div>
+              </li>
+            ))
+          ) : (
+            <p style={{ color: "#8f8f8f" }}>상품리뷰가 없습니다.</p>
+          )}
         </ul>
       </div>
       <div className="pagination">

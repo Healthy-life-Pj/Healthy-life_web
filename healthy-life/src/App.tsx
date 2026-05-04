@@ -76,8 +76,8 @@ function App() {
         <Route path="/product/productDetail/:pId" element={<ProductDetail />} />
 
         {/*주문*/}
-        <Route path="/order/:pId/:quantity" element={<DirectOrder/>}/>
-        <Route path="/cart/order" element={<CartOrder/>}/>
+        <Route path="/order/:pId/:quantity" element={<DirectOrder />} />
+        <Route path="/cart/order" element={<CartOrder />} />
 
         {/* 전체 리뷰 */}
         <Route path="/reviews" element={<AllReviewList />} />

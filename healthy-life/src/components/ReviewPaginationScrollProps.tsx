@@ -56,7 +56,12 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
           </div>
           <div className="productInform">
             <div className="reviewListPNameRatingDiv">
-            <h6 className="reviewPnameLink" onClick={() => navigate(`/product/productDetail/${review.pId}`)}>{review.pName}</h6>
+              <h6
+                className="reviewPnameLink"
+                onClick={() => navigate(`/product/productDetail/${review.pId}`)}
+              >
+                {review.pName}
+              </h6>
               <Rating
                 style={{ fontSize: "12px" }}
                 name="half-rating-read"
@@ -91,7 +96,7 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
               </div>
               <div className="reviewModalMainBox">
                 <div className="modalImageDiv">
-                  {!review.pImgUrl ? (
+                  {review.reviewImgUrl ? (
                     <img
                       className="modalImage"
                       src={`${IMG_PATH}/${review.reviewImgUrl}`}
@@ -102,7 +107,14 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
                 </div>
                 <div className="reviewModalInfo">
                   <div className="reviewPNameRatingDiv">
-                  <h6 className="reviewPnameLink" onClick={() => navigate(`/product/productDetail/${review.pId}`)}>{review.pName}</h6>
+                    <h6
+                      className="reviewPnameLink"
+                      onClick={() =>
+                        navigate(`/product/productDetail/${review.pId}`)
+                      }
+                    >
+                      {review.pName}
+                    </h6>
                     <Rating
                       style={{ fontSize: "12px" }}
                       name="half-rating-read"

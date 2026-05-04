@@ -15,6 +15,7 @@ import AddressSearch from "./AddressSearch";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TextField } from "@mui/material";
 
 const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
 const passwordRegex =
@@ -387,20 +388,21 @@ function SignUp() {
               <label htmlFor="userBirth">생년월일</label>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  slotProps={{
-                    textField: {
-                      sx: {
+                  value={birth}
+                  onChange={(newValue: Dayjs | null) => setBirth(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      sx={{
                         "& .MuiInputBase-root": {
                           height: 32,
                           fontSize: 13,
                           width: 264,
-                          borderColor: "#c4c4c4"
+                          borderColor: "#c4c4c4",
                         },
-                      },
-                    },
-                  }}
-                  value={birth}
-                  onChange={(newValue) => setBirth(newValue)}
+                      }}
+                    />
+                  )}
                 />
               </LocalizationProvider>
             </li>

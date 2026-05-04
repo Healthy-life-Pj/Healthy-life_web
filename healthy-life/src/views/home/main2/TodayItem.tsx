@@ -6,8 +6,10 @@ import {
   AUTH_PATH,
   CART_PATH,
   CART_PRODUCT,
+  IMG_PATH,
   MAIN_APT_PATH,
   MY_CART,
+  PRODUCT_IMG,
   PRODUCT_PATH,
   WISH_LIST_PATH,
 } from "../../../constants";
@@ -30,7 +32,7 @@ const NewItemSlider = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${PRODUCT_PATH}${ALL_PRODUCTS}`,
       );
       const data = response.data.data;
       const shuffled = data.sort(() => Math.random() - 0.5);
@@ -53,13 +55,13 @@ const NewItemSlider = () => {
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? datas.length - 1 : prevIndex - 1
+      prevIndex === 0 ? datas.length - 1 : prevIndex - 1,
     );
   };
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === datas.length - 1 ? 0 : prevIndex + 1
+      prevIndex === datas.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
@@ -80,7 +82,7 @@ const NewItemSlider = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
       const response = await axios.get(
@@ -90,7 +92,7 @@ const NewItemSlider = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       setCartItemData(response.data.data.cartItem || []);
       setModalIsOpen(true);
@@ -117,7 +119,7 @@ const NewItemSlider = () => {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       alert("위시리스트에 추가되었습니다.");
     } catch (error: any) {
@@ -143,7 +145,7 @@ const NewItemSlider = () => {
   };
 
   const handleClickProductDetail = (
-    product: ProductDetailResponseDto | null
+    product: ProductDetailResponseDto | null,
   ) => {
     navigate(`/product/productDetail/${product?.pId}`);
   };
@@ -169,7 +171,7 @@ const NewItemSlider = () => {
                   onMouseLeave={handleMouseLeave}
                 >
                   <img
-                    src={product.pImgUrl}
+                    src={`${IMG_PATH}${PRODUCT_IMG}/${product.pImgUrl}`}
                     alt={product.pName}
                     className="allProductImage"
                     onMouseEnter={() => handleMouseEnter(index)}

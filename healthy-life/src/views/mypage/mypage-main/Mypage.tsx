@@ -10,6 +10,7 @@ import {
   MAIN_APT_PATH,
   ORDER_PATH,
   ORDER_PUT_ORDER_STATUS,
+  PRODUCT_IMG,
 } from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -249,8 +250,9 @@ function Mypage() {
                   <div className="myPageOrderListContent">
                     <div className="myPageOrderImgDiv">
                       <img
-                        src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
+                        src={`${IMG_PATH}${PRODUCT_IMG}/${data.orderDetails[0].pImgUrl}`}
                         alt={data.orderDetails[0].pName}
+                        className="myPageOrderProductImg"
                       />
                     </div>
                     <p className="orderListUlLiP orderListPname">
@@ -317,7 +319,7 @@ function Mypage() {
                         <div className="orderDetailModalImgDiv">
                           <img
                             className="orderDetailModalImg"
-                            src={`${IMG_PATH}${orderDetail.pImgUrl}`}
+                            src={`${IMG_PATH}${PRODUCT_IMG}/${orderDetail.pImgUrl}`}
                             alt={orderDetail.pName}
                           />
                         </div>

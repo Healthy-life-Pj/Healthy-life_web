@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../style/mypage/ReviewWrite.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
@@ -6,8 +6,8 @@ import { ReviewRequestDto } from "../../../types/dto";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { MAIN_APT_PATH, REVIEW_PATH } from "../../../constants";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 
 function ReviewWrite() {
   const navigate = useNavigate();
@@ -27,36 +27,36 @@ function ReviewWrite() {
       formData.append("reviewRating", String(reviewData.reviewRating));
       formData.append("reviewImgUrl", reviewData.reviewImgUrl);
 
-    if (!formData.get("reviewContent")) {
-      alert("내용을 입력해주세요.");
-      return;
-    }
-    if (formData.get("reviewRating") === "0") {
-      alert("별점을 입력해주세요.");
-      return;
-    }
-    try {
-      await axios.post(
-        `${MAIN_APT_PATH}${REVIEW_PATH}/${orderDetailId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-            "Content-Type": "multipart/form-data",
+      if (!formData.get("reviewContent")) {
+        alert("내용을 입력해주세요.");
+        return;
+      }
+      if (formData.get("reviewRating") === "0") {
+        alert("별점을 입력해주세요.");
+        return;
+      }
+      try {
+        await axios.post(
+          `${MAIN_APT_PATH}${REVIEW_PATH}/${orderDetailId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
           },
-          withCredentials: true,
-        }
-      );
-      alert("리뷰등록 완료!");
-      navigate(-1);
-    } catch (error) {
-      console.error(error);
-      alert("리뷰등록 실패")
+        );
+        alert("리뷰등록 완료!");
+        navigate(-1);
+      } catch (error) {
+        console.error(error);
+        alert("리뷰등록 실패");
+      }
+    } else {
+      alert("로그인이 필요합니다.");
+      navigate("/login");
     }
-  } else {
-    alert("로그인이 필요합니다.");
-    navigate("/login");
-  }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ function ReviewWrite() {
   };
 
   const handleReviewPostChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setReviewData((prev) => ({
@@ -93,14 +93,14 @@ function ReviewWrite() {
     if (!!reviewData.reviewImgUrl) {
       fileReader.readAsDataURL(reviewData.reviewImgUrl);
     }
-    if(!cookies.token) navigate("/login");
+    if (!cookies.token) navigate("/login");
   }, [reviewData.reviewImgUrl]);
 
   return (
     <div className="ReviewWriteContainer">
       <h2>후기등록</h2>
       <div className="ReviewStar">
-      <p>{pName}</p>
+        <p>{pName}</p>
         <Rating
           name="reviewRating"
           value={reviewData.reviewRating || 0}
@@ -124,14 +124,20 @@ function ReviewWrite() {
       </form>
       <div className="ImgContainer">
         <div className="ImgContainerDiv">
-          {reviewImg ? 
-          <img className="imgPreview" src={reviewImg} alt="리뷰사진" />
-          : <ImageNotSupportedIcon style={{fontSize: "50px" , color: "#a2a2a2"}}/>}
+          {reviewImg ? (
+            <img className="imgPreview" src={reviewImg} alt="리뷰사진" />
+          ) : (
+            <ImageNotSupportedIcon
+              style={{ fontSize: "50px", color: "#a2a2a2" }}
+            />
+          )}
         </div>
         <div className="fileBox">
-        <label className="fileBoxLabel" htmlFor="reviewImgUrl">
-              <AddPhotoAlternateIcon style={{fontSize: "40px" , color: "#4f4f4f"}}/>
-            </label>
+          <label className="fileBoxLabel" htmlFor="reviewImgUrl">
+            <AddPhotoAlternateIcon
+              style={{ fontSize: "40px", color: "#4f4f4f" }}
+            />
+          </label>
           <input
             type="file"
             id="reviewImgUrl"
@@ -145,7 +151,11 @@ function ReviewWrite() {
         <button className="reviewWritebtn" onClick={fetchData}>
           등록
         </button>
-        <button type="button" className="reviewWritebtn" onClick={() => navigate(-1)}>
+        <button
+          type="button"
+          className="reviewWritebtn"
+          onClick={() => navigate(-1)}
+        >
           취소
         </button>
       </div>

@@ -11,7 +11,7 @@ const MypageNav: React.FC = () => {
         <ul className="myPageNavBox">
           <li className="mypageNavTitle">주문관리</li>
           <li>
-            <Link to="/my-page/orderApp">
+            <Link to="/my-page/order">
               <span className="mypageMenue">주문내역 조회</span>
             </Link>
           </li>

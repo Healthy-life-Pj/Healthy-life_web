@@ -26,7 +26,7 @@ function MyPageMain() {
       <MypageNav/>
       <Routes>
         <Route path='/' element={<Mypage/>}/> 
-        <Route path='/orderApp' element={<OrderApp />}/>
+        <Route path='/order' element={<OrderApp />}/>
         <Route path='/shipping' element={<ShippingList />}/>
         <Route path='/my-review' element={<ReviewList />}/>
         <Route path='/wishlist' element={<WishApp />}/>

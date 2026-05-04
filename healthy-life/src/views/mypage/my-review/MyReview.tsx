@@ -10,6 +10,7 @@ import {
   MY_REVIEWS,
   ORDER_GET_REVIEW,
   ORDER_PATH,
+  PRODUCT_IMG,
   REVIEW_DELETE,
   REVIEW_PATH,
 } from "../../../constants";
@@ -58,7 +59,7 @@ function Review() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
       setOrderDatas(response.data.data);
@@ -76,11 +77,13 @@ function Review() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       const reversDatas = response.data.data;
       const reviewList = reversDatas.reviewListDto;
-      setReviewDatas(Array.isArray(reviewList) ? [...reviewList].reverse() : []);
+      setReviewDatas(
+        Array.isArray(reviewList) ? [...reviewList].reverse() : [],
+      );
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +98,7 @@ function Review() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       orderFetchData();
       reviewFetchData();
@@ -123,7 +126,7 @@ function Review() {
   const openModal = async (id: number) => {
     if (reviewDatas == null) return null;
     const review: ReviewListDto | undefined = reviewDatas.find(
-      (r) => r?.reviewId === id
+      (r) => r?.reviewId === id,
     );
 
     if (review) {
@@ -173,7 +176,7 @@ function Review() {
                       }
                     >
                       <img
-                        src={order.pImgUrl}
+                        src={`${IMG_PATH}${PRODUCT_IMG}/${order.pImgUrl}`}
                         alt={order.pName}
                         className="reveiwAppImage"
                       />
@@ -181,13 +184,14 @@ function Review() {
                     <div className="reviewProducNameDiv">
                       <p>{cutText(order.pName, 20)}</p>
                       <p className="reviewDateP">
-                        {new Date(order.orderDate).toLocaleDateString()}</p>
+                        {new Date(order.orderDate).toLocaleDateString()}
+                      </p>
                     </div>
                     <button
                       className="reviewWrightBtn"
                       onClick={() =>
                         navigate(
-                          `/mypage/my-review/write/${order.orderDetailId}/${order.pName}`
+                          `/my-page/my-review/write/${order.orderDetailId}/${order.pName}`,
                         )
                       }
                     >
@@ -226,14 +230,16 @@ function Review() {
                       }
                     >
                       <img
-                        src={review.pImgUrl}
+                        src={`${IMG_PATH}/${review.reviewImgUrl}`}
                         alt={review.pName}
                         className="reveiwAppImage"
                       />
                     </div>
                     <div className="reviewProducNameDiv forMargin">
                       <p>{cutText(review.pName, 11)}</p>
-                      <p className="reviewDateP">{new Date(review.reviewCreatAt).toLocaleDateString()}</p>
+                      <p className="reviewDateP">
+                        {new Date(review.reviewCreatAt).toLocaleDateString()}
+                      </p>
                     </div>
                     <div className="reviewBtnDiv">
                       <button
@@ -247,7 +253,7 @@ function Review() {
                           className="reviewWrightBtn2"
                           onClick={() =>
                             navigate(
-                              `/mypage/my-review/update/${review.reviewId}`
+                              `/my-page/my-review/update/${review.reviewId}`,
                             )
                           }
                         >
@@ -298,7 +304,7 @@ function Review() {
               </div>
               <div className="reviewModalMainBox">
                 <div className="modalImageDiv">
-                  {!reviewModal.pImgUrl ? (
+                  {reviewModal.reviewImgUrl ? (
                     <img
                       className="modalImage"
                       src={`${IMG_PATH}/${reviewModal.reviewImgUrl}`}

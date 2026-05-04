@@ -89,7 +89,7 @@ function DirectOrder() {
 
   const handleClosePaymentModal = () => {
     setIsOpen(false);
-    navigate("/mypage/orderApp");
+    navigate("/my-page");
   };
 
   const userdataForm = (
@@ -292,7 +292,9 @@ function DirectOrder() {
         } catch (cancelErr) {
           console.error("[CANCEL FAIL]", cancelErr);
           setErrorMsg(
-            "주문 실패 후 결제 취소 중 오류가 발생했습니다. 고객센터에 문의해 주세요. (결제 ID: " + payRsp.imp_uid + ")",
+            "주문 실패 후 결제 취소 중 오류가 발생했습니다. 고객센터에 문의해 주세요. (결제 ID: " +
+              payRsp.imp_uid +
+              ")",
           );
         }
         return;
@@ -568,7 +570,10 @@ function DirectOrder() {
             </div>
           )}
 
-          <button onClick={payAndOrderKG} disabled={!ready || !agreed || paying}>
+          <button
+            onClick={payAndOrderKG}
+            disabled={!ready || !agreed || paying}
+          >
             {paying ? "처리 중..." : "결제하고 주문하기"}
           </button>
         </div>

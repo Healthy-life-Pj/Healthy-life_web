@@ -19,7 +19,7 @@ const QNA = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  
+
   const currentPosts = Array.isArray(qnaData)
     ? qnaData.slice(indexOfFirstPost, indexOfLastPost)
     : [];
@@ -35,7 +35,7 @@ const QNA = () => {
     const fetchPosts = async () => {
       setLoading(true);
       const response = await axios.get(
-        `${MAIN_APT_PATH}${AUTH_PATH}${QNA_PATH}/${pId}`
+        `${MAIN_APT_PATH}${AUTH_PATH}${QNA_PATH}/${pId}`,
       );
       setQnaData(response.data.data);
       setLoading(false);
@@ -51,20 +51,23 @@ const QNA = () => {
       </div>
       <div>
         <ul className="qnaTotalUl">
-          {currentPosts.map((qna, index) => (
-            <React.Fragment key={qna.qnaId}>
-              <li className="qnaTotalLi" onClick={() => handleBtn(qna.qnaId)}>
-                <p>{!qna.qnaAnswer ? "답변미완료" : "답변완료"}</p>
-                <p>{qna.qnaTitle}</p>
-                <p>{qna.userNickName}</p>
-              </li>
-              {openQnaId === qna.qnaId && 
-                <QnaContent data={qna}/>}
-                { index < currentPosts.length -1 && (
-                    <div className="qnaLineDiv"></div>
-                  )}
-            </React.Fragment>
-          ))}
+          {currentPosts.length > 0 ? (
+            currentPosts.map((qna, index) => (
+              <React.Fragment key={qna.qnaId}>
+                <li className="qnaTotalLi" onClick={() => handleBtn(qna.qnaId)}>
+                  <p>{!qna.qnaAnswer ? "답변미완료" : "답변완료"}</p>
+                  <p>{qna.qnaTitle}</p>
+                  <p>{qna.userNickName}</p>
+                </li>
+                {openQnaId === qna.qnaId && <QnaContent data={qna} />}
+                {index < currentPosts.length - 1 && (
+                  <div className="qnaLineDiv"></div>
+                )}
+              </React.Fragment>
+            ))
+          ) : (
+            <p style={{ color: "#8f8f8f" }}>qna가 없습니다.</p>
+          )}
         </ul>
       </div>
       <div className="pagination">

@@ -11,8 +11,8 @@ import {
   REVIEW_PUT,
 } from "../../../constants";
 import { ReviewRequestDto, ReviewResponseDto } from "../../../types/dto";
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import CropOriginalIcon from '@mui/icons-material/CropOriginal';
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import CropOriginalIcon from "@mui/icons-material/CropOriginal";
 import "../../../style/mypage/ReviewWrite.css";
 
 function ReviewUpdate() {
@@ -28,7 +28,7 @@ function ReviewUpdate() {
   });
   const [reviewImgPreview, setReviewImgPreview] = useState<string>("");
 
-  const didRun = useRef(false); 
+  const didRun = useRef(false);
 
   useEffect(() => {
     if (didRun.current) return;
@@ -51,7 +51,7 @@ function ReviewUpdate() {
             Authorization: `Bearer ${cookies.token}`,
           },
           withCredentials: true,
-        }
+        },
       );
       const reviewDto = response.data.data;
       setReviewData(reviewDto);
@@ -65,19 +65,19 @@ function ReviewUpdate() {
       }
     } catch (error) {
       console.error(error);
-      navigate("/mypage/my-review");
+      navigate("/my-page/my-review");
     }
   };
 
   const updateFetchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!cookies.token) return;
-  
+
     if (!reviewForm.reviewContent.trim()) {
       alert("리뷰 내용을 입력해주세요.");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("reviewContent", reviewForm.reviewContent);
     formData.append("reviewRating", String(reviewForm.reviewRating));
@@ -95,15 +95,15 @@ function ReviewUpdate() {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
       alert("리뷰 수정 완료!");
-      navigate("/mypage/my-review");
+      navigate("/my-page/my-review");
     } catch (error) {
       console.error(error);
       alert("리뷰 수정 실패");
     }
-  };  
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -121,7 +121,7 @@ function ReviewUpdate() {
   };
 
   const handleReviewPostChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setReviewForm((prev) => ({
@@ -164,10 +164,14 @@ function ReviewUpdate() {
         <div className="ImgContainer">
           <div className="ImgContainerDiv">
             {reviewImgPreview ? (
-              <img className="imgPreview" src={reviewImgPreview} alt="미리보기" />
-            )
-          : <CropOriginalIcon />
-          }
+              <img
+                className="imgPreview"
+                src={reviewImgPreview}
+                alt="미리보기"
+              />
+            ) : (
+              <CropOriginalIcon />
+            )}
           </div>
           <div className="fileBox">
             <label className="fileBoxBtn" htmlFor="reviewImgUrl">
