@@ -9,7 +9,7 @@ import {
   DELIVER_ADDRESS_IS_DEFAULT,
   DELIVER_ADDRESS_PATH,
   MAIN_APT_PATH,
-} from "../../constants/api";
+} from "../../constants";
 import AddressSearch from "./AddressSearch";
 import "../../style/modal/addressModal.css";
 

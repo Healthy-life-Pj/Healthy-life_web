@@ -3,7 +3,7 @@ import ReactModal from "react-modal";
 import "../../../style/ModalExample.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { MAIN_APT_PATH, QNA_PATH, QNA_UPDATE } from "../../../constants/api";
+import { MAIN_APT_PATH, QNA_PATH, QNA_UPDATE } from "../../../constants";
 import { useCookies } from "react-cookie";
 import { QnaReqestDto, QnaResponseDto } from "../../../types/dto";
 

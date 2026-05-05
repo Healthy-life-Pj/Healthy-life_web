@@ -11,7 +11,7 @@ import {
   MAIN_APT_PATH,
   ORDER_PATH,
   USER_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import { useCookies } from "react-cookie";
 import { OrderDto, OrderGetRequestDto } from "../../../types/dto";
 import { useNavigate } from "react-router-dom";

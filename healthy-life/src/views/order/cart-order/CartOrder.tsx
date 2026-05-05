@@ -13,7 +13,7 @@ import {
   ORDER_POST_CART,
   ORDER_SHIPPING,
   USER_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import { useCookies } from "react-cookie";
 import {
   Box,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { OrderDto, OrderGetRequestDto } from '../../../types/dto';
 import OrderList from './OrderList';
 import axios from 'axios';
-import { MAIN_APT_PATH, ORDER_PATH } from '../../../constants/api';
+import { MAIN_APT_PATH, ORDER_PATH } from '../../../constants';
 import { useCookies } from 'react-cookie';
 
 

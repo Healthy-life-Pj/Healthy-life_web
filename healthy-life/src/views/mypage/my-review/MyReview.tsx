@@ -13,7 +13,7 @@ import {
   PRODUCT_IMG,
   REVIEW_DELETE,
   REVIEW_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ReactModal from "react-modal";
 import { Rating } from "@mui/material";

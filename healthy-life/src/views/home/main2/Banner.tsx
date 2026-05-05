@@ -12,7 +12,7 @@ import {
   MAIN_APT_PATH,
   PRODUCT_IMG,
   PRODUCT_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import { useNavigate } from "react-router-dom";
 
 const Banner = () => {

@@ -7,7 +7,7 @@ import {
   MAIN_APT_PATH,
   PRODUCT_PATH,
   PRODUCT_SEARCH,
-} from "../../../constants/api";
+} from "../../../constants";
 import { Product } from "../../../types";
 import { useNavigate } from "react-router-dom";
 

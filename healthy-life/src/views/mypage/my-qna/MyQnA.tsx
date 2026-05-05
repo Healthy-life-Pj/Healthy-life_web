@@ -11,7 +11,7 @@ import {
   PRODUCT_IMG,
   QNA_GET_MINE,
   QNA_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 
 function MyQnA() {
   const navigate = useNavigate();

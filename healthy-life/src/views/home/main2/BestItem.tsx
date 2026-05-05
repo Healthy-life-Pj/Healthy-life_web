@@ -12,7 +12,7 @@ import {
   MY_CART,
   PRODUCT_IMG,
   PRODUCT_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import CartModal from "../../../components/CartModal";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";

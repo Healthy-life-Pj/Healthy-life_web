@@ -7,7 +7,7 @@ import {
   USER_PATH,
   SHIPPING_PATH,
   TRACKING_DETAIL,
-} from '../../../constants/api';
+} from '../../../constants';
 import { Shipping, TrackingInfo, TrackingDetail } from '../../../types';
 import '../../../style/mypage/shipping.css';
 

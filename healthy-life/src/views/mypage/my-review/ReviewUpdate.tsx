@@ -9,7 +9,7 @@ import {
   MY_REVIEW_ONE,
   REVIEW_PATH,
   REVIEW_PUT,
-} from "../../../constants/api";
+} from "../../../constants";
 import { ReviewRequestDto, ReviewResponseDto } from "../../../types/dto";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CropOriginalIcon from "@mui/icons-material/CropOriginal";

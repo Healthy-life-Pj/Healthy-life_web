@@ -7,7 +7,7 @@ import {
   PHYSIQUE_GET_NAME,
   PHYSIQUE_PUT,
   USER_PATH,
-} from "../../constants/api";
+} from "../../constants";
 import "./physiqueStyle.css";
 
 interface PhysiqueSurveyProps {

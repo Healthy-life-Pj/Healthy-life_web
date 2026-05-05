@@ -8,7 +8,7 @@ import {
   CATEGORY_PRODUCTS,
   MAIN_APT_PATH,
   PRODUCT_PATH,
-} from "../../constants/api";
+} from "../../constants";
 import { useParams } from "react-router-dom";
 
 const Product: React.FC = () => {

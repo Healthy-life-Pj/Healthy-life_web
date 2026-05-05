@@ -5,7 +5,7 @@ import {
   AUTH_PATH,
   MAIN_APT_PATH,
   REVIEW_PATH,
-} from "../../constants/api";
+} from "../../constants";
 import ReviewPaginationScrollProps from "../../components/ReviewPaginationScrollProps";
 import "../../style/Review.css";
 

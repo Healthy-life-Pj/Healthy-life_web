@@ -3,7 +3,7 @@ import { QnaResponseDto } from "../../../types/dto";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { MAIN_APT_PATH, QNA_DELETE, QNA_PATH } from "../../../constants/api";
+import { MAIN_APT_PATH, QNA_DELETE, QNA_PATH } from "../../../constants";
 import MyQnAModal from "./MyQnAModal";
 
 interface QnaContentProps {

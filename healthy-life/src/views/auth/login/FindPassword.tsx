@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import "../../../style/auth/login/login.css"
 import ReactModal from 'react-modal';
 import axios from 'axios';
-import { MAIL_PATH, MAIN_APT_PATH, RECOVERY_EMAIL } from '../../../constants/api';
+import { MAIL_PATH, MAIN_APT_PATH, RECOVERY_EMAIL } from '../../../constants';
 
 interface FindPasswordData {
   username: string;

@@ -12,9 +12,10 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import "../../../style/auth/login/login.css";
 import ReactModal from "react-modal";
 import axios from "axios";
-import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants/api";
+import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants";
 import { useCookies } from "react-cookie";
 import { LoginInResponseDto } from "../../../types";
+import { OAUTH_PATH } from "../../../constants/api";
 
 const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
 const passwordRegex =
@@ -48,7 +49,7 @@ function Login() {
   };
 
   const handleNaverLogin = () => {
-    window.location.href = `${MAIN_APT_PATH}/oauth2/authorization/naver`;
+    window.location.href = `${OAUTH_PATH}/oauth2/authorization/naver`;
   };
 
   const fetchData = async (

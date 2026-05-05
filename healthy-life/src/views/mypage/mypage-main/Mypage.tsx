@@ -11,7 +11,7 @@ import {
   ORDER_PATH,
   ORDER_PUT_ORDER_STATUS,
   PRODUCT_IMG,
-} from "../../../constants/api";
+} from "../../../constants";
 import SmallPagination from "../../../components/SmallPagination";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ReactModal from "react-modal";

@@ -15,7 +15,7 @@ import {
   PRODUCT_IMG,
   PRODUCT_PATH,
   USER_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import { useCookies } from "react-cookie";
 import {
   Box,

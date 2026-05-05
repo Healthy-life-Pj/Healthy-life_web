@@ -5,7 +5,7 @@ import {
   AUTH_PATH,
   MAIN_APT_PATH,
   PRODUCT_PATH,
-} from "../../../constants/api";
+} from "../../../constants";
 import PaginationScroller from "../../../components/PaginationScroller";
 import useAllproductpaginationHook from "../../../hooks/allProductPagination";
 
