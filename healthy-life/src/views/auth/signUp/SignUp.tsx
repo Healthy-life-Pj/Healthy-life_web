@@ -8,7 +8,7 @@ import {
   DUPLICATE_USERNAME,
   MAIN_APT_PATH,
   SIGN_UP,
-} from "../../../constants";
+} from "../../../constants/api";
 import Term from "./Term";
 import "../../../style/auth/signUp/signUp.css";
 import AddressSearch from "./AddressSearch";

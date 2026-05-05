@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import "../../../../style/auth/login/login.css";
 import axios from "axios";
-import {
-  FIND_ID,
-  MAIL_PATH,
-  MAIN_APT_PATH,
-} from "../../../../constants";
+import { FIND_ID, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants/api";
 
 function FindId() {
   const [formData, setFormData] = useState({
@@ -69,7 +65,11 @@ function FindId() {
             name="userEmail"
             onChange={handleChange}
           />
-          <button type="button" className="loginButton" onClick={handleSendMail}>
+          <button
+            type="button"
+            className="loginButton"
+            onClick={handleSendMail}
+          >
             {loading ? <p>전송중...</p> : <p>아이디 찾기</p>}
           </button>
         </form>

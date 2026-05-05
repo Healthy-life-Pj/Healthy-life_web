@@ -15,7 +15,7 @@ import {
   MY_CART,
   PRODUCT_IMG,
   PRODUCT_PATH,
-} from "../../constants";
+} from "../../constants/api";
 import { useCookies } from "react-cookie";
 
 const Cart = () => {

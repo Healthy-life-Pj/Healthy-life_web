@@ -13,7 +13,7 @@ import {
   GET_USER,
   MAIN_APT_PATH,
   USER_PATH,
-} from "../../../constants";
+} from "../../../constants/api";
 import { DeliveryAddress } from "../../../types";
 import ChangePassword from "./ChangePassword";
 import DeliverAddressModal from "../../order/DeliverAddressModal";

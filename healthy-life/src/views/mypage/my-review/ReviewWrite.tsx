@@ -5,7 +5,7 @@ import { Rating } from "@mui/material";
 import { ReviewRequestDto } from "../../../types/dto";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { MAIN_APT_PATH, REVIEW_PATH } from "../../../constants";
+import { MAIN_APT_PATH, REVIEW_PATH } from "../../../constants/api";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 

@@ -6,7 +6,7 @@ import { Rating } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import "../style/Review.css";
 import "../style/ModalExample.css";
-import { IMG_PATH } from "../constants";
+import { IMG_PATH } from "../constants/api";
 import { Camera } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 

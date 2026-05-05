@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { User } from "../../../../types/index";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FIND_ID_BY_TOKEN_REUSLT, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants";
+import {
+  FIND_ID_BY_TOKEN_REUSLT,
+  MAIL_PATH,
+  MAIN_APT_PATH,
+} from "../../../../constants/api";
 
 function FindUserIdResult() {
   const location = useLocation();
@@ -14,9 +18,8 @@ function FindUserIdResult() {
 
   const params = new URLSearchParams(location.search);
   const token = params.get("token");
-  
-  useEffect(() => {
 
+  useEffect(() => {
     if (!token || token.trim() === "") {
       console.error("유효하지 않은 토큰입니다.");
       alert("유효하지 않은 요청입니다.");
@@ -29,7 +32,10 @@ function FindUserIdResult() {
   const fetchData = async (token: string | null) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID_BY_TOKEN_REUSLT}`, {params: {token}});
+      const response = await axios.get(
+        `${MAIN_APT_PATH}${MAIL_PATH}${FIND_ID_BY_TOKEN_REUSLT}`,
+        { params: { token } },
+      );
       const userIdData = response.data.data;
       if (userIdData) {
         setResult(userIdData);
@@ -46,20 +52,23 @@ function FindUserIdResult() {
 
   return (
     <div className="findUsernameContainer">
-      <h4 className='findUsernameTitle'>아이디 찾기</h4>
-      <div className='findUserIdResultBox'>
+      <h4 className="findUsernameTitle">아이디 찾기</h4>
+      <div className="findUserIdResultBox">
         {loading ? (
           <p>로딩중....</p>
         ) : isData ? (
           <>
             <div className="findUsernameResultUl">
               <div className="findUsernameResultLi">
-                <p>"{result?.name}" 님의 아이디는 <strong>{result?.username}</strong> 입니다.</p>
+                <p>
+                  "{result?.name}" 님의 아이디는{" "}
+                  <strong>{result?.username}</strong> 입니다.
+                </p>
               </div>
             </div>
-      <div className="finUsernameResultLine"></div>
+            <div className="finUsernameResultLine"></div>
             <button
-              className='loginButton findUsernameloginButton'
+              className="loginButton findUsernameloginButton"
               onClick={() => navigate("/login")}
             >
               로그인하기

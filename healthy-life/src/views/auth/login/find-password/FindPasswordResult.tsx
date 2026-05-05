@@ -1,10 +1,13 @@
-import { Button, OutlinedInput } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import "../../../../style/auth/login/login.css"
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import { MAIN_APT_PATH, UPDATE_PASSWORD_BY_EMAIL } from '../../../../constants';
+import { Button, OutlinedInput } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import "../../../../style/auth/login/login.css";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import {
+  MAIN_APT_PATH,
+  UPDATE_PASSWORD_BY_EMAIL,
+} from "../../../../constants/api";
 
 interface DecodedToken {
   username: string;
@@ -15,12 +18,14 @@ interface UpdatePasswordData {
   confirmPassword: string;
 }
 
-const fetchUserInfoForCertification = (token: string): Promise<{ username: string }> => {
+const fetchUserInfoForCertification = (
+  token: string,
+): Promise<{ username: string }> => {
   return new Promise((resolve, reject) => {
     try {
       const decoded = jwtDecode<DecodedToken>(token);
       if (!decoded.username) {
-        reject(new Error('유효하지 않은 토큰입니다.'));
+        reject(new Error("유효하지 않은 토큰입니다."));
         return;
       }
       resolve({ username: decoded.username });
@@ -30,22 +35,25 @@ const fetchUserInfoForCertification = (token: string): Promise<{ username: strin
   });
 };
 
-const updateUserPassword = async (data: UpdatePasswordData, token: string): Promise<void> => {
+const updateUserPassword = async (
+  data: UpdatePasswordData,
+  token: string,
+): Promise<void> => {
   await axios.put(
     `${MAIN_APT_PATH}${UPDATE_PASSWORD_BY_EMAIL}`,
     {
       userPassword: data.password,
       confirmUserPassword: data.confirmPassword,
     },
-    { params: { token } }
+    { params: { token } },
   );
 };
 
 function FindPasswordResult() {
   const { token } = useParams<{ token: string }>();
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,9 +61,9 @@ function FindPasswordResult() {
       fetchUserInfoForCertification(token)
         .then((info) => setUsername(info.username))
         .catch((e) => {
-          console.error('fail to fetch user', e);
-          alert('유효하지 않은 인증 링크입니다.');
-          navigate('/login/');
+          console.error("fail to fetch user", e);
+          alert("유효하지 않은 인증 링크입니다.");
+          navigate("/login/");
         });
     }
   }, [token]);
@@ -64,7 +72,9 @@ function FindPasswordResult() {
     setPassword(e.target.value);
   };
 
-  const passwordConfirmInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const passwordConfirmInputHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setConfirmPassword(e.target.value);
   };
 
@@ -72,23 +82,23 @@ function FindPasswordResult() {
     const data = { password, confirmPassword };
 
     if (data.password !== data.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다.');
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     if (!token) {
-      alert('잘못된 인증 경로 입니다.');
+      alert("잘못된 인증 경로 입니다.");
       return;
     }
 
     updateUserPassword(data, token)
       .then(() => {
-        alert('비밀번호 변경에 성공하셨습니다.');
-        navigate('/login/');
+        alert("비밀번호 변경에 성공하셨습니다.");
+        navigate("/login/");
       })
       .catch((e) => {
-        console.error('fail to update password', e);
-        alert('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');
+        console.error("fail to update password", e);
+        alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
       });
   };
 
@@ -128,19 +138,19 @@ function FindPasswordResult() {
               variant="contained"
               onClick={updatePasswordInClickHandler}
               sx={{
-                fontFamily: 'Pretendard',
-                height: '100%',
-                backgroundColor: '#0085ff',
-                color: '#ffffff',
-                borderRadius: '18px',
+                fontFamily: "Pretendard",
+                height: "100%",
+                backgroundColor: "#0085ff",
+                color: "#ffffff",
+                borderRadius: "18px",
               }}
             >
               비밀번호 재설정 하기
             </Button>
           </div>
-            <div className="speech-bubble">
-              <p>{username}님 재설정할 비밀번호를 입력해 주세요!</p>
-            </div>
+          <div className="speech-bubble">
+            <p>{username}님 재설정할 비밀번호를 입력해 주세요!</p>
+          </div>
         </div>
       </div>
     </>

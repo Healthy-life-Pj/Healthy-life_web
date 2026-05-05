@@ -14,7 +14,7 @@ import {
   MY_CART,
   PRODUCT_IMG,
   WISH_LIST_PATH,
-} from "../constants";
+} from "../constants/api";
 
 interface PaginationScrollProps {
   products: ProductDetailResponseDto[];

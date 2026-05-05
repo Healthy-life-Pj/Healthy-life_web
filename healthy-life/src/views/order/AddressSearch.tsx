@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DeliveryAddress } from "../../types";
 import "../../style/auth/signUp/address.css";
 import axios from "axios";
-import { DELIVER_ADDRESS_PATH, MAIN_APT_PATH } from "../../constants";
+import { DELIVER_ADDRESS_PATH, MAIN_APT_PATH } from "../../constants/api";
 import { useCookies } from "react-cookie";
 
 interface AddressSearchProps {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BasicTabs from './BasicTabs'
 import '../../../style/mypage/Order.css'
 

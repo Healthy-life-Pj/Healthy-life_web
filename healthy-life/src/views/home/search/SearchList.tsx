@@ -7,7 +7,7 @@ import {
   MAIN_APT_PATH,
   PRODUCT_PATH,
   PRODUCT_SEARCH,
-} from "../../../constants";
+} from "../../../constants/api";
 import PaginationScroller from "../../../components/PaginationScroller";
 
 const SearchList = () => {

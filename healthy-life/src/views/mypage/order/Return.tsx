@@ -3,7 +3,7 @@ import "../../../style/mypage/Order.css";
 import OrderList from "./OrderList";
 import { useCookies } from "react-cookie";
 import { OrderDto, OrderGetRequestDto } from "../../../types/dto";
-import { MAIN_APT_PATH, ORDER_PATH } from "../../../constants";
+import { MAIN_APT_PATH, ORDER_PATH } from "../../../constants/api";
 import axios from "axios";
 
 function Return() {

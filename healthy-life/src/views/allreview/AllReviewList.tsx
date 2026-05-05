@@ -1,13 +1,9 @@
 import "../../style/home/AllReview.css";
 import useReviewPaginationHook from "../../hooks/reviewPaginationHook";
-import {
-  ALL_REVIEWS,
-  AUTH_PATH,
-  MAIN_APT_PATH,
-  REVIEW_PATH,
-} from "../../constants";
+
 import ReviewPaginationScrollProps from "../../components/ReviewPaginationScrollProps";
 import "../../style/Review.css";
+import { ALL_REVIEWS, AUTH_PATH, MAIN_APT_PATH, REVIEW_PATH } from "../../constants/api";
 
 const AllReviewList = () => {
   const { data, loading } = useReviewPaginationHook({

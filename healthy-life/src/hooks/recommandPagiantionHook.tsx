@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ProductDetailResponseDto, ProductListResponseDto } from "../types/dto";
+import { ProductDetailResponseDto } from "../types/dto";
 import { useCookies } from "react-cookie";
 
 interface PaginationScrollProps<T> {
