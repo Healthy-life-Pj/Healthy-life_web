@@ -26,7 +26,8 @@ export const PHYSIQUE_PATH = "/productImg";
 
 
 //Image
-export const IMG_PATH =     process.env.NODE_ENV === "production"
+export const IMG_PATH = 
+    process.env.NODE_ENV === "production"
     ?  "https://healthy-life-was.onrender.com/imgs"
     : "http://localhost:4040/imgs";
 
