@@ -5,7 +5,7 @@ export const MAIN_APT_PATH =
 
 export const OAUTH_PATH = 
 process.env.NODE_ENV === "production"
-    ?  "https://healthy-life-was.onrender.com"
+    ?  "https://healthy-life-was.onrender.com/api/v1"
     : "http://localhost:4040";
 
 // Resource
@@ -26,7 +26,10 @@ export const PHYSIQUE_PATH = "/productImg";
 
 
 //Image
-export const IMG_PATH = "http://localhost:4040/imgs";
+export const IMG_PATH =     process.env.NODE_ENV === "production"
+    ?  "https://healthy-life-was.onrender.com/imgs"
+    : "http://localhost:4040/imgs";
+
 
 // User
 export const GET_USER = "/me";
