@@ -16,7 +16,7 @@ import {
   PRODUCT_IMG,
   PRODUCT_PATH,
   WISH_LIST_PATH,
-} from "../../../../constants";
+} from "../../../../constants/api";
 import { useCookies } from "react-cookie";
 import { CartItemDto, ProductDetailResponseDto } from "../../../../types/dto";
 import CartModal from "../../../../components/CartModal";

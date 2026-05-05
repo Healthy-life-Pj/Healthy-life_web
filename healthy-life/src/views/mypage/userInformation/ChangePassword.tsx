@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { MAIN_APT_PATH, UPDATE_PASSWORD } from "../../../constants";
+import { MAIN_APT_PATH, UPDATE_PASSWORD } from "../../../constants/api";
 import "../../../style/userInformation/userInformation.css";
 
 interface ChangePasswordProps {

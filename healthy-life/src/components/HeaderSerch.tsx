@@ -6,7 +6,7 @@ import {
   MAIN_APT_PATH,
   PRODUCT_PATH,
   PRODUCT_SEARCH,
-} from "../constants";
+} from "../constants/api";
 import axios from "axios";
 import { AccountCircle } from "@mui/icons-material";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";

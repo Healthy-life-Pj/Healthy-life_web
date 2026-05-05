@@ -12,7 +12,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import "../../../style/auth/login/login.css";
 import ReactModal from "react-modal";
 import axios from "axios";
-import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants";
+import { AUTH_PATH, LOGIN, MAIN_APT_PATH } from "../../../constants/api";
 import { useCookies } from "react-cookie";
 import { LoginInResponseDto } from "../../../types";
 
@@ -48,7 +48,7 @@ function Login() {
   };
 
   const handleNaverLogin = () => {
-    window.location.href = "http://localhost:4040/oauth2/authorization/naver";
+    window.location.href = `${MAIN_APT_PATH}/oauth2/authorization/naver`;
   };
 
   const fetchData = async (

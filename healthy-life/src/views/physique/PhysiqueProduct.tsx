@@ -4,7 +4,7 @@ import {
   MAIN_APT_PATH,
   PHYSIQUE_PRODUCTS,
   PRODUCT_PATH,
-} from "../../constants";
+} from "../../constants/api";
 import PaginationScroller from "../../components/PaginationScroller";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";

@@ -12,7 +12,7 @@ import {
   PRODUCT_IMG,
   PRODUCT_PATH,
   WISH_LIST_PATH,
-} from "../../../constants";
+} from "../../../constants/api";
 import { CartItemDto, ProductDetailResponseDto } from "../../../types/dto";
 import "../../../style/home/allProduct.css";
 import "../../../style/home/main1.css";

@@ -4,7 +4,7 @@ import "../../../../style/auth/login/login.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { MAIN_APT_PATH, UPDATE_PASSWORD_BY_EMAIL } from '../../../../constants';
+import { MAIN_APT_PATH, UPDATE_PASSWORD_BY_EMAIL } from '../../../../constants/api';
 
 interface DecodedToken {
   username: string;

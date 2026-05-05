@@ -11,7 +11,7 @@ import {
   ORDER_PATH,
   ORDER_PUT_ORDER_STATUS,
   ORDER_PUT_RETURN_EXCHAGE,
-} from "../../../constants";
+} from "../../../constants/api";
 import { useCookies } from "react-cookie";
 
 interface OrderSearchResultProps {

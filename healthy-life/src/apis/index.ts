@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FIND_ID_BY_TOKEN, MAIL_PATH, RECOVERY_EMAIL } from "../constants";
+import { FIND_ID_BY_TOKEN, MAIL_PATH, RECOVERY_EMAIL } from "../constants/api";
 
 export const sendEmailForId = async (email: string) => {
   const response = await axios.post(`${MAIL_PATH}${RECOVERY_EMAIL}`, {

@@ -1,4 +1,7 @@
-export const MAIN_APT_PATH = "http://localhost:4040/api/v1";
+export const MAIN_APT_PATH = 
+    process.env.NODE_ENV === "production"
+    ? "https://healthy-life-was.onrender.com"
+    : "http://localhost:4040";
 
 
 // Resource

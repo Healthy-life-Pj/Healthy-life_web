@@ -7,7 +7,7 @@ import {
   FIND_ID,
   MAIL_PATH,
   MAIN_APT_PATH,
-} from "../../../../constants";
+} from "../../../../constants/api";
 
 function FindId() {
   const [formData, setFormData] = useState({

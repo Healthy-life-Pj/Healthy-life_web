@@ -9,7 +9,7 @@ import {
   MAIN_APT_PATH,
   REVIEW_PATH,
   REVIEW_PRODUCT,
-} from "../../../../constants";
+} from "../../../../constants/api";
 import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactModal from "react-modal";

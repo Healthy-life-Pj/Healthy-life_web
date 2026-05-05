@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
-import { MAIN_APT_PATH, PHYSIQUE_DELETE, PHYSIQUE_GET, PHYSIQUE_GET_NAME, PHYSIQUE_PUT, USER_PATH } from '../../../constants';
+import { MAIN_APT_PATH, PHYSIQUE_DELETE, PHYSIQUE_GET, PHYSIQUE_GET_NAME, PHYSIQUE_PUT, USER_PATH } from '../../../constants/api';
 import axios from 'axios';
 
 function MyPhysiquePage() {

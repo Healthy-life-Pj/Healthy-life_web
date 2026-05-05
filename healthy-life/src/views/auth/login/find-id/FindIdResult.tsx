@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User } from "../../../../types/index";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FIND_ID_BY_TOKEN_REUSLT, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants";
+import { FIND_ID_BY_TOKEN_REUSLT, MAIL_PATH, MAIN_APT_PATH } from "../../../../constants/api";
 
 function FindUserIdResult() {
   const location = useLocation();

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CartItemDto } from "../types/dto";
 import SmallPagination from "./SmallPagination";
 import "../style/modal/cartModal.css";
-import { IMG_PATH, PRODUCT_IMG } from "../constants";
+import { IMG_PATH, PRODUCT_IMG } from "../constants/api";
 
 interface CartModalProps {
   cartItem: CartItemDto[] | [];

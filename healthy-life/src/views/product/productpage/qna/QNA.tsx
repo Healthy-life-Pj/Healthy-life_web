@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../../style/QnA.css";
 import ModalExample from "./modal/ModalExample";
 import axios from "axios";
-import { AUTH_PATH, MAIN_APT_PATH, QNA_PATH } from "../../../../constants";
+import { AUTH_PATH, MAIN_APT_PATH, QNA_PATH } from "../../../../constants/api";
 import { useParams } from "react-router-dom";
 import { QnaResponseDto } from "../../../../types/dto";
 import QnaContent from "./QnaContent";

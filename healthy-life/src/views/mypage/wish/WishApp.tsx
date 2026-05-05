@@ -11,7 +11,7 @@ import {
   MY_CART,
   IMG_PATH,
   PRODUCT_IMG,
-} from '../../../constants'
+} from '../../../constants/api'
 import { WishlistItemDto, CartItemDto } from '../../../types/dto'
 import CartModal from '../../../components/CartModal'
 
