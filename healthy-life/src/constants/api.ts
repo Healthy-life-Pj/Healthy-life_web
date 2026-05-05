@@ -1,6 +1,6 @@
 export const MAIN_APT_PATH = 
     process.env.NODE_ENV === "production"
-    ? "https://healthy-life-was.onrender.com"
+    ? "https://healthy-life-web-eta.vercel.app"
     : "http://localhost:4040";
 
 
