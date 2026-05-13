@@ -49,7 +49,7 @@ const ProductDetail = () => {
       console.error(error);
     }
   };
-
+console.log(`${IMG_PATH}${PRODUCT_IMG}/${product?.pImgUrl}`);
   const addToWishlist = async () => {
     if (!cookies.token) {
       alert("로그인이 필요합니다.");
