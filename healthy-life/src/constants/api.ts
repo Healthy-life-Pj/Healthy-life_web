@@ -22,15 +22,14 @@ export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
 export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
 export const PRODUCT_IMG = "/productImg";
-export const PHYSIQUE_PATH = "/productImg";
+// export const PHYSIQUE_PATH = "/productImg";
 
 
 //Image
 export const IMG_PATH = 
     process.env.NODE_ENV === "production"
-    ?  "https://healthy-life-was.onrender.com/imgs"
+    ?  "https://res.cloudinary.com/dmftqsprx/image/upload/"
     : "http://localhost:4040/imgs";
-
 
 // User
 export const GET_USER = "/me";
