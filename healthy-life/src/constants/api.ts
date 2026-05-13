@@ -21,14 +21,14 @@ export const PAYMENT_PATH = "/payment";
 export const REVIEW_PATH = "/reviews";
 export const QNA_PATH = "/qnas";
 export const DELIVER_ADDRESS_PATH = "/deliver-addresses";
-export const PRODUCT_IMG = "/productImg";
+export const PRODUCT_IMG = "";
 // export const PHYSIQUE_PATH = "/productImg";
 
 
 //Image
 export const IMG_PATH = 
     process.env.NODE_ENV === "production"
-    ?  "https://res.cloudinary.com/dmftqsprx/image/upload"
+    ?  "https://res.cloudinary.com/dmftqsprx/image/upload/v1778690242"
     : "http://localhost:4040/imgs";
 
 // User
