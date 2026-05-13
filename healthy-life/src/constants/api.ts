@@ -28,7 +28,7 @@ export const PRODUCT_IMG = "/productImg";
 //Image
 export const IMG_PATH = 
     process.env.NODE_ENV === "production"
-    ?  "https://res.cloudinary.com/dmftqsprx/image/upload/"
+    ?  "https://res.cloudinary.com/dmftqsprx/image/upload"
     : "http://localhost:4040/imgs";
 
 // User
