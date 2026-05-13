@@ -137,7 +137,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             onClick={() => handleClickProductDetail(product)}
           >
             <img
-              src={`${IMG_PATH}${PRODUCT_IMG}/${product.pImgUrl}`}
+              src={product.pImgUrl}
               alt={product.pName}
               className="allProductImage"
               onClick={() => handleClickProductDetail(product)}
