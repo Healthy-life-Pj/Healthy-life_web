@@ -309,7 +309,7 @@ const OrderList = ({ orderDatas, getfetchData }: OrderSearchResultProps) => {
                       <div className="orderDetailModalImgDiv">
                         <img
                           className="orderDetailModalImg"
-                          src={``}
+                          src={`${IMG_PATH}${orderDetail.pImgUrl}`}
                           alt={orderDetail.pName}
                         />
                       </div>
