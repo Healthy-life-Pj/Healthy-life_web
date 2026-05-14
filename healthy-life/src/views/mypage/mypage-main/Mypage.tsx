@@ -250,7 +250,7 @@ function Mypage() {
                   <div className="myPageOrderListContent">
                     <div className="myPageOrderImgDiv">
                       <img
-                        src={`${IMG_PATH}${PRODUCT_IMG}/${data.orderDetails[0].pImgUrl}`}
+                        src={`${IMG_PATH}${data.orderDetails[0].pImgUrl}`}
                         alt={data.orderDetails[0].pName}
                         className="myPageOrderProductImg"
                       />
@@ -319,7 +319,7 @@ function Mypage() {
                         <div className="orderDetailModalImgDiv">
                           <img
                             className="orderDetailModalImg"
-                            src={`${IMG_PATH}${PRODUCT_IMG}/${orderDetail.pImgUrl}`}
+                            src={`${IMG_PATH}${orderDetail.pImgUrl}`}
                             alt={orderDetail.pName}
                           />
                         </div>
