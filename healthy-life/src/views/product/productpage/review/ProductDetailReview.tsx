@@ -111,7 +111,7 @@ function Review() {
                 >
                   <img
                     className="reivewImg"
-                    src={`${IMG_PATH}${review.reviewImgUrl}`}
+                    src={review.reviewImgUrl}
                     alt={String(review.reviewId)}
                   />
                 </div>
@@ -152,7 +152,7 @@ function Review() {
               <div className="reviewModalMainBox">
                 <div className="modalImageDiv">
                   <img
-                    src={`${IMG_PATH}${reviewModal.reviewImgUrl}`}
+                    src={reviewModal.reviewImgUrl}
                     alt={String(reviewModal.reviewId)}
                     className="modalImage"
                   />
