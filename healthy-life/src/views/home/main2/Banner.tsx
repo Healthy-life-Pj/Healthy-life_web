@@ -79,7 +79,7 @@ const Banner = () => {
           <img
             className="bannerImagesljw"
             key={data.pId}
-            src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
+            src={data.pImgUrl}
             alt={data.pName}
           />
         </div>

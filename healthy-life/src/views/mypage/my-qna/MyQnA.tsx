@@ -90,7 +90,7 @@ function MyQnA() {
                     >
                       <div className="qnaImgDiv">
                         <img
-                          src={`${IMG_PATH}${PRODUCT_IMG}/${qna.pImgUrl}`}
+                          src={`${IMG_PATH}${qna.pImgUrl}`}
                           alt={qna.pName}
                           className="qnaImgPDivImg"
                         />

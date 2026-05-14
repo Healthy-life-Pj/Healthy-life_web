@@ -123,7 +123,7 @@ export default function BestItemApp() {
         {visibleImages.map((data, index) => (
           <div key={index} className="bestItemImageMap">
             <img
-              src={`${IMG_PATH}${PRODUCT_IMG}/${data.pImgUrl}`}
+              src={`${IMG_PATH}${data.pImgUrl}`}
               alt={data.pName}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => hanldeMouseLeave}

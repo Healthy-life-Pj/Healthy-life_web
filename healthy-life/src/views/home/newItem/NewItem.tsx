@@ -174,7 +174,7 @@ const NewItemSlider = () => {
                   onClick={() => handleClickProductDetail(product)}
                 >
                   <img
-                    src={`${IMG_PATH}${PRODUCT_IMG}/${product.pImgUrl}`}
+                    src={`${IMG_PATH}${product.pImgUrl}`}
                     alt={product.pName}
                     className="allProductImage"
                   />
