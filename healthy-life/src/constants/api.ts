@@ -26,7 +26,7 @@ export const PRODUCT_IMG = "";
 
 
 //Image
-export const IMG_PATH = "https://res.cloudinary.com/dmftqspxr/image/upload/"
+export const IMG_PATH = "https://res.cloudinary.com/dmftqspxr/image/upload";
 
 // User
 export const GET_USER = "/me";

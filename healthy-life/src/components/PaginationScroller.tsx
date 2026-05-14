@@ -137,7 +137,7 @@ const PaginationScroller = ({ products }: PaginationScrollProps) => {
             onClick={() => handleClickProductDetail(product)}
           >
             <img
-              src={https://res.cloudinary.com/dmftqspxr/image/upload/}
+              src={`${IMG_PATH}${product.pImgUrl}`}
               alt={product.pName}
               className="allProductImage"
               onClick={() => handleClickProductDetail(product)}
