@@ -295,9 +295,7 @@ function Mypage() {
                   </p>
                   <p className="orderDetailModalInfoP">
                     <span>주문날짜 : </span>{" "}
-                    {openOrder.orderDate.replaceAll("-", ".").slice(0, 9) +
-                      "." +
-                      openOrder.orderDate.slice(11, 19)}
+                    {new Date(openOrder.orderDate).toLocaleString()}
                   </p>
                 </div>
                 <div className="orderDetailModalOrderContent">
