@@ -171,7 +171,7 @@ const NewItemSlider = () => {
                   onMouseLeave={handleMouseLeave}
                 >
                   <img
-                    src={product.pImgUrl}
+                    src={`${IMG_PATH}${product.pImgUrl}`}
                     alt={product.pName}
                     className="allProductImage"
                     onMouseEnter={() => handleMouseEnter(index)}
