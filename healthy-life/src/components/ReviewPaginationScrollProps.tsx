@@ -50,7 +50,7 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
           <div className="reviewImgDiv">
             <img
               className="reviewImgUrl"
-              src={`${IMG_PATH}/${review.reviewImgUrl}`}
+              src={review.reviewImgUrl}
               alt={String(review.reviewId)}
             />
           </div>
