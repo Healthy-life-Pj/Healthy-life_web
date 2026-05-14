@@ -99,7 +99,7 @@ function ReviewPaginationScrollProps({ reviews }: PaginationScrollProps) {
                   {review.reviewImgUrl ? (
                     <img
                       className="modalImage"
-                      src={`${IMG_PATH}/${review.reviewImgUrl}`}
+                      src={review.reviewImgUrl}
                     />
                   ) : (
                     <Camera />
