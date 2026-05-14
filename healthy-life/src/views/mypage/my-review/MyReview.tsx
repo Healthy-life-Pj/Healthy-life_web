@@ -230,7 +230,7 @@ function Review() {
                       }
                     >
                       <img
-                        src={`${IMG_PATH}/${review.reviewImgUrl}`}
+                        src={review.reviewImgUrl}
                         alt={review.pName}
                         className="reveiwAppImage"
                       />
@@ -307,7 +307,7 @@ function Review() {
                   {reviewModal.reviewImgUrl ? (
                     <img
                       className="modalImage"
-                      src={`${IMG_PATH}/${reviewModal.reviewImgUrl}`}
+                      src={reviewModal.reviewImgUrl}
                     />
                   ) : (
                     <Camera />
