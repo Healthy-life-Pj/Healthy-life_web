@@ -5,7 +5,7 @@ export const MAIN_APT_PATH =
 
 export const OAUTH_PATH = 
 process.env.NODE_ENV === "production"
-    ?  "https://healthy-life-was.onrender.com/api/v1"
+    ?  "https://healthy-life-was.onrender.com"
     : "http://localhost:4040";
 
 // Resource
