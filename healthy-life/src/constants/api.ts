@@ -32,7 +32,7 @@ export const IMG_PATH = "https://res.cloudinary.com/dmftqspxr/image/upload";
 export const GET_USER = "/me";
 export const UPDATE_USER = "/users/me";
 export const UPDATE_PASSWORD = "/users/me/password";
-export const UPDATE_PASSWORD_BY_EMAIL = "/users/me/password/email";
+export const UPDATE_PASSWORD_BY_EMAIL = "/mail/me/password/email";
 
 // Physique
 export const USER_PHYSIQUE = "/me/physiques";
