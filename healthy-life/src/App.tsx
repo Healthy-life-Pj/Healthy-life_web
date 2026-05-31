@@ -29,6 +29,7 @@ import DirectOrder from "./views/order/direct-order/DirectOrder";
 import CartOrder from "./views/order/cart-order/CartOrder";
 import OAuth from "./views/auth/login/OAuth";
 import PhysiqueProduct from "./views/physique/PhysiqueProduct";
+import SearchList from "./views/home/search/SearchList";
 
 function App() {
   interface TokenUser {
@@ -74,6 +75,7 @@ function App() {
         {/*상품*/}
         <Route path="/products/:pCategoryName/*" element={<Product />} />
         <Route path="/product/productDetail/:pId" element={<ProductDetail />} />
+        <Route path="/product/:pName" element={<SearchList />} />
 
         {/*주문*/}
         <Route path="/order/:pId/:quantity" element={<DirectOrder />} />
